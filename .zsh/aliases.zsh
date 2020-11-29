@@ -9,6 +9,9 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# JWST APT
+alias aptool='~/Programs/APT_2020.4.1/APT'
+
 # Use neovim
 alias v='nvim'
 alias vim='nvim'
@@ -45,13 +48,15 @@ alias gagenda='gcalcli agenda'
 # Kitty terminal
 alias icat="kitty +kitten icat"
 
-# Two dirs up
+# Navigation
 alias ...="cd ../.."
+alias cdwin="/mnt/c/Users/thoma"
 
 # Python
 alias jlab='jupyter lab'
 alias jnote='jupyter notebook'
 alias p='ipython'
+alias python='python3'
 
 # Power
 alias sdn='shutdown now'

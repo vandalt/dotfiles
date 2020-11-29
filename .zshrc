@@ -37,17 +37,14 @@ then
     PATH="/usr/bin/core_perl:$PATH"
 fi
 
+# Env vars
 export PATH
+export DISPLAY="`grep nameserver /etc/resolv.conf | sed 's/nameserver //'`:0"
+export EDITOR="vi"
+export SCREENDIR=$HOME/.screen
+export LD_LIBRARY_PATH=/home/vandal/astro-dev/MultiNest/lib/:$LD_LIBRARY_PATH
+export GDK_DPI_SCALE=2.0
+export GDK_SCALE=0.5
 
-# QT apps
-# export QT_QPA_PLATFORM=wayland
-export QT_QPA_PLATFORMTHEME=gtk2
-# export QT_QPA_PLATFORMTHEME=wayland-egl
-# export QT_WAYLAND_FORCE_DPI=96
-
-# Firefox on wayland
-MOZ_ENABLE_WAYLAND=1
-export MOZ_ENABLE_WAYLAND
-
-# To customize prompt, run `p10k configure` or edit ~/.zsh/p10k.zsh.
-[[ ! -f ~/.zsh/p10k.zsh ]] || source ~/.zsh/p10k.zsh
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
