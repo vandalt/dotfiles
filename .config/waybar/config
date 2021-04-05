@@ -7,7 +7,7 @@
     "modules-left": ["sway/workspaces", "sway/mode"],
     /* "modules-center": ["sway/window"], */
 	"modules-center": ["clock"],
-    "modules-right": ["tray", "custom/spotify", "idle_inhibitor", "custom/nightlight", "custom/bluetooth", "pulseaudio", "network", "cpu", "memory", "backlight", "battery", "custom/touchbar"],
+    "modules-right": ["tray", "custom/spotify", "idle_inhibitor", "custom/keyboard", "custom/nightlight", "custom/bluetooth", "pulseaudio", "network", "cpu", "memory", "backlight", "battery", "custom/touchbar"],
 
     // Modules configuration
     "sway/workspaces": {

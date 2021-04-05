@@ -1,0 +1,24 @@
+channel_priorty: strict
+channels:
+  - conda-forge
+  - defaults
+  - http://ssb.stsci.edu/astroconda
+
+add_pip_as_python_dependency: true
+
+# Some default packages
+# The libblas line forces to use mkl
+# (had problems with multiprocessing and openblas, mainly with radvel GPs)
+create_default_packages:
+  - python
+  - ipython
+  - jedi
+  - jupytext
+  - black
+  - yapf
+  - flake8
+  - pyflakes
+  - pynvim
+  - isort
+  - conda-build
+  - "libblas=*=*mkl"

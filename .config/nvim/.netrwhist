@@ -1,3 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =1
+let g:netrw_dirhistcnt =3
+let g:netrw_dirhist_3='/home/vandal/astro-dev/apero-utils/general/apero-tests/tests'
+let g:netrw_dirhist_2='/home/vandal/astro-dev/apero-drs/.git'
 let g:netrw_dirhist_1='/home/vandal/.config/nvim'

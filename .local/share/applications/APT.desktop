@@ -1,8 +1,7 @@
 [Desktop Entry]
 Name=APT
 GenericName=Astronomer Proposal Tool
-#Exec=env _JAVA_AWT_WM_NONREPARENTING=1 /home/vandal/APT_2020.4.1/APT
-Exec=/home/vandal/Programs/APT_2020.4.1/APT
+Exec=/home/vandal/Programs/APT_2020.5/APT
 Terminal=false
 Type=Application
 Keywords=astro;

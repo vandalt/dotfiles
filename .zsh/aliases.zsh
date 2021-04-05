@@ -12,6 +12,13 @@ fi
 # JWST APT
 alias aptool='~/Programs/APT_2020.4.1/APT'
 
+# Taskwarrior aliases
+alias taskl='task +OVERDUE'
+alias taskn='task +next'
+alias taskg='git -C ~/.task pull'
+alias taskc='git -C ~/.task commit -a -m "add latest tasks"'
+alias taskp='git -C ~/.task push'
+
 # Use neovim
 alias v='nvim'
 alias vim='nvim'
@@ -51,6 +58,9 @@ alias icat="kitty +kitten icat"
 # Navigation
 alias ...="cd ../.."
 alias cdwin="/mnt/c/Users/thoma"
+
+# Java scaling
+alias topcat='topcat -Dsun.java2d.uiScale=2'
 
 # Python
 alias jlab='jupyter lab'

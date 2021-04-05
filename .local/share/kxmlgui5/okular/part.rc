@@ -3,18 +3,18 @@
  <MenuBar>
   <Menu name="file">
    <text>&amp;File</text>
-   <Action name="get_new_stuff" group="file_open"/>
-   <Action name="import_ps" group="file_open"/>
-   <Action name="file_save" group="file_save"/>
-   <Action name="file_save_as" group="file_save"/>
-   <Action name="file_reload" group="file_save"/>
-   <Action name="file_print" group="file_print"/>
-   <Action name="file_print_preview" group="file_print"/>
-   <Action name="open_containing_folder" group="file_print"/>
-   <Action name="properties" group="file_print"/>
-   <Action name="embedded_files" group="file_print"/>
-   <Action name="file_export_as" group="file_print"/>
-   <Action name="file_share" group="file_print"/>
+   <Action group="file_open" name="get_new_stuff"/>
+   <Action group="file_open" name="import_ps"/>
+   <Action group="file_save" name="file_save"/>
+   <Action group="file_save" name="file_save_as"/>
+   <Action group="file_save" name="file_reload"/>
+   <Action group="file_print" name="file_print"/>
+   <Action group="file_print" name="file_print_preview"/>
+   <Action group="file_print" name="open_containing_folder"/>
+   <Action group="file_print" name="properties"/>
+   <Action group="file_print" name="embedded_files"/>
+   <Action group="file_print" name="file_export_as"/>
+   <Action group="file_print" name="file_share"/>
   </Menu>
   <Menu name="edit">
    <text>&amp;Edit</text>
@@ -93,14 +93,14 @@
   </Menu>
   <Menu name="settings">
    <text>&amp;Settings</text>
-   <Action name="show_leftpanel" group="show_merge"/>
-   <Action name="show_bottombar" group="show_merge"/>
-   <Action name="options_configure_generators" group="configure_merge"/>
-   <Action name="options_configure" group="configure_merge"/>
+   <Action group="show_merge" name="show_leftpanel"/>
+   <Action group="show_merge" name="show_bottombar"/>
+   <Action group="configure_merge" name="options_configure_generators"/>
+   <Action group="configure_merge" name="options_configure"/>
   </Menu>
   <Menu name="help">
    <text>&amp;Help</text>
-   <Action name="help_about_backend" group="about_merge"/>
+   <Action group="about_merge" name="help_about_backend"/>
   </Menu>
  </MenuBar>
  <ToolBar name="mainToolBar">
@@ -117,7 +117,7 @@
   <Action name="zoom_to"/>
   <Action name="view_zoom_in"/>
  </ToolBar>
- <ToolBar iconText="icononly" hidden="true" name="annotationToolBar" newline="true">
+ <ToolBar newline="true" hidden="true" iconText="icononly" name="annotationToolBar">
   <text>Annotation Toolbar</text>
   <Action name="annotation_highlighter"/>
   <Action name="annotation_underline"/>
@@ -143,14 +143,17 @@
   <Action name="hide_annotation_toolbar"/>
  </ToolBar>
  <ActionProperties scheme="Default">
-  <Action name="go_next" shortcut=""/>
-  <Action name="go_previous" shortcut=""/>
-  <Action name="show_bottombar" shortcut="Ctrl+N"/>
-  <Action name="view_auto_fit" shortcut="A"/>
-  <Action name="view_fit_to_page" shortcut="F"/>
-  <Action name="view_fit_to_width" shortcut="W"/>
-  <Action name="edit_find_next" shortcut="Ctrl+Shift+N"/>
-  <Action name="presentation" shortcut="Alt+P"/>
-  <Action name="edit_find_prev" shortcut="Ctrl+Shift+P"/>
+  <Action shortcut="" name="go_next"/>
+  <Action shortcut="" name="go_previous"/>
+  <Action shortcut="Ctrl+N" name="show_bottombar"/>
+  <Action shortcut="A" name="view_auto_fit"/>
+  <Action shortcut="F" name="view_fit_to_page"/>
+  <Action shortcut="W" name="view_fit_to_width"/>
+  <Action shortcut="Ctrl+Shift+N" name="edit_find_next"/>
+  <Action shortcut="Alt+P" name="presentation"/>
+  <Action shortcut="Ctrl+Shift+P" name="edit_find_prev"/>
+  <Action shortcut="Shift+R" name="mouse_toggle_annotate"/>
+  <Action shortcut="Ctrl+Shift+R" name="view_orientation_rotate_ccw"/>
+  <Action shortcut="Ctrl+R" name="view_orientation_rotate_cw"/>
  </ActionProperties>
 </kpartgui>

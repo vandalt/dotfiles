@@ -66,8 +66,9 @@ input $touchpad {
 # Keyboard configuration
 input * {
 	repeat_delay 250
-	xkb_layout "us"
-	xkb_options "grp:win_space_toggle,caps:escape,shift:both_capslock,compose:ralt"
+	xkb_layout "us,us"
+	xkb_variant ",intl"
+	xkb_options "grp:win_space_toggle,caps:swapescape,compose:ralt"
 }
 
 # Map touchscreen to output
@@ -95,13 +96,32 @@ mouse_warping output
 output * bg $background fill
 
 # Monitors
+xwayland force scale 2
+exec xsettingsd
+
+# Setup monitor disposition and scaling
 output $out1 scale 2.0 
 output $out1 pos 0 0 res 3840 2160
 output $out2 scale 1.5
 output $out2 pos 1920 0 res 3840 2160
 output $out3 scale 1.5
 output $out3 pos 1920 0 res 3840 2160
-exec sh -c "swaymsg xwayland scale 2; echo Gdk/WindowScalingFactor 2 > ~/.config/xsettingsd/xsettingsd.conf; killall -HUP xsettingsd"
+#profile {
+#    output $out1 scale 2.0 
+#    output $out1 pos 0 0 res 3840 2160
+#}
+#profile {
+#    output $out1 scale 2.0 
+#    output $out1 pos 0 0 res 3840 2160
+#    output $out2 scale 1.5
+#    output $out2 pos 1920 0 res 3840 2160
+#}
+#profile {
+#    output $out1 scale 2.0 
+#    output $out1 pos 0 0 res 3840 2160
+#    output $out3 scale 1.5
+#    output $out3 pos 1920 0 res 3840 2160
+#}
 
 # Toggle waybar
 bindsym $mod+Shift+i exec killall -SIGUSR1 waybar
@@ -183,7 +203,7 @@ exec swayidle -w \
 
 # Workspaces
 assign [app_id="firefox"] $ws2
-assign [class="Chromium"] $ws2
+assign [app_id="Chromium"] $ws2
 
 # Floating
 for_window [app_id="pavucontrol"] floating enable

@@ -3,7 +3,7 @@ Encoding=UTF-8
 Name= Topcat
 GenericName= Topcat
 Comment=Tool for OPerations on Catalogues And Tables
-Exec=/home/vandal/.local/bin/topcat -Dsun.java2d.uiScale=2
+Exec=topcat -Dsun.java2d.uiScale=2
 Icon=/home/vandal/Pictures/topcat.png
 Terminal=false
 Type=Application
