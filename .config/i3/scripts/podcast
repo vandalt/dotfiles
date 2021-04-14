@@ -1,0 +1,16 @@
+#!/bin/bash
+
+pod_print() {
+    meta="$(playerctl metadata 2>/dev/null)"
+    if echo $meta | grep -q 'cumulonimbus'; then
+        show="$(playerctl metadata artist 2>/dev/null)"
+        echo "$show"
+    fi
+}
+
+# Left click
+if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
+    playerctl play-pause 2>/dev/null
+fi
+
+pod_print

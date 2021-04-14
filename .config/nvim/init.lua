@@ -53,7 +53,7 @@ require('packer').startup(function()
   use 'alvan/vim-closetag'  -- Close html tags
   use 'sjl/gundo.vim'  -- Sometimes undo tree is useful
   use 'liuchengxu/vista.vim'  -- Show lsp symbols in side bar
-  -- use 'jiangmiao/auto-pairs'  -- Auto-close pairs
+  use 'jiangmiao/auto-pairs'  -- Auto-close pairs
   use 'KenN7/vim-arsync'  -- Sync remote files
   use 'godlygeek/tabular'  -- Align words in vim
   use {'plasticboy/vim-markdown', requires = 'godlygeek/tabular'}
@@ -61,6 +61,12 @@ require('packer').startup(function()
   use 'junegunn/goyo.vim'  -- Distraction-free writing
   use 'ferrine/md-img-paste.vim'  -- Paste images automatically with md files
   use {'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim'}
+  use 'vimwiki/vimwiki'  -- Note-taking with vimwiki
+  use {'tools-life/taskwiki', requires = 'vimwiki/vimwiki'}  -- Taswarrior in vimwiki
+  use 'vim-scripts/AnsiEsc.vim'
+  use 'goerz/jupytext.vim'  -- Convert and open jupyter notebooks
+  use 'GCBallesteros/vim-textobj-hydrogen'
+  use 'hkupty/iron.nvim'
 
   -- Theming plugins
   use 'joshdick/onedark.vim'
@@ -98,9 +104,11 @@ vim.wo.number = true
 -- Color column at 80
 vim.wo.colorcolumn = "80"
 
--- Remove trailing spaces
-cmd [[autocmd BufWritePre * %s/\\s\\+$//e]]
+-- Enable filetype plugin
+cmd [[filetype plugin on]]
 
+-- Remove trailing spaces
+cmd [[autocmd BufWritePre * :%s/\s\+$//e]]
 
 -- Completion in wildmode
 local wignorelist = {
@@ -349,8 +357,8 @@ nvim_lsp.diagnosticls.setup {
       },
     };
     formatFiletypes = {
-      -- python = {"yapf", "isort"}
-      python = {"black", "isort"}
+      python = {"yapf", "isort"}
+      -- python = {"black", "isort"}
     };
     formatters = {
       black = {
@@ -459,3 +467,26 @@ require('gitsigns').setup({
     changedelete = {hl = 'GitGutterChange', text = '~'},
   }
 })
+
+-- Use %% cells for jupytext
+vim.g.jupytext_fmt = 'py:percent'
+
+
+local iron = require('iron')
+
+iron.core.set_config {
+  preferred = {
+    python = "ipython",
+  }
+}
+
+-- This one conflicts with cl, which replaces s when using sneak
+vim.g.iron_map_extended = 0
+
+-- Use mix of iron and hydrogen cell textobj to execute cell (note: ih is broken)
+vim.api.nvim_set_keymap('n', '<leader>x', 'ctrah]h', {})
+
+-- Wiki config
+vim.g.vimwiki_list = {{path = '~/Documents/notes/',
+                       syntax = 'markdown',
+                       ext = '.md'}}

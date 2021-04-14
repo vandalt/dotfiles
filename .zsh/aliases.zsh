@@ -22,7 +22,7 @@ alias taskp='git -C ~/.task push'
 # Use neovim
 alias v='nvim'
 alias vim='nvim'
-alias cnvim='nvim ~/.config/nvim/init.vim'
+alias cnvim='nvim ~/.config/nvim/init.lua'
 
 # Git dotfiles
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'

@@ -52,7 +52,8 @@ bindsym $mod+b exec --no-startup-id togblue && pkill -RTMIN+12 i3blocks
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+# bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -177,7 +178,7 @@ workspace $ws2 output HDMI1 eDP1
 workspace $ws3 output HDMI1 eDP1
 workspace $ws8 output eDP1 HDMI1
 workspace $ws9 output eDP1 HDMI1
-workspace $ws10 output HDMI1 eDP1 
+workspace $ws10 output HDMI1 eDP1
 
 # move workspaces between monitors
 bindsym $mod+semicolon move workspace to output right
@@ -224,21 +225,21 @@ mode "resize" {
 bindsym $mod+g mode "resize"
 
 # wallpaper
-exec_always --no-startup-id feh --bg-fill ~/.background
+exec_always --no-startup-id feh --bg-fill ~/Pictures/aurores/iceland.png
 
 # Eye breaks
 exec --no-startup-id safeeyes
 
 # compositing
-# exec --no-startup-id xcompmgr -c -f -n
-exec --no-startup-id picom -c -f
+exec --no-startup-id xcompmgr -c -f -n
+# exec --no-startup-id picom -c -f
 
 # no borders
-default_border pixel 0
+default_border pixel 1
 
 # gaps
-workspace $ws1 gaps inner 15 
-workspace $ws8 gaps inner 15 
+workspace $ws1 gaps inner 15
+workspace $ws8 gaps inner 15
 
 # lock to dm
 bindsym $mod+Shift+x exec --no-startup-id "dm-tool lock"
