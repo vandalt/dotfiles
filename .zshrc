@@ -31,6 +31,8 @@ alias vim='nvim'
 alias spyenv='env PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv'
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias pconfig='/usr/bin/git --git-dir=$HOME/.private_dotfiles/ --work-tree=$HOME'
+alias ..='cd ..'
+alias ...='cd ../..'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

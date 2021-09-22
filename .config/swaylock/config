@@ -1,0 +1,7 @@
+daemonize
+show-failed-attempts
+ignore-empty-password
+indicator
+clock
+timestr=%H:%M
+effect-vignette=0.3:0.3

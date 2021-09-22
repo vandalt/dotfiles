@@ -1,0 +1,4 @@
+default-timeout=4000
+
+[mode=do-not-disturb]
+invisible=1
