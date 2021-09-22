@@ -1,0 +1,8 @@
+bind J tabnext
+bind K tabprev
+bind / fillcmdline find
+bind ? fillcmdline find -?
+bind n findnext 1
+bind N findnext -1
+bind ,<Space> nohlsearch
+blacklistadd localhost:8888/lab
