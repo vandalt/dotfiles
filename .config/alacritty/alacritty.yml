@@ -1,6 +1,7 @@
 font:
   normal:
     family: "MesloLGS NF"
+  size: 10
 # TokyoNight Alacritty Colors
 colors:
   # Default colors

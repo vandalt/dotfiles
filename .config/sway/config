@@ -195,6 +195,11 @@ for_window [class="Toplevel"] floating enable
     bindsym $mod+Shift+9 move container to workspace $ws9
     bindsym $mod+Shift+0 move container to workspace $ws10
 
+    # Move workspaces between outputs
+    bindsym $mod+bracketright move workspace to output right
+    bindsym $mod+bracketleft move workspace to output left
+    bindsym $mod+braceright move workspace to output up
+    bindsym $mod+braceleft move workspace to output down
     # Toggle between two latest workspaces
     bindsym $mod+Tab workspace back_and_forth
 
