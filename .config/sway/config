@@ -88,6 +88,13 @@ popup_during_fullscreen leave_fullscreen
 seat seat0 hide_cursor 3000
 focus_follows_mouse yes
 mouse_warping output
+# Borders
+default_border pixel 2
+default_floating_border normal 2
+hide_edge_borders smart
+smart_borders on
+smart_gaps on
+gaps inner 5
 
 # Floating windows
 for_window [app_id="pavucontrol"] floating enable
@@ -139,9 +146,11 @@ for_window [class="Toplevel"] floating enable
     # Reload the configuration file
     bindsym $mod+Shift+c reload
 
+    # Toggle waybar
+    bindsym $mod+Shift+i exec killall -SIGUSR1 waybar
+
     # Lock session
     bindsym $mod+Backspace exec $lock
-
 
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
@@ -212,11 +221,11 @@ for_window [class="Toplevel"] floating enable
     # You can "split" the current object of your focus with
     # $mod+b or $mod+v, for horizontal and vertical splits
     # respectively.
-    bindsym $mod+b splith
+    bindsym $mod+s splith
     bindsym $mod+v splitv
 
     # Switch the current container between different layout styles
-    bindsym $mod+s layout stacking
+    bindsym $mod+t layout stacking
     bindsym $mod+w layout tabbed
     bindsym $mod+e layout toggle split
 
@@ -331,7 +340,7 @@ exec_always "pkill kanshi; exec kanshi"
 # This is required for gammastep to access location
 #exec /usr/lib/geoclue-2.0/demos/agent
 exec gammastep
-#exec libinput-gestures
+exec libinput-gestures
 exec udiskie
 
 #
@@ -339,17 +348,19 @@ exec udiskie
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
-    position top
+    swaybar_command waybar
+    # position bottom
 
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
+    # # When the status_command prints a new line to stdout, swaybar updates.
+    # # The default just shows the current date and time.
+    # status_command while date +'%Y-%m-%d %H:%M'; do sleep 1; done
 
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
+    # # 285577
+    # colors {
+    #     statusline #ffffff
+    #     background #323232
+    #     inactive_workspace #32323200 #32323200 #5c5c5c
+    # }
 }
 
 include /etc/sway/config.d/*

@@ -15,9 +15,10 @@ bindkey '^n' down-line-or-search
 bindkey '^d' delete-char-or-list
 bindkey '^h' backward-delete-char
 bindkey '^[d' kill-word
-bindkey '^[h' backward-kill-word
+# The second ^ prevents escape from doing the alt command
+bindkey '^[^h' backward-kill-word
 bindkey '^[f' forward-word
-bindkey '^[b' backward-word
+bindkey '^[^b' backward-word
 
 # create a zkbd compatible hash;
 # to add other keys to this hash, see: man 5 terminfo
