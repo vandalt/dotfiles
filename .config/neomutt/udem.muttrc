@@ -14,4 +14,4 @@ set sendmail = "/usr/bin/msmtp -a udem"
 # These change depending on acount folder names so put them here for each account
 macro index,pager A "<save-message>$my_folder/Archive<enter>" "Archive Message"
 macro index,pager I "<save-message>$my_folder/Inbox<enter>" "Move to Inbox"
-macro index,pager X "<save-message>$my_folder/Junk<complete><enter>" "Move to Junk"
+macro index,pager X "<save-message>$my_folder/Junk Email<complete><enter>" "Move to Junk"
