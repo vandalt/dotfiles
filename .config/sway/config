@@ -10,7 +10,7 @@ set $down j
 set $up k
 set $right l
 # Terminal
-set $term alacritty
+set $term kitty
 # Your preferred application launcher
 # bemenu is a wayland dmenu replacmement. $menu for commands, $appmenu for desktop apps
 set $menu dmenu_path | bemenu-run | xargs swaymsg exec --

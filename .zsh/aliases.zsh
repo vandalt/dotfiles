@@ -9,6 +9,9 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# Use kitty terminfo to ssh
+alias ssh="kitty +kitten ssh"
+
 alias vim='nvim'
 alias cnvim='nvim ~/.config/nvim/init.lua'
 alias csway='nvim ~/.config/sway/config'
