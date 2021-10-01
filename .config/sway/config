@@ -25,7 +25,8 @@ set $touchpad "1739:52542:SYNA2B31:00_06CB:CD3E_Touchpad"
 set $finger "1386:20963:Wacom_HID_51E3_Finger"
 set $pen "1386:20963:Wacom_HID_51E3_Pen"
 # Background image
-set $background /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png
+# set $background /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png
+set $background /home/vandal/Pictures/aurores/snow.jpg
 # Bin with sway commands
 set $bin ~/.local/bin/sway
 # Screen lock command, with same image as background (other options are in config file)

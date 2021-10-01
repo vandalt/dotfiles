@@ -80,6 +80,7 @@ require('packer').startup(function()
   use 'folke/which-key.nvim'
   use 'akinsho/nvim-toggleterm.lua'
   use 'folke/tokyonight.nvim'
+  use {"ellisonleao/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
   use {
     'hoob3rt/lualine.nvim',
     requires = {'kyazdani42/nvim-web-devicons', opt = true},
@@ -302,7 +303,7 @@ vim.api.nvim_set_keymap("s", "<S-Tab>", "vsnip#jumpable(-1)   ? '<Plug>(vsnip-ju
 
 -- {{{ LSP
 local nvim_lsp = require('lspconfig')
-local configs = require('lspconfig/configs')
+-- local configs = require('lspconfig/configs')
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
