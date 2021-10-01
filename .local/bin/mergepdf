@@ -1,0 +1,9 @@
+#!/bin/bash
+# merge pdf files to single pdf named combined.pdf
+
+if [ $# -lt 2 ]
+then
+    echo "Usage: mergepdf requires at least 2 pdf files to merge"
+fi
+
+pdftk "$@" cat output combined.pdf

@@ -1,0 +1,66 @@
+#!/bin/bash
+
+# Vritual keyboard for sway
+
+if [ "$1" = "" ]; then
+	echo "usage: $0 <cmd>"
+	echo ""
+	echo "commands":
+	echo "   status"
+	echo "   show"
+	echo "   hide"
+  echo "   kill"
+	echo "   toggle"
+	exit 1
+fi
+
+startkbd() {
+	virtboard &
+}
+
+status() {
+	if [ ! "`pgrep virtboard`" ]; then
+		echo false
+	else
+		busctl call --user sm.puri.OSK0 /sm/puri/OSK0 sm.puri.OSK0 GetVisible | cut -d' ' -f2
+	fi
+}
+
+toggle() {
+	if [ "`status`" = "true" ]; then
+		hide
+	else
+		show
+	fi
+}
+
+show() {
+	if [ ! "`pgrep virtboard`" ]; then
+		startkbd
+	else
+		busctl call --user sm.puri.OSK0 /sm/puri/OSK0 sm.puri.OSK0 SetVisible b true
+	fi
+}
+
+hide() {
+	if [ "`pgrep virtboard`" ]; then
+		busctl call --user sm.puri.OSK0 /sm/puri/OSK0 sm.puri.OSK0 SetVisible b false
+	fi
+}
+
+killkbd() {
+  pkill virtboard
+}
+
+case "$1" in
+	status) status ;;
+	toggle) toggle ;;
+	show) show ;;
+	hide) hide ;;
+  kill) killkbd ;;
+	*)
+		echo "error: bad command" >&2
+		exit 1
+esac
+
+exit 0

@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# Script to toggle gammastep
+
+if [ "$1" = "" ]; then
+	echo "usage: $0 <cmd>"
+	echo ""
+	echo "commands":
+	echo "   start"
+	echo "   stop"
+	echo "   toggle"
+	exit 1
+fi
+
+start() {
+	[ "`pgrep gammastep`" ] && return
+	gammastep &
+}
+
+stop() {
+	pkill gammastep 2>/dev/null
+}
+
+toggle() {
+	if [ "`pgrep gammastep`" ]; then
+    pkill gammastep
+  else
+    gammastep &
+  fi
+}
+
+
+case "$1" in
+	start) start ;;
+	stop) stop ;;
+	toggle) toggle ;;
+	*)
+		echo "error: unexpected command" >&2
+		exit 1
+esac
+
+exit 0

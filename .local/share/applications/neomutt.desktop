@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Neomutt
+Exec=alacritty -t Neomutt -e neomutt
+Terminal=false
+Type=Application
+Keywords=mail;
+Icon=/home/vandal/Pictures/neomutt.png
