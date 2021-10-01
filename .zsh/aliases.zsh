@@ -16,6 +16,8 @@ alias vim='nvim'
 alias cnvim='nvim ~/.config/nvim/init.lua'
 alias csway='nvim ~/.config/sway/config'
 
+alias mutt="neomutt"
+
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias pconfig='/usr/bin/git --git-dir=$HOME/.private_dotfiles/ --work-tree=$HOME'
 alias ..="cd .."
