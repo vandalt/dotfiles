@@ -85,6 +85,29 @@ require('packer').startup(function()
     'hoob3rt/lualine.nvim',
     requires = {'kyazdani42/nvim-web-devicons', opt = true},
   }
+  use {
+    "nvim-neorg/neorg",
+    config = function()
+      require('neorg').setup {
+        -- Tell Neorg what modules to load
+            load = {
+              ["core.defaults"] = {}, -- Load all the default modules
+              ["core.norg.concealer"] = {}, -- Allows for use of icons
+              ["core.norg.dirman"] = { -- Manage your directories with Neorg
+                config = {
+                  workspaces = {
+                    my_workspace = "~/neorg"
+                  }
+                }
+              }
+            },
+        }
+    end,
+    requires = "nvim-lua/plenary.nvim"
+  }
+
+
+
 end)
 -- }}}
 
@@ -369,7 +392,7 @@ local autoformat = function(client, bufnr)
 end
 
 local sumneko_binary = 'lua-language-server'
-local sumneko_main = '/usr/share/lua-language-server/main.lua'
+local sumneko_main = '/usr/lib/lua-language-server/main.lua'
 
 require('nlua.lsp.nvim').setup(nvim_lsp, {
   on_attach = on_attach,
@@ -663,6 +686,7 @@ telescope.setup {
 
 -- built-in telescope mappings
 vim.api.nvim_set_keymap('n', '<leader>ff', [[<cmd>lua require('telescope.builtin').find_files()<cr>]], {noremap=true})
+vim.api.nvim_set_keymap('n', '<leader>f.', [[<cmd>lua require('telescope.builtin').file_browser()<cr>]], {noremap=true})
 vim.api.nvim_set_keymap('n', '<leader>fc', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], {noremap=true})
 vim.api.nvim_set_keymap('n', '<leader>fb', [[<cmd>lua require('telescope.builtin').buffers()<cr>]], {noremap=true})
 vim.api.nvim_set_keymap('n', '<leader>fh', [[<cmd>lua require('telescope.builtin').help_tags()<cr>]], {noremap=true})
@@ -704,6 +728,16 @@ require('toggleterm').setup{
 --   ext = '.md',
 -- }}
 -- vim.g.vimwiki_auto_chdir = 1
+
+local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
+
+parser_configs.norg = {
+    install_info = {
+        url = "https://github.com/nvim-neorg/tree-sitter-norg",
+        files = { "src/parser.c", "src/scanner.cc" },
+        branch = "main"
+    },
+}
 
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages

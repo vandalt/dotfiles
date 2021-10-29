@@ -23,7 +23,10 @@ set delete  # Don't ask before deleting
 unset confirmappend  # Don't ask before appending/moving
 set quit  # Don't ask before quitting
 set help = no  # Don't show the help bar (comment out if needed)
-set sort = reverse-date-received  # Latest messages on top
+# set sort = reverse-date-received  # Latest messages on top
+# set sort = reverse-date-received  # Latest messages on top
+set sort=threads
+set sort_aux=reverse-date-received
 
 # Display formatting
 set date_format="%y-%m-%d %H:%M"

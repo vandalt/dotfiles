@@ -6,3 +6,4 @@ bind n findnext 1
 bind N findnext -1
 bind ,<Space> nohlsearch
 blacklistadd localhost:8888/lab
+blacklistadd overleaf.com/project/

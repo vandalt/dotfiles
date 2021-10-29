@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Neomutt
-Exec=alacritty -t Neomutt -e neomutt
+Exec=kitty -T Neomutt -e neomutt
 Terminal=false
 Type=Application
 Keywords=mail;

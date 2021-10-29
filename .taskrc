@@ -29,5 +29,69 @@ data.location=~/.task
 #include /usr/share/doc/task/rc/solarized-light-256.theme
 #include /usr/share/doc/task/rc/no-color.theme
 #include ~/.local/share/task/gruvbox-dark-256.theme
-urgency.user.tag.someday.coefficient=-6.0
+
 alias.rm=delete
+
+include ~/.local/share/task/inthe/config.rc
+uda.reviewed.type=date
+uda.reviewed.label=Reviewed
+report._reviewed.description=Tasksh review report.  Adjust the filter to your needs.
+report._reviewed.columns=uuid
+report._reviewed.sort=reviewed+,modified+
+report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING )
+
+# Bugwarrior UDAs
+uda.trellocard.type=string
+uda.trellocard.label=Trello card name
+uda.trellocardid.type=string
+uda.trellocardid.label=Trello card ID
+uda.trellocardidshort.type=numeric
+uda.trellocardidshort.label=Trello short card ID
+uda.trellodescription.type=string
+uda.trellodescription.label=Trello description
+uda.trelloboard.type=string
+uda.trelloboard.label=Trello board name
+uda.trellolist.type=string
+uda.trellolist.label=Trello list name
+uda.trelloshortlink.type=string
+uda.trelloshortlink.label=Trello shortlink
+uda.trelloshorturl.type=string
+uda.trelloshorturl.label=Trello short URL
+uda.trellourl.type=string
+uda.trellourl.label=Trello URL
+uda.githubtitle.type=string
+uda.githubtitle.label=Github Title
+uda.githubbody.type=string
+uda.githubbody.label=Github Body
+uda.githubcreatedon.type=date
+uda.githubcreatedon.label=Github Created
+uda.githubupdatedat.type=date
+uda.githubupdatedat.label=Github Updated
+uda.githubclosedon.type=date
+uda.githubclosedon.label=GitHub Closed
+uda.githubmilestone.type=string
+uda.githubmilestone.label=Github Milestone
+uda.githubrepo.type=string
+uda.githubrepo.label=Github Repo Slug
+uda.githuburl.type=string
+uda.githuburl.label=Github URL
+uda.githubtype.type=string
+uda.githubtype.label=Github Type
+uda.githubnumber.type=numeric
+uda.githubnumber.label=Github Issue/PR #
+uda.githubuser.type=string
+uda.githubuser.label=Github User
+uda.githubnamespace.type=string
+uda.githubnamespace.label=Github Namespace
+uda.githubstate.type=string
+uda.githubstate.label=GitHub State
+# END Bugwarrior UDAs
+news.version=2.6.0
+context.comm.read=+jwst and project:comm
+context.comm.write=+jwst and project:comm
+context.apero-tests.read=+apero and project:apero.tests
+context.apero-tests.write=+apero and project:apero.tests
+context.phy1234.read=+phy1234
+context.phy1234.write=+phy1234
+context.nova.read=+initiasciences and project:novascience
+context.nova.write=+initiasciences and project:novascience

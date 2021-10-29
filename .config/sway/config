@@ -16,8 +16,8 @@ set $term kitty
 set $menu dmenu_path | bemenu-run | xargs swaymsg exec --
 set $appmenu dmenu_path | j4-dmenu-desktop --dmenu='bemenu -i'
 # Browser
-set $browser qutebrowser
-set $browser2 firefox
+set $browser firefox
+set $browser2 qutebrowser
 # Main laptop output, to map touchscreen and pen
 set $out1 eDP-1
 # Input devices
@@ -109,6 +109,8 @@ for_window [app_id="thunar"] floating enable
 for_window [app_id="imv"] floating enable
 for_window [app_id="zoom"] floating enable
 for_window [app_id="ipython" title="Figure .*"] floating enable
+for_window [app_id="python" title="Figure .*"] floating enable
+for_window [app_id="python3" title="Figure .*"] floating enable
 for_window [app_id="firefox" title="Sharing Indicator"] floating enable
 for_window [app_id="firefox" title="Library"] floating enable
 for_window [app_id="firefox" title="Picture-in-Picture"] floating enable
@@ -224,11 +226,11 @@ for_window [class="Toplevel"] floating enable
     # You can "split" the current object of your focus with
     # $mod+b or $mod+v, for horizontal and vertical splits
     # respectively.
-    bindsym $mod+s splith
-    bindsym $mod+v splitv
+    bindsym $mod+minus splitv
+    bindsym $mod+backslash splith
 
     # Switch the current container between different layout styles
-    bindsym $mod+t layout stacking
+    bindsym $mod+s layout stacking
     bindsym $mod+w layout tabbed
     bindsym $mod+e layout toggle split
 
@@ -286,11 +288,11 @@ for_window [class="Toplevel"] floating enable
     # You can send windows there and get them back later.
 
     # Move the currently focused window to the scratchpad
-    bindsym $mod+Shift+minus move scratchpad
+    bindsym $mod+Shift+equal move scratchpad
 
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
-    bindsym $mod+minus scratchpad show
+    bindsym $mod+equal scratchpad show
 #
 # Resizing containers:
 #

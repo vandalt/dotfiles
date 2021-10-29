@@ -1,4 +1,4 @@
 default-timeout=4000
 
-[mode=do-not-disturb]
+[mode=dnd]
 invisible=1

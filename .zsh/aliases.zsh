@@ -10,9 +10,18 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # Use kitty terminfo to ssh
-alias ssh="kitty +kitten ssh"
+if [ $TERM = xterm-kitty ]; then
+    alias ssh="kitty +kitten ssh"
+fi
+
+alias auracle='auracle -C ~/aur'
+
+# Open files with $EDITOR
+alias nnn='nnn -e'
+alias syncnplug='cp /usr/share/nnn/plugins/{*,.*} ~/.config/nnn/plugins'
 
 # Use old names for "neo" programs
+alias v='nvim'
 alias vim='nvim'
 alias mutt="neomutt"
 
@@ -45,6 +54,8 @@ alias sl='ls'
 alias ll='ls -lh'
 alias la='ls -A'
 alias lla='ls -lA'
+alias llt='ls -lt'
+alias lltr='ls -ltr'
 alias rmr='rm -r'
 alias rmrf='rm -rf'
 alias dh='du -sch *'
@@ -57,18 +68,20 @@ alias scr='screen -r'
 alias scs='screen -S'
 alias scls='screen -ls'
 
-# Git aliases
-alias gcl='git clone'
-alias ga='git add'
-alias gp='git push'
-alias gst='git status'
-alias gcmsg='git commit -m'
-alias gb='git branch'
-alias gcb='git checkout -b'
-alias gco='git checkout'
+# Sway things
+# NOTE: No "toggle" for mako modes yet (https://github.com/emersion/mako/pull/382)
+alias dnd='makoctl set-mode do-not-disturb'
+alias dndoff='makoctl set-mode default'
+
+# Power
+alias sdn='shutdown now'
 
 # Taskwarrior aliases
 alias t='task'
+alias tstop='task +ACTIVE stop'
 alias ta='task add'
+alias tai='task add +inbox'
 alias td='task done'
 alias ttui='taskwarrior-tui'
+alias to='taskopen'
+alias te='task edit'

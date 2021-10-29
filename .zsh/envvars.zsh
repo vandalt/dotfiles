@@ -32,5 +32,13 @@ then
 
     # Jupyter lab extension in userland
     export JUPYTERLAB_DIR=$HOME/.local/share/jupyter/lab
+
+    # nnn vars
+    export NNN_BMS="d:$HOME/Documents;h:/home/vandal;D:$HOME/Downloads/;k:$HOME/Desktop/;p:$HOME/projects/"
+    # NOTE: python jwst package has jump "false positive" with pyenv shims, can delete bin file, should open issue
+    export NNN_PLUG='s:syncpwd;z:autojump;b:bulknew;d:diffs;f:fzopen;g:syncplugs'
+
+    # Misc
+    export WEBBPSF_PATH=$HOME/Documents/jwst_data/webbpsf-data
 fi
 export PATH

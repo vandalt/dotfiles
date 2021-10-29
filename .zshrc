@@ -24,6 +24,9 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Source all config files
 for config_file ($HOME/.zsh/*.*sh) source $config_file
 
+# Keep below config to have nnn -e alias set
+source /usr/share/nnn/quitcd/quitcd.bash_zsh
+
 # Must be after vi/emacs mode
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
@@ -31,6 +34,9 @@ source /usr/share/fzf/completion.zsh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+
+setopt CORRECT_ALL
+
 
 # Add things to shell
 if command -v pyenv 1>/dev/null 2>&1; then
