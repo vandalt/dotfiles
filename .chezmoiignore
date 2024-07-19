@@ -1,4 +1,4 @@
-external_mod/*
+mod/
 .git
 LICENSE
 README.md
