@@ -1,7 +1,0 @@
-daemonize
-show-failed-attempts
-indicator
-clock
-timestr=%H:%M
-image=/home/vandal/Pictures/wallpapers/space/orion_jwst.jpg
-effect-vignette=0.2:0.2
