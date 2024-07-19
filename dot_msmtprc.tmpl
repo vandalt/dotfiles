@@ -1,0 +1,20 @@
+defaults
+auth           on
+tls            on
+tls_starttls   on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+
+account        udem
+host           smtp.office365.com
+port           587
+from           thomas.vandal@umontreal.ca
+user           thomas.vandal@umontreal.ca
+auth xoauth2
+passwordeval "/home/vandal/.local/bin/mutt_oauth2.py {{ (rbw "udem.oauth2.tokens").data.password }}"
+
+account        personal
+host           smtp.office365.com
+port           587
+from           thomasvandal@hotmail.com
+user           thomasvandal@hotmail.com
+passwordeval "rbw get yoga.hotmail"

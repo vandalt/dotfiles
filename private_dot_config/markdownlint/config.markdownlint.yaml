@@ -1,0 +1,11 @@
+# MD012/no-multiple-blanks
+MD012:
+  # Two blank lines is nice above some headings
+  maximum: 2
+# MD013/line-length
+MD013: false
+# MD026/no-trailing-punctuation
+MD026:
+  punctuation: ".,;:。，；："
+# MD036/no-emphasis-as-heading
+MD036: false

@@ -1,0 +1,270 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+then
+  PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+fi
+if ! [[ "$PATH" =~ "$HOME/.cargo/bin" ]]
+then
+  PATH="$HOME/.cargo/bin:$PATH"
+fi
+if ! [[ "$PATH" =~ "$HOME/go/bin" ]]
+then
+  PATH="$HOME/go/bin:$PATH"
+fi
+if ! [[ "$PATH" =~ "$HOME/.local/share/nvim/distant.nvim/bin" ]]
+then
+  PATH="$HOME/.local/share/nvim/distant.nvim/bin:$PATH"
+fi
+if ! [[ "$LD_LIBRARY_PATH" =~ "$HOME/repos/astro/MultiNest/lib" ]]
+then
+  LD_LIBRARY_PATH="$HOME/repos/astro/MultiNest/lib:$LD_LIBRARY_PATH"
+fi
+export LD_LIBRARY_PATH
+
+# Put extra completions in zfunc
+fpath+=~/.zfunc
+fpath+=~/programs/conda-zsh-completion
+
+HISTFILE=~/.histfile
+HISTSIZE=10000
+SAVEHIST=10000
+
+# source ~/programs/powerlevel10k/powerlevel10k.zsh-theme
+# source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/doc/pkgfile/command-not-found.zsh
+
+setopt autocd
+
+zstyle ':compinstall:*' menu select
+autoload -Uz compinit
+compinit
+
+source ~/.zsh/keybindings.zsh
+source ~/.zsh/git.zsh
+source ~/.zsh/python.zsh
+source ~/.zsh/onedrive.zsh
+
+# Must be after vi/emacs mode
+# source /usr/share/fzf/shell/key-bindings.zsh
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+
+if [ -x /usr/bin/dircolors ]; then
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  alias ls='ls --color=auto'
+  alias dir='dir --color=auto'
+  alias vdir='vdir --color=auto'
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+fi
+
+# Utils
+alias l='ls'
+alias sl='ls'
+alias ll='ls -l'
+alias lla='ls -la'
+alias la='ls -a'
+alias lsd='ls -d'
+alias lt='ls -lt'
+alias ltr='ls -ltr'
+alias treei='tree --gitignore -I venv -I *.pyc'
+alias rmr='rm -rI'
+alias dh='du -sch *'
+alias dhsh='du -sch * | sort -h'
+alias dha='du -d 1 -h .'
+alias untar='tar -xvf'
+alias guntar='tar -xzvf'
+alias buntar='tar -xjvf'
+alias open='xdg-open'
+alias ...="cd ../.."
+alias gof="open ."
+alias scls="screen -ls"
+
+# Mutt
+alias mutt='neomutt'
+alias muttr='neomutt -R'
+
+# Tw
+alias t='task'
+
+# Editor
+export EDITOR='nvim'
+
+# Notifications in sway
+# NOTE: No "toggle" for mako modes yet (https://github.com/emersion/mako/pull/382)
+alias dnd='makoctl mode -s dnd'
+alias dndoff='makoctl mode -s default'
+
+# Quick access to config files
+alias cnvim='z ~/.config/nvim; nvim init.lua; z -'
+alias cs='nvim ~/.config/sway/config'
+alias cruff='nvim ~/repos/ruff.toml'
+alias lvim='NVIM_APPNAME="nvim-lazy" nvim'
+
+# TUI things
+alias pmix='pulsemixer'
+alias blue='bluetuith'
+
+alias cz='chezmoi'
+
+# alias jwst-apt='~/programs/APT/APT'
+
+setopt +o nomatch
+alias tclean='rm *.aux *.fls *.fdb_latexmk *.log *.out *.vrb *.nav *.snm *.synctex.* *.toc *.bbl *.blg *.lof'
+
+export THEANO_FLAGS=blas__ldflags="-L/usr/lib/ -lopenblas"
+export AESARA_FLAGS=blas__ldflags="-L/usr/lib/ -lopenblas"
+export PYTENSOR_FLAGS=blas__ldflags="-L/usr/lib/ -lopenblas"
+# export XLA_FLAGS="--xla_force_host_platform_device_count=4"
+export MKL_DYNAMIC=FALSE
+export MKL_CBWR=COMPATIBLE
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export VECLIB_MAXIMUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+export XLA_FLAGS="--xla_force_host_platform_device_count=8 --xla_cpu_multi_thread_eigen=false intra_op_parallelism_threads=1"
+export WEBBPSF_PATH=$HOME/Documents/data/package-data/webbpsf-data
+export PYSYN_CDBS=$HOME/Documents/data/package-data/trds
+export CRDS_PATH=$HOME/Documents/data/package-data/crds_cache
+export CRDS_SERVER_URL=https://jwst-crds.stsci.edu
+export MIRAGE_DATA=$HOME/Documents/data/package-data/mirage-data/mirage_data
+# Dsiable jupyter "frozen packges" warning for python 3.11
+export PYDEVD_DISABLE_FILE_VALIDATION=1
+export JUPYTERLAB_DIR=$HOME/.local/share/jupyter/lab
+export MPLBACKEND_KITTY_SIZING=manual
+
+# Kitty
+if [ $TERM = "xterm-kitty" ]; then
+  LIGHT_COLOR='tokyonight_day.conf'
+  DARK_COLOR='tokyonight_moon.conf'
+
+  alias tday="cp ~/.config/kitty/themes/$LIGHT_COLOR ~/.config/kitty/theme.conf"
+  alias tnight="cp ~/.config/kitty/themes/$DARK_COLOR ~/.config/kitty/theme.conf"
+
+  alias icat="kitty +kitten icat"
+  alias ssh="kitty +kitten ssh"
+  alias kd="kitty +kitten diff"
+  alias hrg="kitty + kitten hyperlinked_grep"
+  alias ktheme="kitty +kitten themes"
+fi
+
+
+# Alacritty colors
+if [ $TERM = "alacritty" ]; then
+  LIGHT_COLOR='alacritty_tokyonight_day.yml'
+  DARK_COLOR='alacritty_tokyonight_storm.yml'
+
+  alias tday="alacritty-colorscheme apply $LIGHT_COLOR"
+  alias tnight="alacritty-colorscheme apply $DARK_COLOR"
+  alias ttoggle="alacritty-colorscheme toggle $LIGHT_COLOR $DARK_COLOR"
+fi
+
+setopt CORRECT_ALL
+export CORRECT_IGNORE_FILE="go|.config"
+
+
+# Go to notes and open nvim
+export ZK_NOTEBOOK_DIR="/home/vandal/notes"
+function znv() {
+  if [[ $(basename "$(pwd)") != "notes" ]]; then
+    z $ZK_NOTEBOOK_DIR
+  fi
+  nvim
+}
+
+JWST_TOKEN_FILE=~/.local/share/mast/latest_token.txt
+if [[ -f "$JWST_TOKEN_FILE" ]]; then
+  export MAST_API_TOKEN="$(cat $JWST_TOKEN_FILE)"
+fi
+export JWSTDOWNLOAD_OUTDIR=~/Documents/data/jwst-obs
+
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
+fi
+
+if command -v zoxide 1>/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+fi
+
+alias luamake=/home/vandal/programs/lua-language-server/3rd/luamake/luamake
+
+# nnn configuration
+# A: Don't auto switch when searching
+export NNN_OPTS="aA"
+# Use trash-cli
+export NNN_TRASH=1
+# Plugins
+export NNN_PLUG="z:autojump;d:dragdrop;g:getplugs;x:xdgdefault;p:preview-tui"
+# export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+n ()
+{
+    # Block nesting of nnn in subshells
+    [ "${NNNLVL:-0}" -eq 0 ] || {
+        echo "nnn is already running"
+        return
+    }
+
+    # The behaviour is set to cd on quit (nnn checks if NNN_TMPFILE is set)
+    # If NNN_TMPFILE is set to a custom path, it must be exported for nnn to
+    # see. To cd on quit only on ^G, remove the "export" and make sure not to
+    # use a custom path, i.e. set NNN_TMPFILE *exactly* as follows:
+    #      NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+
+    # Unmask ^Q (, ^V etc.) (if required, see `stty -a`) to Quit nnn
+    # stty start undef
+    # stty stop undef
+    # stty lwrap undef
+    # stty lnext undef
+
+    # The command builtin allows one to alias nnn to n, if desired, without
+    # making an infinitely recursive alias
+    command nnn "$@"
+
+    [ ! -f "$NNN_TMPFILE" ] || {
+        . "$NNN_TMPFILE"
+        rm -f "$NNN_TMPFILE" > /dev/null
+    }
+}
+
+# Conda init stuff slows down shell. Load only when used (not my main Python)
+# Tiny delay from conda init would be OK if used conda/mamba as main Python.
+alias miniload="eval \"\$(/home/vandal/miniforge3/bin/conda shell.zsh hook)\""
+
+# Enable intel oneapi compilers (not python)
+alias isource="source /opt/intel/oneapi/setvars.sh --config=\"/home/vandal/.zsh/intel_oneapi_config.txt\""
+
+alias apero_source_setup="source /home/vandal/apero/default/apero/apero.zsh.setup"
+alias apero_online_he="source /home/vandal/apero/default/nirps_online_he/nirps_online_he.zsh.setup"
+
+# NOTE: Keep at bottom to make sure "z" command has been defined.
+# mkdir and cd at once
+function mkcd() {
+  mkdir -p "$1" && cd "$1";
+}
+# Same but with z/zoxide/whatever autojump util
+function mkz() {
+  mkdir -p "$1" && z "$1";
+}
+# View csv with less and column tools
+function csview {
+  column -s, -t "$@" | less -N -S
+}
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

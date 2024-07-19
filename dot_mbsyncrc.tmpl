@@ -1,0 +1,66 @@
+### General Mail config
+# Automatically create missing mailboxes, both locally and on the server
+Create Both
+# Delete both locally and on the server
+Expunge Both
+# Save the synchronization state files in the relevant directory
+SyncState *
+
+
+### Accounts
+
+## Personal hotmail account
+IMAPAccount personal
+# Login info
+Host outlook.office365.com
+User thomasvandal@hotmail.com
+AuthMechs LOGIN
+PassCmd "rbw get yoga.hotmail"
+# Use SSL
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+# Remote IMAP
+IMAPStore personal-remote
+Account personal
+
+# Local folders
+MaildirStore personal-local
+SubFolders Verbatim
+# The trailing "/" is important
+Path ~/.mail/personal/
+Inbox ~/.mail/personal/Inbox
+
+# Sync all (*) subfolders
+Channel personal
+Far :personal-remote:
+Near :personal-local:
+Patterns "INBOX" "Drafts" "Sent" "Archive" "Deleted" "Junk"
+
+## UdeM office365 account
+IMAPAccount udem
+# Login info
+Host outlook.office365.com
+User thomas.vandal@umontreal.ca
+AuthMechs XOAUTH2
+PassCmd "/home/vandal/.local/bin/mutt_oauth2.py {{ (rbw "udem.oauth2.tokens").data.password }}"
+# Use SSL
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+# Remote IMAP
+IMAPStore udem-remote
+Account udem
+
+# Local folders
+MaildirStore udem-local
+SubFolders Verbatim
+# The trailing "/" is important
+Path ~/.mail/udem/
+Inbox ~/.mail/udem/Inbox
+
+# Sync all (*) subfolders
+Channel udem
+Far :udem-remote:
+Near :udem-local:
+Patterns "INBOX" "Drafts" "Sent Items" "Archive" "Deleted Items" "Junk Email" "McGill" "InitiaSciences" "astro-ph"

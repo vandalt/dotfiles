@@ -1,0 +1,6 @@
+default-timeout=4000
+font=FiraCode Nerd Font 10
+
+[mode=dnd]
+invisible=1
+default-timeout=0

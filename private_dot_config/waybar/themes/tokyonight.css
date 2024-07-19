@@ -1,0 +1,13 @@
+/* @define-color background rgba(0, 0, 0, 0.5); */
+/* @define-color background rgba(36, 40, 59, 1.0); */
+/* @define-color background rgba(26, 27, 38, 0.5); */
+@define-color background rgba(26, 27, 38, 0.9);
+@define-color bar-border rgba(86, 95, 137, 1.0);
+@define-color bar-border-focus #a9b1d6;
+@define-color foreground-alt #b4f9f8;
+@define-color foreground #c0caf5;
+@define-color background-focus #292e42;
+@define-color status-green #9ece6a;
+@define-color status-yellow #e0af68;
+@define-color status-red #f7768e;
+@define-color faded #565f89;

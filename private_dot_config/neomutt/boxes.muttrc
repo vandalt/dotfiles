@@ -1,0 +1,14 @@
+named-mailboxes \
+    'UdeM' "=udem/Inbox" \
+    '  Drafts' "=udem/Drafts" \
+    '  Sent' "=udem/Sent Items" \
+    '  Archive' "=udem/Archive" \
+    '  Deleted' "=udem/Deleted Items" \
+    '  Junk' "=udem/Junk Email" \
+    '  McGill' "=udem/McGill" \
+    'Personal' "=personal/Inbox" \
+    '  Drafts' "=personal/Drafts" \
+    '  Sent' "=personal/Sent" \
+    '  Archive' "=personal/Archive" \
+    '  Deleted' "=personal/Deleted" \
+    '  Junk' "=personal/Junk"

@@ -1,0 +1,20 @@
+# Config file for UdeM account
+
+# IMAP Storage
+set my_folder = "~/.mail/udem"
+set spoolfile = "$my_folder/Inbox"
+set postponed = "$my_folder/Drafts"
+set trash = "$my_folder/Deleted Items"
+set record = "$my_folder/Sent Items"
+
+# Send mail
+set from = "thomas.vandal@umontreal.ca"
+set sig_dashes = no
+set sig_on_top = yes
+set signature = "~/.config/neomutt/signature.sig"
+set sendmail = "/usr/bin/msmtp -a udem"
+
+# These change depending on acount folder names so put them here for each account
+macro index,pager A "<save-message>$my_folder/Archive<enter>" "Archive Message"
+macro index,pager I "<save-message>$my_folder/Inbox<enter>" "Move to Inbox"
+macro index,pager X "<save-message>$my_folder/Junk<enter>" "Move to Junk"

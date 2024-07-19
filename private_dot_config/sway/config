@@ -1,0 +1,405 @@
+### Variables
+#
+# Logo key. Use Mod1 for Alt.
+set $mod Mod4
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+# Your preferred terminal emulator
+set $term kitty
+set $floatingTerm kitty --class floatTerm
+# Browser
+# set $browser QT_SCALE_FACTOR_ROUNDING_POLICY=round qutebrowser
+set $browser firefox
+# Your preferred application launcher
+# Note: pass the final command to swaymsg (| xargs swaymsg exec --) so that the resulting window can be opened
+# on the original workspace that the command was run on.
+set $menu dmenu_path | rofi -show run
+set $appmenu rofi -show drun -show-icons
+# Outputs
+set $out1 eDP-1
+# Inputs
+set $touchpad "1739:52542:SYNA2B31:00_06CB:CD3E_Touchpad"
+set $touchscreen "1386:20963:Wacom_HID_51E3_Finger"
+set $pen "1386:20963:Wacom_HID_51E3_Pen"
+# Volume bar
+set $sink_volume pactl get-sink-volume @DEFAULT_SINK@ | grep '^Volume:' | cut -d / -f 2 | tr -d ' ' | sed 's/%//'
+set $source_volume pactl get-source-volume @DEFAULT_SOURCE@ | grep '^Volume:' | cut -d / -f 2 | tr -d ' ' | sed 's/%//'
+set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
+set $screenshot grim ~/Pictures/Screenshots/Screenshot-$(date +"%Y-%m-%d-%H-%M-%S").png
+set $areashot slurp | grim -g - ~/Pictures/Screenshots/Screenshot-$(date +"%Y-%m-%d-%H-%M-%S").png
+set $screenclip grim - | wl-copy
+set $areaclip slurp | grim  -g - - | wl-copy
+set $colorpicker ~/.local/bin/sway/colorpicker
+
+### Output configuration
+# Display configuration (resolution, position, etc.) handled in ~/.config/kanshi/config
+#
+# Default wallpaper is in /usr/share/backgrounds/sway/
+# Start wallpaper daemon and random wallpaper loop
+# Use script with "loop" in name for a loop. Without for a single random every login
+exec swww-daemon
+exec ~/.local/bin/random_wallpaper ~/Pictures/wallpapers
+
+### Idle configuration
+exec swayidle -w \
+         timeout 300 'swaylock' \
+         timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+         before-sleep 'swaylock'
+
+### Input configuration
+#
+# Keyboards
+input "type:keyboard" {
+    repeat_delay 250
+    xkb_layout "us"
+    xkb_variant "altgr-intl"
+}
+# Touchpad
+input $touchpad {
+    # Disable while typing
+    dwt enabled
+    tap enabled
+    natural_scroll enabled
+    middle_emulation enabled
+}
+
+# input "1133:45093:Logitech_MX_Anywhere_3" {
+#     pointer_accel 0.5
+# }
+
+# Touch screen
+input $touchscreen map_to_output $out1
+# Pen
+input $pen map_to_output $out1
+
+### Sway settings
+# Cursor
+seat * hide_cursor  3000
+# Won't focus, but can still scroll
+focus_follows_mouse no
+# "pixel" means no title bar, 2 is default width
+default_border pixel 2
+default_floating_border pixel 2
+smart_borders no_gaps
+gaps inner 30
+gaps outer 40
+smart_gaps inverse_outer
+
+# Colors (more visible borders)
+client.focused           #9aa5ce #16161d #c0caf5 #9aa5ce   #9aa5ce
+client.focused_inactive  #16161d #16161d #c0caf5 #16161d   #16161d
+client.unfocused         #16161d #16161d #c0caf5 #16161d   #16161d
+
+### Startup programs
+#
+# Automatic display management with kanshi
+# Causes some flicker but best solution to avoid loosing display config on reload
+exec_always "pkill kanshi; exec kanshi"
+# Automatically mount drives
+exec udiskie
+# Night light
+exec_always = pgrep gammastep || gammastep
+# Volume bar
+exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
+# Automatic rotation for yoga
+exec rot8
+# Touchpad gestures
+# TODO: Replace with new gesture options in sway, at least the workspace switching one
+exec libinput-gestures
+# Kmonad
+exec kmonad ~/.config/kmonad/config.kbd
+# Playerctl daemon helps select latest media player
+exec playerctld daemon
+# Sway autotiling
+# exec autotiling
+# Clipboard
+exec wl-clip-persist --clipboard regular
+exec wl-paste --type text --watch cliphist store
+exec wl-paste --type image --watch cliphist store
+# KDE Connect
+exec /usr/lib/kdeconnectd
+exec kdeconnect-indicator
+
+### Key bindings
+#
+# Basics:
+#
+# Start a terminal
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+Return exec $floatingTerm
+
+# Start browser
+bindsym $mod+i exec $browser
+# bindsym $mod+Shift+i exec $browser2
+
+# Kill focused window
+bindsym $mod+Shift+q kill
+
+# Start your launcher
+bindsym $mod+d exec $appmenu
+bindsym $mod+Shift+d exec $menu
+
+# Dismiss notifications
+bindsym $mod+m exec makoctl dismiss
+
+# Reoload the display config
+bindsym $mod+Shift+p exec pkill kanshi; exec kanshi
+bindsym $mod+Shift+w exec ~/.local/bin/random_wallpaper ~/Pictures/wallpapers
+
+# Screenshots
+bindsym --release Print exec $screenshot
+bindsym --release Shift+Print exec $areashot
+bindsym --release Control+Print exec $screenclip
+bindsym --release Control+Shift+Print exec $areaclip
+
+# Color picker
+bindsym --release $mod+Shift+o exec $colorpicker
+
+
+bindsym $mod+Shift+c exec cliphist list | rofi -dmenu | cliphist decode | wl-copy
+bindsym $mod+g exec rofi -show window -show-icons
+bindsym $mod+period exec rofimoji -a copy
+bindsym $mod+f exec ~/programs/rofi-file-selector/rofi-file-selector.sh
+
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal
+
+# Reload the configuration file
+bindsym $mod+Shift+r reload
+
+# Lock the screen
+bindsym $mod+BackSpace exec swaylock
+
+# Exit sway (logs you out of your Wayland session)
+bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+
+#
+# Moving around:
+#
+# Move your focus around
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+# Or use $mod+[up|down|left|right]
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move the focused window with the same, but add Shift
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+# Ditto, with arrow keys
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+#
+# Workspaces:
+#
+# Switch to workspace
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+# Note: workspaces can have any name you want, not just numbers.
+# We just use 1-10 as the default.
+
+# Move workspaces around outputs
+bindsym $mod+bracketleft move workspace output left
+bindsym $mod+braceleft move workspace output down
+bindsym $mod+bracketright move workspace output right
+bindsym $mod+braceright move workspace output up
+
+# Next/previous workspace
+bindsym $mod+n workspace next_on_output
+bindsym $mod+p workspace prev_on_output
+
+#
+# Layout stuff:
+#
+# You can "split" the current object of your focus with
+# $mod+b or $mod+v, for horizontal and vertical splits
+# respectively.
+bindsym $mod+b splith
+bindsym $mod+v splitv
+
+# Switch the current container between different layout styles
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Make the current focus fullscreen
+bindsym $mod+Shift+f fullscreen
+
+# Toggle the current focus between tiling and floating mode
+bindsym $mod+Shift+space floating toggle
+
+# Swap focus between the tiling area and the floating area
+bindsym $mod+space focus mode_toggle
+
+# Make a floating window visible on all workspace
+bindsym $mod+Shift+s sticky toggle
+
+# Move focus to the parent/child container
+bindsym $mod+a focus parent
+bindsym $mod+c focus child
+
+#
+# Scratchpad:
+#
+# Sway has a "scratchpad", which is a bag of holding for windows.
+# You can send windows there and get them back later.
+
+# Move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+
+#
+# System/media keys
+#
+# Special keys
+bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% && $sink_volume > $WOBSOCK
+bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% && $sink_volume > $WOBSOCK
+bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle && pactl get-sink-mute @DEFAULT_SINK@ | sed -En "/no/ s/.*/$($sink_volume)/p; /yes/ s/.*/0/p"
+bindsym --locked XF86AudioMicMute exec $(pactl set-source-mute @DEFAULT_SOURCE@ toggle && pactl get-source-mute @DEFAULT_SOURCE@ | sed -En "/no/ s/.*/$($source_volume)/p; /yes/ s/.*/0/p"
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%- | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
+bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+ | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
+# Bluetooth headset uses this
+bindsym --locked XF86AudioPlay exec playerctl play-pause
+# Bluetooth headset uses this
+bindsym --locked XF86AudioPause exec playerctl play-pause
+bindsym --locked XF86AudioNext exec playerctl next
+bindsym --locked XF86AudioPrev exec playerctl previous
+# Alternative playerctl bindings for built-in keyboard
+bindsym --locked $mod+Control+p exec playerctl play-pause
+bindsym --locked $mod+Control+bracketright exec playerctl next
+bindsym --locked $mod+Control+bracketleft exec playerctl previous
+
+#
+# Resizing containers:
+#
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+#
+# Mouse and touchpad bindings
+#
+bindsym --whole-window --border $mod+button5 workspace next_on_output
+bindsym --whole-window --border $mod+button4 workspace prev_on_output
+bindsym --whole-window $mod+button2 kill
+
+
+#
+# Status Bar:
+#
+bar swaybar_command waybar
+
+### Behaviour of specific windows or apps
+for_window [app_id="pavucontrol"] floating enable
+for_window [app_id="gnome-font-viewer"] floating enable
+for_window [app_id="pulseUI"] floating enable
+for_window [app_id="blueberry.py"] floating enable
+for_window [app_id="galculator"] floating enable
+for_window [app_id="com.belmoussaoui.Authenticator"] floating enable
+for_window [app_id="gnome-calculator"] floating enable
+for_window [app_id="org.gnome.Calculator"] floating enable
+for_window [app_id="zoom"] floating enable
+for_window [app_id="gnome-terminal.*"] floating enable
+for_window [app_id="jupyter-lab"] floating enable
+for_window [app_id="com.wolfram.Mathematica"  title="Mathematica"] floating enable
+for_window [app_id="soffice" title="Text Import.*"] floating enable
+for_window [app_id="system-config-printer"] floating enable
+for_window [app_id="nm-connection-editor"] floating enable
+for_window [app_id="org.kde.okular" title="Transferring — Okular"] floating enable
+for_window [app_id="ipython" title="Figure .*"] floating enable
+for_window [app_id="python" title="Figure .*"] floating enable
+for_window [class="Matplotlib" title="Figure .*"] floating enable
+for_window [class="Zotero" title="ZotFile Preferences"] floating enable
+for_window [app_id="python3" title="Figure .*"] floating enable
+for_window [app_id="gksqt"] floating enable
+for_window [app_id="python3" title="matplotlib"] floating enable
+for_window [app_id="firefox" title="Sharing Indicator"] floating enable
+for_window [app_id="firefox" title="Library"] floating enable
+for_window [app_id="firefox" title="Picture-in-Picture"] floating enable
+for_window [app_id="firefox" title="Close Firefox"] floating enable
+for_window [app_id="chromeium-browser" title="Spotify MiniPlayer"] floating enable
+for_window [app_id="org.gnome.Solanum"] floating enable
+for_window [app_id="io.github.diegoivanme.flowtime"] floating enable
+for_window [app_id="org.gnome.font-viewer"] floating enable
+for_window [app_id="org.kde.kdeconnect*"] floating enable
+for_window [class="edu-stsci-apt-controller-APT" title="Open"] floating enable
+for_window [class="jetbrains-pycharm" title="win0"] floating enable
+for_window [class="jetbrains-pycharm" title="splash"] floating enable
+for_window [class="jetbrains-pycharm" title="Welcome to PyCharm"] floating enable
+for_window [class="uk-ac-starlink-topcat-Driver"] floating enable
+for_window [class="Ds9.tcl"] floating enable
+for_window [class="TkMotifFDialog" title="Open"] floating enable
+for_window [class="Toplevel"] floating enable
+for_window [app_id="floatTerm"] floating enable
+for_window [app_id="org.gnome.Settings"] floating enable
+for_window [app_id="com.gitlab.newsflash"] floating enable
+for_window [app_id="org.gnome.Calendar"] floating enable
+for_window [app_id="org.gnome.baobab"] floating enable
+
+
+# Assign to workspace
+assign [app_id="Slack"] workspace number 9
+assign [title="Spotify Premium"] workspace number 10
+
+# Transparent windows!
+for_window [title="Spotify Premium"] opacity 0.9
+for_window [app_id="Slack"] opacity 0.95
+for_window [app_id="Element"] opacity 0.95
+
+include /etc/sway/config.d/*

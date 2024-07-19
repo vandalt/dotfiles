@@ -1,0 +1,18 @@
+[init]
+	defaultBranch = main
+[user]
+	email = thomas.vandal@umontreal.ca
+	name = Thomas Vandal
+[checkout]
+	defaultRemote = origin
+
+[push]
+	default = simple
+[core]
+	editor = nvim
+[pull]
+	rebase = true
+[alias]
+	lgb = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%n' --abbrev-commit --date=relative --branches
+[diff]
+	submodule = log

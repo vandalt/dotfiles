@@ -1,0 +1,29 @@
+#!/usr/bin/bash
+
+if [[ $# -lt 1 ]] || [[ ! -d $1   ]]; then
+  echo "Usage:
+  $0 <dir containing images>"
+  exit 1
+fi
+
+INTERVAL=600
+
+if ! type "fd" > /dev/null 2>&1; then
+  echo "ERROR: 'fd' command doesn't exist!"
+  exit 1
+fi
+
+get_random_img() {
+  fd -t f . "$1" | shuf -n 1
+}
+
+swaybg -i "$(get_random_img "$@")" -m fill &
+OLD_PID=$!
+while true; do
+    sleep "$INTERVAL"
+    swaybg -i "$(get_random_img "$@")" -m fill &
+    NEXT_PID=$!
+    sleep 5
+    kill $OLD_PID
+    OLD_PID=$NEXT_PID
+done

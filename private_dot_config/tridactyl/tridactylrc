@@ -1,0 +1,26 @@
+bind J tabnext
+bind K tabprev
+bind / fillcmdline find
+bind ? fillcmdline find --reverse
+bind n findnext --search-from-view
+bind N findnext --search-from-view --reverse
+bind ,<Space> nohlsearch
+bind <C-.> nohlsearch
+bind O fillcmdline tabopen
+bind t current_url open
+bind W hint -w
+bind S pin
+blacklistadd localhost:\d+/lab
+blacklistadd localhost:\d+/tree
+blacklistadd overleaf.com/project/
+blacklistadd docs.google.com
+blacklistadd colab.research.google.com
+blacklistadd am.ticketmaster.com
+blacklistadd typing.io
+blacklistadd keybr.com
+blacklistadd typelit.io
+blacklistadd leetcode.com
+
+setnull searchurls.github
+set searchurls.gh https://github.com/search?utf8=✓&q=
+set searchengine duckduckgo

@@ -1,0 +1,11 @@
+text/html; firefox --new-window %s; nametemplate=%s.html;
+text/html; lynx -assume_charset=%{charset} -display_charset=utf-8 -collapse_br_tags -dump %s; nametemplate=%s.html; copiousoutput
+image/jpeg; xdg-open %s
+image/png; xdg-open %s
+application/pdf; xdg-open %s
+application/msword; libreoffice --writer %s
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; libreoffice --writer %s
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; libreoffice --writer %s
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; libreoffice --calc %s
+application/vnd.ms-excel; libreoffice --calc %s
+video/mp4; mpv %s

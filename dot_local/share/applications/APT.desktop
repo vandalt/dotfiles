@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Astronomer's Proposal Tool APT JWST HST
+Exec=/home/vandal/programs/APT/APT
+Terminal=false
+Type=Application
+Keywords=apt;jwst;hst;
+Icon=/home/vandal/Pictures/icons/jwst.png

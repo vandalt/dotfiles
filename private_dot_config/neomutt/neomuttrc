@@ -1,0 +1,125 @@
+### Identity and accounts
+set realname = "Thomas Vandal"
+set folder = ~/.mail  # Parent dir of all mail
+
+# Use UdeM account by default, but make both available with hools
+source ~/.config/neomutt/udem.muttrc  # Main account info
+folder-hook 'udem' 'source ~/.config/neomutt/udem.muttrc'  # School account hook
+folder-hook 'personal' 'source ~/.config/neomutt/personal.muttrc'  # Personal account hook
+
+# Set mailboxes
+source ~/.config/neomutt/boxes.muttrc
+source ~/.config/neomutt/mutt-theme.muttrc
+
+### General neomutt options
+set beep_new  # Bell on new messages
+set mail_check = 5  # Interval to check for mail
+set mail_check_stats  # Update mail status
+set mail_check_stats_interval = 5  # Update mail status at this interval
+set wait_key = no  # Silently return after external commands
+set sidebar_visible = no
+set sidebar_short_path = yes
+set move = no  # Handled by imap stuff
+set delete  # Don't ask before deleting
+unset confirmappend  # Don't ask before appending/moving
+set quit  # Don't ask before quitting
+set help = no  # Don't show the help bar (comment out if needed)
+set ask_cc = yes
+# set sort = reverse-date-received  # Latest messages on top
+set use_threads = yes
+# set sort = reverse-date-received  # Latest messages on top
+# set sort=reverse-last-date
+set sort=reverse-last-date-received
+
+# Display formatting
+set date_format="%y-%m-%d %H:%M"
+set index_format="%2C | %Z [%d] %-30.30F (%-4.4c) %s"
+set status_format="───[ Folder: %D ]───[%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+set sidebar_format = "%D%?F? [%F]?%* %?N?%N/?%S"  # Mailbox display format in sidebar
+set sidebar_delim_chars="/"  # Delimiter for splits in mailboxes
+set sidebar_indent_string="  "  # Indent for folders
+
+# Notifications
+# set new_mail_command="notify-send --hint int:transient:1 --icon='/home/vandal/Pictures/icons/neomutt.png' \
+# 'New Email.' 'You have new mail.' &"
+
+### Reading messages
+# Define how to open messages
+auto_view text/html  # Do not require opening html as attachment
+set mailcap_path = ~/.config/neomutt/mailcap  # File with app associations
+alternative_order multipart/mixed multipart/related text/enriched text/plain image/*
+mime_lookup application/octet-stream
+
+# Pager view
+ignore *  # Ignore all fields in pager view
+unignore From Message-ID Date To Cc Reply-to Subject  # Show some of them
+set pager_stop  # Don't go to next message
+unset markers  # Dont't show '+' on wrapped lines
+
+### Compsition messages
+set edit_headers  # Allow to edit headers in editor
+set editor = "nvim"  # Use neovim
+set mime_type_query_command = "xdg-mime query filetype"  # Determine mime type of attachments
+set include  # Include copy of message in reply
+set attribution = "\nOn %d, %n wrote:\n"  # Pattern before message replied to
+set query_command = "echo %s | xargs khard email --parsable --"
+set query_format="%4c %t %-70.70a %-70.70n %?e?(%e)?"
+set forward_format = "Fwd: %s"
+
+### Keybindings
+bind editor <Tab>  complete-query
+bind editor ^T     complete
+bind index,pager R group-reply
+
+# Sidebar
+bind index,pager B sidebar-toggle-visible  # Toggle
+bind index,pager \Cp sidebar-prev  # Previous folder
+bind index,pager \Cn sidebar-next  # Next folder
+bind index,pager \Co sidebar-open  # Open highlighted folder
+
+# More vi-like bindings
+bind pager j next-line
+bind pager k previous-line
+bind pager <down> next-line
+bind pager <up> previous-line
+bind attach,index,pager \CD next-page
+bind attach,index,pager \CU previous-page
+bind pager g top
+bind pager G bottom
+bind attach,index g first-entry
+bind attach,index G last-entry
+bind index,pager N search-opposite
+
+# macro index \Cg "<search>~b" "Search body"
+
+## Macros
+# Sync mailboxes now
+macro index S "!mailsync &<enter>" "Update through mbsync"
+macro attach s <save-entry><bol><delete-char><delete-char>/home/vandal/Downloads/<eol> "Save to Downloads"
+
+# Save message somewhere else
+macro index M "<save-message>?<toggle-mailboxes>"
+
+# Multi/alternatives for text and html in composed messages
+macro compose Y "| pandoc --lua-filter=/home/vandal/.config/neomutt/horizontalrule.lua --markdown-headings=atx -f markdown -t html -o /tmp/neomutt-alternative.html<enter>\
+<attach-file>/tmp/neomutt-alternative.html<enter>\
+<toggle-unlink><toggle-disposition>\
+<tag-entry><first-entry><tag-entry><group-alternatives>\
+<send-message>"
+
+macro compose K "| pandoc --lua-filter=/home/vandal/.config/neomutt/horizontalrule.lua --markdown-headings=atx -f markdown -t html -o /tmp/neomutt-alternative.html<enter>\
+<attach-file>/tmp/neomutt-alternative.html<enter>\
+<toggle-unlink><toggle-disposition>\
+<tag-entry><first-entry><tag-entry><group-alternatives>"
+
+macro index,pager C \
+  "<pipe-message>khard add-email<return>" \
+  "add the sender email address to khard"
+macro pager,attach 'V' "<pipe-entry>iconv -c --to-code=UTF8 > /tmp/mail.html<enter><shell-escape>firefox /tmp/mail.html<enter>"
+
+
+auto_view text/html
+
+# Jump to mailboxes/folders
+macro index \e1 "<change-folder> =udem/Inbox/<enter>"
+macro index \e2 "<change-folder> =personal/Inbox/<enter>"

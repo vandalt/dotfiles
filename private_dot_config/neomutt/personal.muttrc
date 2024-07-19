@@ -1,0 +1,20 @@
+# Config file for personal account
+
+# IMAP Storage
+set my_folder = "~/.mail/personal"
+set spoolfile = "$my_folder/Inbox"
+set postponed = "$my_folder/Drafts"
+set trash = "$my_folder/Deleted"
+set record = "$my_folder/Sent"
+
+# Send mail
+set from = "thomasvandal@hotmail.com"
+set sig_dashes = yes
+set sig_on_top = no
+unset signature
+set sendmail = "/usr/bin/msmtp -a personal"
+
+# These change depending on acount folder names so put them here for each account
+macro index,pager A "<save-message>$my_folder/Archive<enter>" "Archive Message"
+macro index,pager I "<save-message>$my_folder/Inbox<enter>" "Move to Inbox"
+macro index,pager X "<save-message>$my_folder/Junk<enter>" "Move to Junk"
