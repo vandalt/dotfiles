@@ -13,9 +13,9 @@ scroll-and-clear-screen() {
   zle clear-screen
 }
 zle -N scroll-and-clear-screen
-bindkey '^l' scroll-and-clear-screen
 # Keep a few emacs bindings
-# bindkey '^l' clear-screen
+# bindkey '^l' scroll-and-clear-screen
+bindkey '^l' clear-screen
 bindkey '^a' beginning-of-line
 bindkey '^e' end-of-line
 bindkey '^f' forward-char
