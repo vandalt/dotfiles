@@ -50,7 +50,7 @@
   @escth @ath    @sth    @dth    @fth    g    h    @jth    @kth    @lth    @colth    @quoth    ret
   @sym z    x    c    v    b    n    m    ,    .    /    @sym
   ;; NOTE: Fn cannot be remapped so not there
-  @sym caps bspc           spc            ret @sym lft up down rght
+  @sym caps lmet           spc            ret @sym lft up down rght
 )
 
 (deflayer symbols
