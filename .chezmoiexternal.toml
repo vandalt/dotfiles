@@ -1,0 +1,30 @@
+[".config/kitty/themes"]
+type = "archive"
+url = "https://github.com/kovidgoyal/kitty-themes/archive/master.tar.gz"
+exact = true
+stripComponents = 2
+refreshPeriod = "168h"
+include = [
+  "**/gruvbox-dark-hard.conf",
+  "**/gruvbox-dark-soft.conf",
+  "**/gruvbox-dark.conf",
+  "**/gruvbox-light-hard.conf",
+  "**/gruvbox-light-soft.conf",
+  "**/gruvbox-light.conf",
+  "**/tokyo_night_day.conf",
+  "**/tokyo_night_moon.conf",
+  "**/tokyo_night_storm.conf",
+  "**/tokyo_night_night.conf",
+  "**/Dracula.conf",
+  "**/GruvboxMaterialDarkHard.conf",
+  "**/GruvboxMaterialDarkMedium.conf",
+  "**/GruvboxMaterialDarkSoft.conf",
+  "**/GruvboxMaterialLightHard.conf",
+  "**/GruvboxMaterialLightMedium.conf",
+  "**/gruvboxMaterialLightSoft.conf",
+  "**/Catppuccin-Latte.conf",
+  "**/Catppuccin-Frappe.conf",
+  "**/Catppuccin-Macchiato.conf",
+  "**/Catppuccin-Mocha.conf",
+  "**/Nord.conf",
+]
