@@ -60,6 +60,7 @@ return {
       -- Use telescope (with dressing.nvim, "select" gives something similar)
       picker = "telescope",
     },
+    cmd = { "ZkNotes", "ZkTags", "ZkLinks", "ZkBacklinks", "ZkMatch", "ZkNew" },
     keys = {
       -- Create new note, ask for title
       {
@@ -76,6 +77,12 @@ return {
         mode = { "x" },
         desc = "New note from title selection",
       },
+      -- Fuzzy search notes based on titles (use regular file picker for file names)
+      {
+        "<leader>zo",
+        function() require("zk").edit() end,
+        desc = "Open note (zk)"
+      },
       -- Create new note using selection as content, ask for title
       {
         "<leader>zc",
@@ -90,6 +97,13 @@ return {
           require("zk").new({ dir = "weekly", date = get_date_zw(zk_start_week) })
         end,
         desc = "Weekly log (zk)",
+      },
+      {
+        "<leader>zm",
+        function()
+          require("zk").new({ title = "Working Memory" })
+        end,
+        desc = "Working memory (zk)",
       },
       -- Create and/or open daily note
       {
