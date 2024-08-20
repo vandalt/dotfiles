@@ -20,6 +20,7 @@ blacklistadd typing.io
 blacklistadd keybr.com
 blacklistadd typelit.io
 blacklistadd leetcode.com
+blacklistadd sharepoint.com
 
 setnull searchurls.github
 set searchurls.gh https://github.com/search?utf8=✓&q=

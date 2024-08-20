@@ -30,7 +30,7 @@
 (defalias
   zth (tap-hold-next-release 135 z lctl)
   /th (tap-hold-next-release 135 / rctl)
-  escth (tap-hold-next-release 135 esc ralt)
+  bspcth (tap-hold-next-release 135 bspc ralt)
   ath (tap-hold-next-release 135 a lsft)
   sth (tap-hold-next-release 135 s lalt)
   dth (tap-hold-next-release 135 d lctl)
@@ -43,21 +43,22 @@
   sym (layer-toggle symbols)
 )
 
+;; NOTE: Fn cannot be remapped, so hardware fn key not in layout
 (deflayer qwerty
   caps  f1   f2   f3  f4  f5  f6  f7  f8  f9  f10  f11  f12  prnt ins  del
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
-  @escth @ath    @sth    @dth    @fth    g    h    @jth    @kth    @lth    @colth    @quoth    ret
+  @bspcth @ath    @sth    @dth    @fth    g    h    @jth    @kth    @lth    @colth    @quoth    ret
   @sym z    x    c    v    b    n    m    ,    .    /    @sym
-  ;; NOTE: Fn cannot be remapped so not there
-  @sym caps lmet           spc            ret @sym lft up down rght
+  @sym lmet esc           spc            ret @sym lft up down rght
 )
 
+;; Add backspace to have a repeatable key
 (deflayer symbols
   _    _    _    _   _   _    _   _   _   _    _    _   _   _  _   _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _    _    _    _    lft  down up   rght _    _    _
+  bspc    _    _    _    _    _    lft  down up   rght _    _    _
   _    _    _    _    _    _    home pgdn pgup end  _    _
   _    _    _              _               _  _  _  _  _  _
 )

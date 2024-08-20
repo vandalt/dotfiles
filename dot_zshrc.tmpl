@@ -163,8 +163,9 @@ if [ $TERM = "alacritty" ]; then
   alias ttoggle="alacritty-colorscheme toggle $LIGHT_COLOR $DARK_COLOR"
 fi
 
+# TODO: Fix this to make less annoying
 setopt CORRECT_ALL
-export CORRECT_IGNORE_FILE="go|.config"
+export CORRECT_IGNORE_FILE="go|.config|.astropy|.snakemake|.ipython"
 
 
 # Go to notes and open nvim
@@ -271,6 +272,8 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 # source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 {{ end }}
+
+compdef _gnu_generic snakemake
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
