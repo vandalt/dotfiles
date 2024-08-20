@@ -6,6 +6,8 @@ return {
       vim.g.vimtex_mappings_disable = { ["n"] = { "K" } } -- disable `K` as it conflicts with LSP hover
       vim.g.vimtex_quickfix_method = vim.fn.executable("pplatex") == 1 and "pplatex" or "latexlog"
 
+      -- Use tectonic
+      vim.g.vimtex_compiler_method = "tectonic"
 
       -- Use okular
       -- vim.g.vimtex_view_general_viewer = "okular"
@@ -13,7 +15,7 @@ return {
       -- Use zathura
       -- vim.g.vimtex_view_method = "zathura_simple" -- simple means don't use xdotool
       -- Use sioyek
-      vim.g.vimtex_view_method = "sioyek" -- simple means don't use xdotool
+      vim.g.vimtex_view_method = "sioyek"
     end,
   }
 }

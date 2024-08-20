@@ -90,6 +90,7 @@ return {
   },
   {
     "echasnovski/mini.pairs",
+    enabled = false,
     opts = {
       mappings = {
         -- Auto add 2nd space in parentheses (not square bc TODO in markdown)

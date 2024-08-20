@@ -64,19 +64,6 @@ return {
     },
   },
   {
-    "lukas-reineke/headlines.nvim",
-    -- Add quarto to filetypes
-    ft = { "quarto" },
-    opts = function(_, opts)
-      -- Copy rmd default config and lazyvim opt overrides to quarto
-      opts["quarto"] = vim.tbl_deep_extend("force", require("headlines").config.rmd, opts.rmd)
-      -- Disable "fat headlines" for all filetypes
-      for _, fopt in pairs(opts) do
-        fopt.fat_headlines = false
-      end
-    end,
-  },
-  {
     "linrongbin16/gitlinker.nvim",
     cmd = "GitLink",
     opts = {},
@@ -153,5 +140,15 @@ return {
     opts = {
       close_if_last_window = true,
     },
+  },
+  {
+    "kmonad/kmonad-vim",
+  },
+  {
+    "chrisbra/csv.vim",
+    config = function()
+      vim.g.csv_nomap_h = true
+      vim.g.csv_nomap_l = true
+    end
   },
 }
