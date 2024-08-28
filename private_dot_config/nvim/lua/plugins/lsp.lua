@@ -18,7 +18,13 @@ return {
             }
           }
         },
-        ltex = {},
+        ltex = {
+          settings = {
+            ltex = {
+              checkFrequency="save"
+            },
+          },
+        },
       },
       setup = {
         -- See https://github.com/LazyVim/LazyVim/discussions/403

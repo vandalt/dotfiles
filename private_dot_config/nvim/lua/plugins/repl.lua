@@ -1,44 +1,15 @@
-local function openSlimeTerm()
-  local id = vim.fn.system("kitty @ launch --type=os-window --cwd=current")
-  local new_config = { window_id = id, listen_on = "" }
-  -- Make sure buffer from where new terminal is created gets updated
-  vim.b.slime_config = new_config
-  -- New buffers will use latest terminal by default
-  vim.g.slime_default_config = new_config
-end
-
-local function updateSlimeDefaultConfig()
-  vim.b.slime_config = vim.g.slime_default_config
-end
-
-local function openPythonREPL()
-  openSlimeTerm()
-  -- TODO: Check for venv otherwise do nothing
-  vim.fn.system("kitty @ send-text 'pact; cd notebooks; ipython'\\\\x0D")
-end
-
-local function openJuliaREPL()
-  openSlimeTerm()
-  vim.fn.system("kitty @ send-text 'julia'\\\\x0D")
-end
-
 return {
   {
     "jpalardy/vim-slime",
     init = function()
-      vim.g.slime_target = "kitty"
-      vim.g.slime_dont_ask_default = 1
+      vim.g.slime_target = "neovim"
       vim.g.slime_no_mappings = 1
       vim.g.slime_cell_delimiter = "# %%"
-      -- TODO: Setup markdown as well
-      -- vim.g.slime_cell_delimiter = "```"
-      -- vim.g.slime_python_ipython = 1
-      vim.g.slime_bracketed_paste = 1
-      vim.keymap.set("n", "<leader>it", openSlimeTerm, { desc = "Open terminal for Slime" })
-      vim.keymap.set("n", "<leader>ir", openPythonREPL, { desc = "Open IPython REPL" })
-      vim.keymap.set("n", "<leader>ij", openJuliaREPL, { desc = "Open Julia REPL" })
+      -- This will use IPython's %cpaste command to fix indentation issues
+      vim.g.slime_python_ipython = 1
+      -- Bracketed paste will fix indentation problems, but does not work for Neovim terminal
+      -- vim.g.slime_bracketed_paste = 1
       vim.keymap.set("n", "<leader>ic", "<Plug>SlimeConfig", { desc = "Set slime config" })
-      vim.keymap.set("n", "<leader>iu", updateSlimeDefaultConfig, { desc = "Update slime config to latest default" })
       vim.keymap.set("n", "<leader>il", "<Plug>SlimeLineSend", { desc = "Send line to REPL" })
       vim.keymap.set("n", "<leader>is", "<Plug>SlimeMotionSend", { desc = "Send motion to REPL" })
       vim.keymap.set("x", "<leader>is", "<Plug>SlimeRegionSend", { desc = "Send selection to REPL" })
