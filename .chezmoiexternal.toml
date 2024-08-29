@@ -28,3 +28,13 @@ include = [
   "**/Catppuccin-Mocha.conf",
   "**/Nord.conf",
 ]
+
+[".config/alacritty/themes"]
+type = "archive"
+url = "https://github.com/folke/tokyonight.nvim/archive/main.tar.gz"
+exact = true
+stripComponents = 3
+refreshPeriod = "168h"
+include = [
+  "**/alacritty/tokyonight_*.toml",
+]
