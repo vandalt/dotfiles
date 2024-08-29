@@ -1,3 +1,11 @@
+# [".config/Kvantum"]
+# type = "archive"
+# url = "https://github.com/GabePoel/KvLibadwaita/archive/main.tar.gz"
+# stripComponents = 2
+# excact = true
+# refreshPeriod = "168h"
+# include = ["**/src/*/*"]
+
 [".config/kitty/themes"]
 type = "archive"
 url = "https://github.com/kovidgoyal/kitty-themes/archive/master.tar.gz"
