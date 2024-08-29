@@ -233,10 +233,6 @@ n ()
     }
 }
 
-# Conda init stuff slows down shell. Load only when used (not my main Python)
-# Tiny delay from conda init would be OK if used conda/mamba as main Python.
-alias miniload="eval \"\$(/home/vandal/miniforge3/bin/conda shell.zsh hook)\""
-
 # Enable intel oneapi compilers (not python)
 alias isource="source /opt/intel/oneapi/setvars.sh --config=\"/home/vandal/.zsh/intel_oneapi_config.txt\""
 
@@ -278,3 +274,22 @@ compdef _gnu_generic snakemake
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 eval "$(starship init zsh)"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/vandal/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/vandal/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "/home/vandal/miniforge3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/vandal/miniforge3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+
+if [ -f "/home/vandal/miniforge3/etc/profile.d/mamba.sh" ]; then
+    . "/home/vandal/miniforge3/etc/profile.d/mamba.sh"
+fi
+# <<< conda initialize <<<
