@@ -53,6 +53,12 @@ return {
       },
     },
   },
+  {
+    "justinmk/vim-gtfo",
+    init = function()
+      vim.g["gtfo#terminals"] = { unix = "kitty" }
+    end,
+  },
   -- Enhanced vim shell commands
   "tpope/vim-eunuch",
   -- Detect tabstop and shiftwidth
@@ -87,7 +93,7 @@ return {
       {
         "<leader>gku",
         function()
-          require("gitlinker").link({ remote="upstream" })
+          require("gitlinker").link({ remote = "upstream" })
         end,
         mode = { "n", "v" },
         desc = "Git link yank upstream",
@@ -95,7 +101,7 @@ return {
       {
         "<leader>gkU",
         function()
-          require("gitlinker").link({ upstream="upstream", action = require("gitlinker.actions").system })
+          require("gitlinker").link({ upstream = "upstream", action = require("gitlinker.actions").system })
         end,
         mode = { "n", "v" },
         desc = "Git link browse upstream",
@@ -149,6 +155,6 @@ return {
     config = function()
       vim.g.csv_nomap_h = true
       vim.g.csv_nomap_l = true
-    end
+    end,
   },
 }
