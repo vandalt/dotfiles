@@ -1,11 +1,5 @@
 bind J tabnext
 bind K tabprev
-bind / fillcmdline find
-bind ? fillcmdline find --reverse
-bind n findnext --search-from-view
-bind N findnext --search-from-view --reverse
-bind ,<Space> nohlsearch
-bind <C-.> nohlsearch
 bind O fillcmdline tabopen
 bind t current_url open
 bind W hint -w
