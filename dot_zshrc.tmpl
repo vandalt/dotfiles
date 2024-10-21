@@ -246,8 +246,9 @@ function csview {
   column -s, -t "$@" | less -N -S
 }
 
-# NOTE: Only if using starship
-precmd() { precmd() { echo "" } }
+# NOTE: echo only if using starship
+# precmd() { precmd() { print -Pn "\e]0;%~\a" echo "" } }
+# precmd() { print -Pn "\e]0;%~\a"; echo "" }
 
 {{ if eq .chezmoi.osRelease.id "arch" }}
 # NOTE: These (or at least highlighting) must be at the end of ~/.zshrc
@@ -261,7 +262,8 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 compdef _gnu_generic snakemake
 
-eval "$(starship init zsh)"
+# eval "$(starship init zsh)"
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
