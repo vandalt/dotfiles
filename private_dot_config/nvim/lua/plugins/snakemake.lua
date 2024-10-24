@@ -29,5 +29,14 @@ return {
       vim.opt.rtp:append(plugin.dir .. "/misc/vim")
     end,
     ft = "snakemake",
+    dev = true,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      if type(opts.ensure_installed) == "table" then
+        vim.list_extend(opts.ensure_installed, { "snakemake" })
+      end
+    end,
   },
 }

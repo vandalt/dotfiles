@@ -58,6 +58,7 @@ return {
         -- },
       }
     },
+    dev = true,
   },
   {
     -- otter provides LSP in embedded code blocks

@@ -23,3 +23,5 @@ opt.shortmess:append({ W = true, I = true, c = true, C = true })
 opt.sessionoptions:append({"terminal"})
 
 opt.guicursor = ""
+
+opt.title = true

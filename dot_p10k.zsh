@@ -215,6 +215,10 @@
   ##################################[ dir: current directory ]##################################
   # Default current directory color.
   typeset -g POWERLEVEL9K_DIR_FOREGROUND=4
+  # Remove directory icon
+  typeset -g POWERLEVEL9K_HOME_ICON=
+  typeset -g POWERLEVEL9K_HOME_SUB_ICON=
+  typeset -g POWERLEVEL9K_FOLDER_ICON=
   # If directory is too long, shorten some of its segments to the shortest possible unique
   # prefix. The shortened directory can be tab-completed to the original.
   typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique

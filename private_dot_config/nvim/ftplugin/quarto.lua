@@ -6,6 +6,7 @@ local api = vim.api
 local ts = vim.treesitter
 
 vim.b.slime_cell_delimiter = '```'
+vim.b.slime_python_ipython = 1
 vim.b['quarto_is_r_mode'] = nil
 vim.b['reticulate_running'] = false
 

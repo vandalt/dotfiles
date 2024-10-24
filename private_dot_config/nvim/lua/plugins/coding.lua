@@ -124,6 +124,7 @@ return {
   },
   {
     "roobert/f-string-toggle.nvim",
+    dev = true,
     keys = {
       { "<leader>fs", function() require("f-string-toggle").toggle_fstring() end, desc = "Toggle f-string" },
     },
@@ -148,5 +149,12 @@ return {
       }
 
     },
-  }
+  },
+  {
+    "zbirenbaum/copilot.lua",
+    keys = {
+      { "<leader>cpp", "<cmd>Copilot enable<CR>", desc = "Enable Copilot" },
+      { "<leader>cpd", "<cmd>Copilot disable<CR>", desc = "Disable Copilot" },
+    },
+  },
 }

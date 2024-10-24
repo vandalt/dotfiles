@@ -55,9 +55,6 @@ return {
   },
   {
     "justinmk/vim-gtfo",
-    init = function()
-      vim.g["gtfo#terminals"] = { unix = "kitty" }
-    end,
   },
   -- Enhanced vim shell commands
   "tpope/vim-eunuch",
@@ -152,6 +149,7 @@ return {
   },
   {
     "chrisbra/csv.vim",
+    ft = "csv",  -- Prevents warning in telescope
     config = function()
       vim.g.csv_nomap_h = true
       vim.g.csv_nomap_l = true

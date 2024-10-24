@@ -15,12 +15,12 @@ return {
     "iamcco/markdown-preview.nvim",
     init = function()
       -- Open a new window when starting preview
-      vim.cmd([[
-        function OpenMarkdownPreview (url)
-        execute "silent ! firefox --new-window " . a:url
-        endfunction
-      ]])
-      vim.g.mkdp_browserfunc = "OpenMarkdownPreview"
+      -- vim.cmd([[
+      --   function OpenMarkdownPreview (url)
+      --   execute "silent ! firefox --new-window " . a:url
+      --   endfunction
+      -- ]])
+      -- vim.g.mkdp_browserfunc = "OpenMarkdownPreview"
 
       -- Don't auto-close window when leaving file
       vim.g.mkdp_auto_close = 0
@@ -29,6 +29,26 @@ return {
       vim.g.mkdp_combine_preview = 1
     end,
   },
+  -- from lazyvim
+  -- {
+  --   "iamcco/markdown-preview.nvim",
+  --   cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+  --   build = function()
+  --     require("lazy").load({ plugins = { "markdown-preview.nvim" } })
+  --     vim.fn["mkdp#util#install"]()
+  --   end,
+  --   keys = {
+  --     {
+  --       "<leader>cp",
+  --       ft = "markdown",
+  --       "<cmd>MarkdownPreviewToggle<cr>",
+  --       desc = "Markdown Preview",
+  --     },
+  --   },
+  --   config = function()
+  --     vim.cmd([[do FileType]])
+  --   end,
+  -- },
   {
     -- NOTE: Using a fork until "checkhealth" issue is fixed
     -- "ekickx/clipboard-image.nvim",
@@ -101,7 +121,7 @@ return {
       {
         "<leader>zm",
         function()
-          require("zk").new({ title = "Working Memory" })
+          require("zk").new({ title = "Quick Notes" })
         end,
         desc = "Working memory (zk)",
       },

@@ -12,6 +12,7 @@ require("lazy").setup({
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import any extras modules here
+    { import = "lazyvim.plugins.extras.lsp.neoconf" },
     { import = "lazyvim.plugins.extras.lang.python" },
     { import = "lazyvim.plugins.extras.lang.clangd" },
     { import = "lazyvim.plugins.extras.lang.yaml" },
@@ -43,6 +44,7 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
+  dev = { path = "~/repos/perso" },
   install = { colorscheme = { "tokyonight", "habamax" } },
   checker = { enabled = true, frequency = 3600 * 24 }, -- automatically check for plugin updates, daily
   change_detection = {

@@ -19,6 +19,7 @@ set mail_check_stats_interval = 5  # Update mail status at this interval
 set wait_key = no  # Silently return after external commands
 set sidebar_visible = no
 set sidebar_short_path = yes
+set ts_enabled = yes
 set move = no  # Handled by imap stuff
 set delete  # Don't ask before deleting
 unset confirmappend  # Don't ask before appending/moving
