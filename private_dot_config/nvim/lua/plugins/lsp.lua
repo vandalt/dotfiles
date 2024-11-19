@@ -5,6 +5,9 @@ return {
       { "barreiroleo/ltex_extra.nvim" },
     },
     opts = {
+      diagnostics = {
+        virtual_text = false,
+      },
       servers = {
         -- TODO: Move to a python.lua file?
         pyright = {
