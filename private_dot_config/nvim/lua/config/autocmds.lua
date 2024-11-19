@@ -16,7 +16,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- https://github.com/LazyVim/LazyVim/issues/4509#issuecomment-2431509475
-vim.api.nvim_create_autocmd("TermOpen", {
+vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, {
   -- Re-enable some useful terminal bindings overriden by LazyVim/snacks.nvim
   callback = function(ev)
     vim.keymap.set("t", "<c-l>", "<c-l>", { buffer = ev.buf, nowait = true })
