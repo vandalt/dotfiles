@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
 then
   PATH="$HOME/.local/bin:$HOME/bin:$PATH"
@@ -40,9 +47,12 @@ source ~/.zsh/python.zsh
 source ~/.zsh/onedrive.zsh
 
 # Must be after vi/emacs mode
-# source /usr/share/fzf/shell/key-bindings.zsh
+{{ if eq .chezmoi.osRelease.id "arch" }}
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
+{{ else if eq .chezmoi.osRelease.id "fedora" }}
+source /usr/share/fzf/shell/key-bindings.zsh
+{{ end }}
 
 if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -256,14 +266,20 @@ source /usr/share/doc/pkgfile/command-not-found.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 {{ else if eq .chezmoi.osRelease.id "fedora" }}
-# source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-# source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 {{ end }}
 
 compdef _gnu_generic snakemake
 
-# eval "$(starship init zsh)"
+{{ if eq .chezmoi.osRelease.id "arch" }}
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+{{ else if eq .chezmoi.osRelease.id "fedora" }}
+source ~/programs/powerlevel10k/powerlevel10k.zsh-theme
+{{ end }}
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -278,8 +294,4 @@ else
     fi
 fi
 unset __conda_setup
-
-if [ -f "/home/vandal/miniforge3/etc/profile.d/mamba.sh" ]; then
-    . "/home/vandal/miniforge3/etc/profile.d/mamba.sh"
-fi
 # <<< conda initialize <<<
