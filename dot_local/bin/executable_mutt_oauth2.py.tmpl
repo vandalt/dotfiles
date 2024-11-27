@@ -44,7 +44,7 @@ import subprocess
 # encryption and decryption pipes you prefer. They should read from standard
 # input and write to standard output. The example values here invoke GPG,
 # although won't work until an appropriate identity appears in the first line.
-ENCRYPTION_PIPE = ['gpg', '--encrypt', '--recipient', '{{ (rbw "gpg_id").notes }}']
+ENCRYPTION_PIPE = ['gpg', '--encrypt', '--recipient', '{{ (bitwarden "item" "gpg_id").notes }}']
 DECRYPTION_PIPE = ['gpg', '--decrypt']
 
 registrations = {
@@ -74,8 +74,8 @@ registrations = {
         'scope': ('offline_access https://outlook.office.com/IMAP.AccessAsUser.All '
                   'https://outlook.office.com/POP.AccessAsUser.All '
                   'https://outlook.office.com/SMTP.Send'),
-        'client_id': '{{ (rbw "mutt_oauth2").data.username  }}',
-        'client_secret': '{{ (rbw "mutt_oauth2").data.password  }}',
+        'client_id': '{{ (bitwarden "item" "mutt_oauth2").login.username  }}',
+        'client_secret': '{{ (bitwarden "item" "mutt_oauth2").login.password  }}',
     },
 }
 

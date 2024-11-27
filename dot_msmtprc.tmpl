@@ -10,7 +10,7 @@ port           587
 from           thomas.vandal@umontreal.ca
 user           thomas.vandal@umontreal.ca
 auth xoauth2
-passwordeval "/home/vandal/.local/bin/mutt_oauth2.py {{ (rbw "udem.oauth2.tokens").data.password }}"
+passwordeval "/home/vandal/.local/bin/mutt_oauth2.py {{ (bitwarden "item" "udem.oauth2.tokens").login.password }}"
 
 account        personal
 host           smtp.office365.com

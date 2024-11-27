@@ -10,7 +10,7 @@ sync_dir = "~"
 # monitor_interval = "45"
 # JWST Data is useful, but very heavy (and accessible from box)
 # APOD is auto-downloaded and available elsewhere + often has invalid Microsoft names
-skip_dir = "{{ (rbw "onedrive_skip_dir").notes }}"
+skip_dir = "{{ (bitwarden "item" "onedrive_skip_dir").notes }}"
 # log_dir = "/var/log/onedrive/"
 # drive_id = ""
 # upload_only = "false"

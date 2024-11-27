@@ -43,7 +43,7 @@ IMAPAccount udem
 Host outlook.office365.com
 User thomas.vandal@umontreal.ca
 AuthMechs XOAUTH2
-PassCmd "/home/vandal/.local/bin/mutt_oauth2.py {{ (rbw "udem.oauth2.tokens").data.password }}"
+PassCmd "/home/vandal/.local/bin/mutt_oauth2.py {{ (bitwarden "item" "udem.oauth2.tokens").login.password }}"
 # Use SSL
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
