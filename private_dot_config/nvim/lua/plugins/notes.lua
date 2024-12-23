@@ -14,44 +14,11 @@ return {
   {
     "iamcco/markdown-preview.nvim",
     init = function()
-      -- Open a new window when starting preview
-      -- vim.cmd([[
-      --   function OpenMarkdownPreview (url)
-      --   execute "silent ! firefox --new-window " . a:url
-      --   endfunction
-      -- ]])
-      -- vim.g.mkdp_browserfunc = "OpenMarkdownPreview"
-
-      -- Don't auto-close window when leaving file
       vim.g.mkdp_auto_close = 0
-      -- Reuse preview window when switching files
-      -- (requires mkdb_auto_close = 0)
       vim.g.mkdp_combine_preview = 1
     end,
   },
-  -- from lazyvim
-  -- {
-  --   "iamcco/markdown-preview.nvim",
-  --   cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-  --   build = function()
-  --     require("lazy").load({ plugins = { "markdown-preview.nvim" } })
-  --     vim.fn["mkdp#util#install"]()
-  --   end,
-  --   keys = {
-  --     {
-  --       "<leader>cp",
-  --       ft = "markdown",
-  --       "<cmd>MarkdownPreviewToggle<cr>",
-  --       desc = "Markdown Preview",
-  --     },
-  --   },
-  --   config = function()
-  --     vim.cmd([[do FileType]])
-  --   end,
-  -- },
   {
-    -- NOTE: Using a fork until "checkhealth" issue is fixed
-    -- "ekickx/clipboard-image.nvim",
     "dfendr/clipboard-image.nvim",
     opts = {
       default = {
@@ -66,7 +33,6 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        -- Using zk instead. Could enable outside "notes" directory?
         marksman = { autostart = false },
       },
     },
@@ -77,8 +43,7 @@ return {
     name = "zk",
     ft = { "markdown" },
     opts = {
-      -- Use telescope (with dressing.nvim, "select" gives something similar)
-      picker = "telescope",
+      picker = "fzf_lua",
     },
     cmd = { "ZkNotes", "ZkTags", "ZkLinks", "ZkBacklinks", "ZkMatch", "ZkNew" },
     keys = {
@@ -133,6 +98,16 @@ return {
         end,
         desc = "Daily note (zk)",
       },
+      {
+        "<leader>zl",
+        "<cmd>ZkLinks<CR>",
+        desc = "zk Links"
+      },
+      {
+        "<leader>zb",
+        "<cmd>ZkBacklinks<CR>",
+        desc = "zk Backlinks"
+      },
     },
   },
   {
@@ -142,9 +117,11 @@ return {
         buffers = false, -- Disable navigation with Backspace and Del - Use C-I and C-O
         folds = false, -- Use default vim folding
         conceal = false, -- Use default treesitter conceal
-        links = false, -- Using zk for that (might want to enable for citations at some point)
+        links = true, -- Using zk for that (might want to enable for citations and mapping at some point)
       },
       mappings = {
+        MkdnNextLink = {'n', ']l'},
+        MkdnPrevLink = {'n', '[l'},
         -- Enable in insert mode: lists and tables
         -- Disable in normal and visual (link-related things)
         MkdnEnter = { "i", "<CR>" },

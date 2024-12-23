@@ -15,3 +15,6 @@ vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, {
     end
   end,
 })
+
+-- Autowrite markdown files when navigating
+vim.api.nvim_create_autocmd("FileType", {pattern = "markdown", command = "set awa"})
