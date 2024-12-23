@@ -1,0 +1,5 @@
+vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })
+vim.keymap.set({"n", "v"}, "<leader>y", [["+y]], { desc = "Yank to system clipboard" , remap=true})
+vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank EOL to system clipboard", remap=true})
+vim.keymap.set({"n", "v"}, "<leader>p", [["+p]], { desc = "Put from system clipboard after cursor" , remap=true})
+vim.keymap.set("n", "<leader>P", [["+P]], { desc = "Put from system clipboard before cursor", remap=true})
