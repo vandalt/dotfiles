@@ -20,6 +20,17 @@ return {
     end,
   },
   {
+    "which-key.nvim",
+    optional = true,
+    opts = {
+      spec = {
+        mode = { "n", "v" },
+        {"<leader>i", group="slime"},
+        {"<leader>q", group="quarto/quit/session"}
+      }
+    }
+  },
+  {
     "GCBallesteros/NotebookNavigator.nvim",
     -- Make sure toggleterm is installed to silence REPL warning
     dependencies = { "akinsho/toggleterm.nvim" },
@@ -46,11 +57,11 @@ return {
     opts = {
       custom_language_formatting = {
         -- TODO Set this up. It's a bit slow when saving for now
-        python = {
-          extension = "qmd",
-          style = "quarto",
-          force_ft = "quarto", -- you can set whatever filetype you want here
-        },
+        -- python = {
+        --   extension = "qmd",
+        --   style = "quarto",
+        --   force_ft = "quarto", -- you can set whatever filetype you want here
+        -- },
         -- python = {
         --   extension = "md",
         --   style = "markdown",
