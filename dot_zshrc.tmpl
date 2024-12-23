@@ -29,7 +29,7 @@ export LD_LIBRARY_PATH
 
 # Put extra completions in zfunc
 fpath+=~/.zfunc
-fpath+=~/programs/conda-zsh-completion
+fpath+=~/programs/conda-zsh-completion-install/conda-zsh-completion
 
 HISTFILE=~/.histfile
 HISTSIZE=10000
@@ -294,4 +294,8 @@ else
     fi
 fi
 unset __conda_setup
+
+if [ -f "/home/vandal/miniforge3/etc/profile.d/mamba.sh" ]; then
+    . "/home/vandal/miniforge3/etc/profile.d/mamba.sh"
+fi
 # <<< conda initialize <<<
