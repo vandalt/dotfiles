@@ -5,15 +5,18 @@
 -- Disable autoformat by default
 vim.g.autoformat = false
 
+vim.g.snacks_animate = false
+
 local opt = vim.opt
 
--- Options that lazyvim sets that I might want to change in the future
-if not vim.env.SSH_TTY then
-  -- only set clipboard if not in ssh, to make sure the OSC 52
-  -- integration works automatically. Requires Neovim >= 0.10.0
-  opt.clipboard = "unnamedplus" -- Sync with system clipboard
-end
-opt.formatoptions = "jcroqlnt" -- tcqj
+-- only set clipboard if not in ssh, to make sure the OSC 52
+-- integration works automatically. Requires Neovim >= 0.10.0
+-- opt.clipboard = vim.env.SSH_TTY and "" or "unnamedplus" -- Sync with system clipboard
+opt.clipboard = ""
+opt.cursorline = true  -- Enable cursorline
+opt.cursorlineopt = "number"  -- Enable cursorline number color, but not full line
+opt.formatoptions = "jcroqlnt"
+opt.scrolloff = 4
 opt.smartindent = false -- disable to allow >>ing comments in Python
 opt.spelllang = { "en", "fr" }
 opt.wildmode = "longest:full,full" -- Command-line completion mode
@@ -21,7 +24,5 @@ opt.wildmode = "longest:full,full" -- Command-line completion mode
 opt.shortmess:append({ W = true, I = true, c = true, C = true })
 
 opt.sessionoptions:append({"terminal"})
-
-opt.guicursor = ""
 
 opt.title = true

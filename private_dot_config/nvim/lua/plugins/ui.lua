@@ -17,26 +17,6 @@ return {
     enabled = true,
   },
   {
-    -- Does not play nice with quarto-nvim's rename functionality
-    "stevearc/dressing.nvim",
-    enabled = false,
-  },
-  -- {
-  --   "dressing.nvim",
-  --   opts = {
-  --     select = {
-  --       enabled = false,
-  --     }
-  --   }
-  -- },
-  {
-    "folke/zen-mode.nvim",
-    dependencies = {
-      -- Zen-mode will auto-activate twilight if installed
-      "folke/twilight.nvim"
-    }
-  },
-  {
     "folke/snacks.nvim",
     opts = {
       dashboard = {
@@ -49,8 +29,15 @@ return {
  ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║
  ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝
     ]],
-        }
-      }
-    }
-  }
+        },
+      },
+      styles = {
+        terminal = {
+          keys = {
+            term_normal = false,
+          },
+        },
+      },
+    },
+  },
 }

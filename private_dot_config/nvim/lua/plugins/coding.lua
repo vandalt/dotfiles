@@ -1,54 +1,9 @@
 return {
   {
-    "hrsh7th/nvim-cmp",
-    opts = function(_, opts)
-      local cmp = require("cmp")
-      opts.completion.completeopt = "menu,menuone,noinsert,noselect"
-
-      opts.mapping = vim.tbl_extend("force", opts.mapping, {
-        -- Lazyvim sets this to automatically accept selected. Very obstrusive
-        -- Use <C-y> instead
-        ["<CR>"] = cmp.config.disable,
-        -- No longer needed with above disabled. Use <C-e> instead
-        ["<C-CR>"] = cmp.config.disable,
-        -- Lazyvim sets this to accept+replace remainder of line
-        ["<S-CR>"] = cmp.config.disable,
-      })
-    end,
-    keys = {
-      { "<Tab>", false, mode = { "i", "s" } },
-      { "<S-Tab>", false, mode = { "i", "s" } },
-      {
-        "<C-l>",
-        function()
-          if vim.snippet.active({ direction = 1 }) then
-            vim.schedule(function()
-              vim.snippet.jump(1)
-            end)
-            return
-          end
-          return "<C-l>"
-        end,
-        expr = true,
-        silent = true,
-        mode = { "i", "s" },
-      },
-      {
-        "<C-h>",
-        function()
-          if vim.snippet.active({ direction = -1 }) then
-            vim.schedule(function()
-              vim.snippet.jump(-1)
-            end)
-            return
-          end
-          return "<C-h>"
-        end,
-        expr = true,
-        silent = true,
-        mode = { "i", "s" },
-      },
-    },
+    "saghen/blink.cmp",
+    opts = {
+      keymap = { preset = "default" },
+    }
   },
   {
     "danymat/neogen",
@@ -90,7 +45,6 @@ return {
   },
   {
     "echasnovski/mini.pairs",
-    enabled = false,
     opts = {
       mappings = {
         -- Auto add 2nd space in parentheses (not square bc TODO in markdown)
@@ -118,7 +72,7 @@ return {
           neigh_pattern = "[^A-Za-eg-zçÇ0-9\\'][^%w]",
           register = { cr = false },
         },
-        ["`"] = { action = "closeopen", pair = "``", neigh_pattern = "[^%a\\`][^%w]", register = { cr = false } },
+        ["`"] = { action = "closeopen", pair = "``", neigh_pattern = "[^%a\\`/][^%w]", register = { cr = false } },
       },
     },
   },

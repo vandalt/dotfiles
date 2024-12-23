@@ -12,11 +12,16 @@ return {
     },
   },
   {
-    "folke/flash.nvim",
+    "which-key.nvim",
     opts = {
-      -- When using regular search, don't auto-jump to labels, first enable them with ";"
-      -- By placing this here, will not affect regular "s" jump
-      modes = { search = { search = { trigger = ";" } } },
+      preset = "helix",  -- classic, modern, helix
+      spec = {
+        {
+          mode = { "n", "v" },
+          { "<leader>r", "rsync" },
+          { "<leader>z", "zk" },
+        },
+      },
     },
   },
   {
@@ -55,6 +60,12 @@ return {
   },
   {
     "justinmk/vim-gtfo",
+    dev = true,
+    init = function()
+      -- Open kitty in a new window
+      vim.g["gtfo#terminals"] = { unix = "kitty" }
+      vim.g["gtfo#kitty_integration"] = 0
+    end,
   },
   -- Enhanced vim shell commands
   "tpope/vim-eunuch",
@@ -67,89 +78,16 @@ return {
     },
   },
   {
-    "linrongbin16/gitlinker.nvim",
-    cmd = "GitLink",
-    opts = {},
-    keys = {
-      {
-        "<leader>gky",
-        function()
-          require("gitlinker").link()
-        end,
-        mode = { "n", "v" },
-        desc = "Git link yank",
-      },
-      {
-        "<leader>gkb",
-        function()
-          require("gitlinker").link({ action = require("gitlinker.actions").system })
-        end,
-        mode = { "n", "v" },
-        desc = "Git link browse",
-      },
-      {
-        "<leader>gku",
-        function()
-          require("gitlinker").link({ remote = "upstream" })
-        end,
-        mode = { "n", "v" },
-        desc = "Git link yank upstream",
-      },
-      {
-        "<leader>gkU",
-        function()
-          require("gitlinker").link({ upstream = "upstream", action = require("gitlinker.actions").system })
-        end,
-        mode = { "n", "v" },
-        desc = "Git link browse upstream",
-      },
-      {
-        "<leader>gkc",
-        function()
-          require("gitlinker").link({ router_type = "current_branch" })
-        end,
-        mode = { "n", "v" },
-        desc = "Git link yank current branch",
-      },
-      {
-        "<leader>gkC",
-        function()
-          require("gitlinker").link({ router_type = "current_branch", action = require("gitlinker.actions").system })
-        end,
-        mode = { "n", "v" },
-        desc = "Git link browse current branch",
-      },
-      {
-        "<leader>gkb",
-        function()
-          require("gitlinker").link({ router_type = "default_branch" })
-        end,
-        mode = { "n", "v" },
-        desc = "Git link yank default branch",
-      },
-      {
-        "<leader>gkB",
-        function()
-          require("gitlinker").link({ router_type = "default_branch", action = require("gitlinker.actions").system })
-        end,
-        mode = { "n", "v" },
-        desc = "Git link browse default branch",
-      },
-    },
-  },
-  {
     "nvim-neo-tree/neo-tree.nvim",
     enabled = false,
     opts = {
       close_if_last_window = true,
     },
   },
-  {
-    "kmonad/kmonad-vim",
-  },
+  "kmonad/kmonad-vim",
   {
     "chrisbra/csv.vim",
-    ft = "csv",  -- Prevents warning in telescope
+    ft = "csv", -- Prevents warning in picker
     config = function()
       vim.g.csv_nomap_h = true
       vim.g.csv_nomap_l = true
