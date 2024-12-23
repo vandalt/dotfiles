@@ -50,7 +50,7 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
   @bspcth @ath    @sth    @dth    @fth    g    h    @jth    @kth    @lth    @colth    @quoth    ret
   @sym z    x    c    v    b    n    m    ,    .    /    @sym
-  @sym lmet esc           spc            ret @sym lft up down rght
+  caps lmet esc           spc            ret @sym lft up down rght
 )
 
 ;; Add backspace to have a repeatable key
