@@ -8,9 +8,4 @@ return {
       { "<leader>ahg", "<cmd>CellularAutomaton game_of_life<CR>", desc = "Game of life" },
     },
   },
-  {
-    "giusgad/pets.nvim",
-    dependencies = { "MunifTanjim/nui.nvim", "giusgad/hologram.nvim" },
-    config = true,
-  },
 }
