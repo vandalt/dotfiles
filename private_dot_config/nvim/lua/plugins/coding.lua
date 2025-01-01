@@ -106,6 +106,7 @@ return {
   },
   {
     "zbirenbaum/copilot.lua",
+    optional = true,
     keys = {
       { "<leader>cpp", "<cmd>Copilot enable<CR>", desc = "Enable Copilot" },
       { "<leader>cpd", "<cmd>Copilot disable<CR>", desc = "Disable Copilot" },

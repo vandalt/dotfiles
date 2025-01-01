@@ -9,10 +9,6 @@ return {
       virt_text_pos = "eol", -- Big data structure hide the code if "inline"
     },
   },
-  -- {
-  --   "linux-cultist/venv-selector.nvim",
-  --   lazy = false,
-  -- },
   {
     "mfussenegger/nvim-dap-python",
     lazy = false,
@@ -27,21 +23,4 @@ return {
       end
     end,
   },
-  -- {
-  --   "mfussenegger/nvim-dap",
-  --   -- lazy = false,
-  --   -- optional = true,
-  --   opts = function()
-  --     -- HACK: LazyVim sets host to localhost, which does not work for me because ipv6 or something
-  --     -- Ref: https://github.com/LazyVim/LazyVim/issues/3577
-  --     local dap = require("dap")
-  --     if dap.adapters["codelldb"] then
-  --       dap.adapters.codelldb["host"] = "127.0.0.1"
-  --     end
-  --     -- HACK: But localhost is required for typescript to work...
-  --     if dap.adapters["pwa-node"] then
-  --       dap.adapters["pwa-node"]["host"] = "localhost"
-  --     end
-  --   end,
-  -- },
 }
