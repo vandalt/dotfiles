@@ -1,4 +1,66 @@
 return {
+  { "nvim-neo-tree/neo-tree.nvim", enabled = false },
+  {
+    "which-key.nvim",
+    opts = {
+      preset = "helix", -- classic, modern, helix
+      spec = {
+        {
+          mode = { "n", "v" },
+          { "<leader>m", "markdown", icon = "󰍔" },
+          { "<leader>r", "rsync", icon = "󰘿" },
+          { "<leader>t", "persistence/splitjoin", icon = { icon = " ", color = "azure" } },
+          { "<leader>z", "zk", icon = "󱓩" },
+          { "<leader>i", group = "slime", icon = { icon = "" } },
+          { "<leader>q", group = "quarto/quit", icon = "󰈙" },
+        },
+      },
+      icons = {
+        rules = {
+          { pattern = "yank", icon = "󰅇", color = "yellow" },
+          { pattern = "put", icon = "󰅇", color = "yellow" },
+          { pattern = "clipboard", icon = "󰅇", color = "yellow" },
+        },
+      },
+    },
+  },
+  {
+    "stevearc/oil.nvim",
+    lazy = false, -- required to open `nvim .` with oil...
+    keys = {
+      { "-", "<CMD>Oil<CR>", desc = "Open parent directory" },
+    },
+    opts = {
+      default_file_explorer = true,
+      skip_confirm_for_simple_edits = true,
+      keymaps = {
+        ["<C-s>"] = false,
+        ["<C-h>"] = false,
+        ["<C-l>"] = false,
+        ["<leader>es"] = { "actions.select", mode = "n", opts = { vertical = true } },
+        ["<leader>eh"] = { "actions.select", mode = "n", opts = { horizontal = true } },
+        ["<leader>er"] = { "actions.refresh", mode = "n" },
+      },
+    },
+  },
+  "justinmk/vim-gtfo",
+  "tpope/vim-eunuch",
+  {
+    "mbbill/undotree",
+    cmd = "UndotreeToggle",
+    keys = {
+      { "<leader>uu", "<Cmd>UndotreeToggle<CR>", desc = "Toggle Undotree" },
+    },
+  },
+  "kmonad/kmonad-vim",
+  {
+    "chrisbra/csv.vim",
+    ft = "csv", -- Prevents warning in picker
+    config = function()
+      vim.g.csv_nomap_h = true
+      vim.g.csv_nomap_l = true
+    end,
+  },
   {
     "KenN7/vim-arsync",
     dependencies = {
@@ -10,87 +72,5 @@ return {
       { "<leader>rd", "<cmd>ARsyncUpDelete<CR>", desc = "Push with rsync and delete files" },
       { "<leader>rl", "<cmd>ARsyncDown<CR>", desc = "Pull with rsync" },
     },
-  },
-  {
-    "which-key.nvim",
-    opts = {
-      preset = "helix",  -- classic, modern, helix
-      spec = {
-        {
-          mode = { "n", "v" },
-          { "<leader>r", "rsync" },
-          { "<leader>z", "zk" },
-        },
-      },
-    },
-  },
-  {
-    "stevearc/oil.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    -- NOTE: Required to open `nvim .` with oil...
-    lazy = false,
-    keys = {
-      { "-", "<CMD>Oil<CR>", desc = "Open parent directory" },
-    },
-    opts = {
-      default_file_explorer = true,
-      skip_confirm_for_simple_edits = true,
-      keymaps = {
-        ["g?"] = "actions.show_help",
-        ["<CR>"] = "actions.select",
-        ["<C-s>"] = false,
-        ["<C-h>"] = false,
-        ["<leader>es"] = "actions.select_vsplit",
-        ["<leader>eh"] = "actions.select_split",
-        ["<C-t>"] = "actions.select_tab",
-        ["<C-p>"] = "actions.preview",
-        ["<C-c>"] = "actions.close",
-        ["<C-l>"] = false,
-        ["<leader>er"] = "actions.refresh",
-        ["-"] = "actions.parent",
-        ["_"] = "actions.open_cwd",
-        ["`"] = "actions.cd",
-        ["~"] = "actions.tcd",
-        ["gs"] = "actions.change_sort",
-        ["gx"] = "actions.open_external",
-        ["g."] = "actions.toggle_hidden",
-        ["g\\"] = "actions.toggle_trash",
-      },
-    },
-  },
-  {
-    "justinmk/vim-gtfo",
-    dev = true,
-    init = function()
-      -- Open kitty in a new window
-      vim.g["gtfo#terminals"] = { unix = "kitty" }
-      vim.g["gtfo#kitty_integration"] = 0
-    end,
-  },
-  -- Enhanced vim shell commands
-  "tpope/vim-eunuch",
-  -- Detect tabstop and shiftwidth
-  "tpope/vim-sleuth",
-  {
-    "mbbill/undotree",
-    keys = {
-      { "<leader>uu", "<Cmd>UndotreeToggle<CR>", desc = "Toggle Undotree" },
-    },
-  },
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    enabled = false,
-    opts = {
-      close_if_last_window = true,
-    },
-  },
-  "kmonad/kmonad-vim",
-  {
-    "chrisbra/csv.vim",
-    ft = "csv", -- Prevents warning in picker
-    config = function()
-      vim.g.csv_nomap_h = true
-      vim.g.csv_nomap_l = true
-    end,
   },
 }
