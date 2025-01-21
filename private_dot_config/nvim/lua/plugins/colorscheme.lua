@@ -3,7 +3,7 @@ return {
     "folke/tokyonight.nvim",
     opts = {
       style = "moon",
-      transparent = false, -- Will be transparent only if match terminal theme
+      transparent = false,
       on_colors = function(colors)
         -- Make line numbers a bit brighter
         colors.fg_gutter = colors.comment
@@ -15,10 +15,10 @@ return {
       },
     },
   },
+  { "catppuccin/nvim", name = "catppuccin" },
   {
     "LazyVim/LazyVim",
     opts = {
-      -- Catppuccin and Tokyonight installed with LazyVim
       colorscheme = "tokyonight",
     },
   },
