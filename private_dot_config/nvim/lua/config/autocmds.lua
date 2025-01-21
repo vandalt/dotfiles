@@ -1,7 +1,3 @@
--- Autocmds are automatically loaded on the VeryLazy event
--- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
--- Add any additional autocmds here
-
 -- https://github.com/LazyVim/LazyVim/issues/4509#issuecomment-2431509475
 vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, {
   -- Re-enable some useful terminal bindings overriden by LazyVim/snacks.nvim
@@ -16,5 +12,5 @@ vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, {
   end,
 })
 
--- Autowrite markdown files when navigating
+-- Autowrite markdown files when navigating, recommended by mkdnflow.nvim
 vim.api.nvim_create_autocmd("FileType", {pattern = "markdown", command = "set awa"})
