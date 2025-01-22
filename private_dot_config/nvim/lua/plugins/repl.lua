@@ -20,17 +20,6 @@ return {
     end,
   },
   {
-    "which-key.nvim",
-    optional = true,
-    opts = {
-      spec = {
-        mode = { "n", "v" },
-        {"<leader>i", group="slime"},
-        {"<leader>q", group="quarto/quit/session"}
-      }
-    }
-  },
-  {
     "GCBallesteros/NotebookNavigator.nvim",
     -- Make sure toggleterm is installed to silence REPL warning
     dependencies = { "akinsho/toggleterm.nvim" },

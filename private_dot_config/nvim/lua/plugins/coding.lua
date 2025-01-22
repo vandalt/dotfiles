@@ -9,40 +9,18 @@ return {
   {
     "roobert/f-string-toggle.nvim",
     dev = true,
+    -- stylua: ignore
     keys = {
-      {
-        "<leader>fs",
-        function()
-          require("f-string-toggle").toggle_fstring()
-        end,
-        desc = "Toggle f-string",
-      },
+      { "<leader>fs", function() require("f-string-toggle").toggle_fstring() end, desc = "Toggle f-string" },
     },
   },
   {
     "Wansmer/treesj",
+    -- stylua: ignore
     keys = {
-      {
-        "<leader>ts",
-        function()
-          require("treesj").split()
-        end,
-        desc = "Split code block",
-      },
-      {
-        "<leader>tj",
-        function()
-          require("treesj").join()
-        end,
-        desc = "Join code block",
-      },
-      {
-        "<leader>tt",
-        function()
-          require("treesj").toggle()
-        end,
-        desc = "Toggle split/join for code block",
-      },
+      { "<leader>ts", function() require("treesj").split() end, desc = "Split code block" },
+      { "<leader>tj", function() require("treesj").join() end, desc = "Join code block" },
+      { "<leader>tt", function() require("treesj").toggle() end, desc = "Toggle split/join for code block" },
     },
     opts = {
       use_default_keymaps = false,

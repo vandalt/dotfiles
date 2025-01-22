@@ -25,11 +25,10 @@ return {
     -- https://github.com/snakemake/snakemake/tree/main/misc/vim
     "snakemake/snakemake",
     config = function(plugin)
-      -- Equivalent to rtp='misc/vim' upstream docs
       vim.opt.rtp:append(plugin.dir .. "/misc/vim")
     end,
     ft = "snakemake",
-    dev = true,
+    dev = false,
   },
   {
     "nvim-treesitter/nvim-treesitter",

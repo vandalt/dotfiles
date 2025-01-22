@@ -1,4 +1,13 @@
 local zk_start_week = "sunday"
+local zk_picker
+if LazyVim.pick.picker.name == "telescope" then
+  zk_picker = "telescope"
+elseif LazyVim.pick.picker.name == "fzf" then
+  zk_picker = "fzf_lua"
+else
+  zk_picker = "select"
+end
+
 local function get_date_zw(start_week_day)
   start_week_day = start_week_day or "sunday"
   -- TODO: 'Start week day stays sunday, but day determining which week to use should be
@@ -17,6 +26,13 @@ return {
       vim.g.mkdp_auto_close = 0
       vim.g.mkdp_combine_preview = 1
     end,
+  },
+  {
+    "3rd/image.nvim",
+    opts = {
+      max_width_window_percentage = 50,
+      max_height_window_percentage = 33,
+    },
   },
   {
     "dfendr/clipboard-image.nvim",
@@ -43,7 +59,7 @@ return {
     name = "zk",
     ft = { "markdown" },
     opts = {
-      picker = "fzf_lua",
+      picker = zk_picker,
     },
     cmd = { "ZkNotes", "ZkTags", "ZkLinks", "ZkBacklinks", "ZkMatch", "ZkNew" },
     keys = {
@@ -65,8 +81,10 @@ return {
       -- Fuzzy search notes based on titles (use regular file picker for file names)
       {
         "<leader>zo",
-        function() require("zk").edit() end,
-        desc = "Open note (zk)"
+        function()
+          require("zk").edit()
+        end,
+        desc = "Open note (zk)",
       },
       -- Create new note using selection as content, ask for title
       {
@@ -101,12 +119,12 @@ return {
       {
         "<leader>zl",
         "<cmd>ZkLinks<CR>",
-        desc = "zk Links"
+        desc = "zk Links",
       },
       {
         "<leader>zb",
         "<cmd>ZkBacklinks<CR>",
-        desc = "zk Backlinks"
+        desc = "zk Backlinks",
       },
     },
   },
@@ -120,8 +138,8 @@ return {
         links = true, -- Using zk for that (might want to enable for citations and mapping at some point)
       },
       mappings = {
-        MkdnNextLink = {'n', ']l'},
-        MkdnPrevLink = {'n', '[l'},
+        MkdnNextLink = { "n", "]l" },
+        MkdnPrevLink = { "n", "[l" },
         -- Enable in insert mode: lists and tables
         -- Disable in normal and visual (link-related things)
         MkdnEnter = { "i", "<CR>" },

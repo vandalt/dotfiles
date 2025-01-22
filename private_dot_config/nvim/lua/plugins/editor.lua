@@ -3,7 +3,7 @@ return {
   {
     "which-key.nvim",
     opts = {
-      preset = "helix", -- classic, modern, helix
+      preset = "classic", -- classic, modern, helix
       spec = {
         {
           mode = { "n", "v" },
