@@ -13,14 +13,9 @@ return {
     },
   },
   {
-    "folke/noice.nvim",
-    enabled = false,
-  },
-  {
     "folke/snacks.nvim",
     opts = {
       dashboard = {
-        enabled = false,
         preset = {
           header = [[
 ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗
@@ -38,15 +33,6 @@ return {
             term_normal = false,
           },
         },
-      },
-    },
-  },
-  {
-    "edgy.nvim",
-    enabled = true,
-    opts = {
-      animate = {
-        enabled = false,
       },
     },
   },
