@@ -5,9 +5,28 @@ return {
     build = ":TSUpdate",
     main = "nvim-treesitter.configs", -- Call setup on this module
     opts = {
-      ensure_installed = { "c", "lua", "luadoc", "markdown", "markdown_inline", "python", "query", "toml", "vim", "vimdoc", "yaml" },
+      ensure_installed = {
+        "bibtex",
+        "c",
+        "latex",
+        "lua",
+        "luadoc",
+        "markdown",
+        "markdown_inline",
+        "ninja",
+        "python",
+        "query",
+        "rst",
+        "toml",
+        "vim",
+        "vimdoc",
+        "yaml",
+      },
       auto_install = true,
-      highlight = { enable = true },
+      highlight = {
+        enable = true,
+        disable = { "latex" },
+      },
       indent = { enable = true },
       -- TODO: Add folding? https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file#folding
       incremental_selection = {

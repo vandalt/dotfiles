@@ -1,5 +1,6 @@
 return {
-  { 'akinsho/bufferline.nvim', event = "VeryLazy", opts = { options = {always_show_bufferline = false} } },
+  { "akinsho/bufferline.nvim", event = "VeryLazy", opts = { options = { always_show_bufferline = false } } },
+  { "lewis6991/gitsigns.nvim", opts = {} },
   {
     "echasnovski/mini.icons",
     lazy = true,
@@ -12,7 +13,9 @@ return {
     end,
   },
   {
-    "lewis6991/gitsigns.nvim",
-    otps = {},
+    "nvim-lualine/lualine.nvim",
+    opts = {
+      options = { section_separators = "", component_separators = "|" },
+    },
   },
 }

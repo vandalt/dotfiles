@@ -11,15 +11,17 @@ return {
       },
     },
     cmd = "Telescope",
-    -- TODO: Try ivy theme (https://github.com/nvim-telescope/telescope.nvim/issues/848)
     config = function()
-      require("telescope").setup({})
+      require("telescope").setup({
+        defaults = require("telescope.themes").get_ivy()
+      })
       pcall(require('telescope').load_extension, 'fzf')
     end,
     keys = {
-      -- TODO: Add chezmoi and replace fc to search chezmoi config
       { "<leader>ff", "<Cmd>Telescope find_files<CR>", desc = "Find files" },
+      { "<leader>fg", "<Cmd>Telescope git_files<CR>", desc = "Find git files" },
       { "<leader>fb", "<Cmd>Telescope buffers<CR>", desc = "Find buffers" },
+      { "<leader>cs", "<Cmd>Telescope lsp_document_symbols<CR>", desc = "LSP symbols" },
       { "<leader>sg", "<Cmd>Telescope live_grep<CR>", desc = "Search grep" },
       { "<leader>sh", "<Cmd>Telescope help_tags<CR>", desc = "Search help pages" },
       { "<leader>sk", "<Cmd>Telescope keymaps<CR>", desc = "Search keymaps" },

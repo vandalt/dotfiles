@@ -2,7 +2,7 @@ return {
   {
     "folke/tokyonight.nvim",
     opts = {
-      style = "moon",
+      style = "night",
       transparent = false,
       on_colors = function(colors)
         -- Make line numbers a bit brighter

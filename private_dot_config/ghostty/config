@@ -1,4 +1,4 @@
-theme = dark:tokyonight_moon,light:tokyonight-day
+theme = dark:tokyonight_night,light:tokyonight-day
 font-family = "JetBrainsMono Nerd Font"
 font-size = 10
 window-width=90

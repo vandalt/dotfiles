@@ -1,3 +1,6 @@
+-- https://github.com/neovim/neovim/blob/master/runtime/ftplugin/python.vim
+vim.g.no_python_maps = 1
+
 local opt = vim.opt
 
 -- TODO: Clipboard with schedule?
@@ -5,7 +8,7 @@ opt.autowrite = false -- Autowrite when switching buffers
 opt.number = true -- Line numbers
 opt.relativenumber = true
 opt.mouse = "a" -- Mouse everywhere
-opt.showmode = true -- Show mode below status line
+opt.showmode = false -- Show mode below status line
 opt.breakindent = true -- Wrapped lines respect indent level
 opt.undofile = true -- Save undo history
 opt.ignorecase = true -- Case-insensitive search...

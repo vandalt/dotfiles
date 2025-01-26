@@ -4,27 +4,32 @@ return {
     cmd = "Mason",
     opts = {},
     keys = {
-      { "<leader>cm", "<Cmd>Mason<CR>", desc = "Mason" }
+      { "<leader>cm", "<Cmd>Mason<CR>", desc = "Mason" },
     },
   },
   {
-    -- TODO: lazydev completion source for cmp or blink
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files
     opts = {
       library = {
         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+        { path = "snacks.nvim", words = { "Snacks" } },
       },
     },
   },
   {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    cmd = { "LspInfo", "LspStart" },
     dependencies = {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
     },
+    keys = {
+      -- Set this mapping here so can check if LSP even when LspAttach has not run
+      { "<leader>ci", "<Cmd>LspInfo<CR>", desc = "LSP Info" },
+    },
     config = function()
-
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("vandalt-lsp-attach", { clear = true }),
         callback = function(event)
@@ -33,19 +38,33 @@ return {
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
           end
 
-          -- TODO: Use picker for some of these?
-          map("gd", vim.lsp.buf.definition, "Goto definition")
+          map("gd", require("telescope.builtin").lsp_definitions, "Goto definition")
           map("gD", vim.lsp.buf.declaration, "Goto declaration")
-          map("gr", vim.lsp.buf.references, "Goto references")
-          map("gI", vim.lsp.buf.implementation, "Goto implementation")
+          map("gr", require("telescope.builtin").lsp_references, "Goto references")
+          map("gI", require("telescope.builtin").lsp_implementations, "Goto implementation")
           map("K", vim.lsp.buf.hover, "Hover")
           map("<C-k>", vim.lsp.buf.signature_help, "Signature help", "i")
           map("<leader>ca", vim.lsp.buf.code_action, "Code actions", { "n", "v" })
-        end
+          -- map("<leader>ci", "<Cmd>LspInfo<CR>", "LSP Info")
+
+          -- We use pyright for hover so disable that in ruff
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
+          if client and client.name == "ruff" then
+            client.server_capabilities.hoverProvider = false
+            map("<leader>co", function()
+              vim.lsp.buf.code_action({
+                filter = function(action)
+                  return vim.startswith(action.kind, "source.organizeImports")
+                end,
+                apply = true,
+              })
+            end, "Organize Imports (ruff)")
+          end
+        end,
       })
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+      capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
       local servers = {
         lua_ls = {
@@ -61,7 +80,9 @@ return {
           },
         },
         pyright = {},
+        ruff = {},
       }
+
       local server_names = vim.tbl_keys(servers)
       require("mason-lspconfig").setup({
         ensure_installed = server_names,
@@ -69,11 +90,11 @@ return {
         handlers = {
           function(server_name)
             local server_opts = servers[server_name]
-            server_opts.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server_opts.capabilities or {})
+            server_opts.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server_opts.capabilities or {})
             require("lspconfig")[server_name].setup(server_opts)
-          end
+          end,
         },
       })
-    end
+    end,
   },
 }

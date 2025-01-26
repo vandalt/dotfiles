@@ -2,7 +2,7 @@ return {
   "tpope/vim-sleuth",
   { "nvim-lua/plenary.nvim", lazy = true },
   {
-    'echasnovski/mini.surround',
+    "echasnovski/mini.surround",
     opts = {
       mappings = {
         add = "gsa", -- Add surrounding in Normal and Visual modes
@@ -16,6 +16,21 @@ return {
         suffix_last = "l", -- Suffix to search with "prev" method
         suffix_next = "n", -- Suffix to search with "next" method
       },
+    },
+  },
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = {
+      words = { enabled = true },
+      indent = { enabled = true, animate = { enabled = true } },
+    },
+    -- stylua: ignore
+    keys = {
+      { "]]", function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
+      { "[[", function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
     },
   },
 }

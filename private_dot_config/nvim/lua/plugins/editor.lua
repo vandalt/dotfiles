@@ -14,17 +14,26 @@ return {
           { "<leader>r", group = "reload" },
           { "<leader>s", group = "search" },
           { "<leader>u", group = "toggle" },
-          { "<leader>q", group = "persistence" },
+          { "<leader>e", group = "explore" },
+          { "<leader>q", group = "session" },
+          { "<localLeader>l", group = "vimtex" },
           { "g", group = "goto/capitalize" },
           { "gc", group = "comment" },
           { "gr", group = "incremental" },
           { "gs", group = "surround" },
         },
       },
+      icons = {
+        rules = {
+          { plugin = "oil.nvim", cat = "filetype", name = "oil" },
+          { pattern = "explore", cat = "filetype", name = "oil" },
+          { pattern = "vimtex", cat = "filetype", name = "tex" },
+        },
+      },
     },
   },
   {
-    'stevearc/oil.nvim',
+    "stevearc/oil.nvim",
     cmd = "Oil",
     event = "VimEnter",
     ---@module 'oil'
@@ -68,12 +77,12 @@ return {
     "folke/persistence.nvim",
     event = "BufReadPre", -- this will only start session saving when an actual file was opened
     opts = {},
+    -- stylua: ignore
     keys = {
       { "<leader>qs", function() require("persistence").load() end, desc = "Restore session (cwd)" },
       { "<leader>qS", function() require("persistence").select() end, desc = "Select session" },
       { "<leader>ql", function() require("persistence").load({last=true}) end, desc = "Restore last session (anywhere)" },
       { "<leader>qd", function() require("persistence").stop() end, desc = "Don't save current session" },
     },
-  }
-
+  },
 }

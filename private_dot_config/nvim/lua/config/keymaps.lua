@@ -2,11 +2,15 @@ local map = vim.keymap.set
 
 map("n", "<leader>bd", "<Cmd>bdelete<CR>", { desc = "Close buffer" })
 
-map({ "n", "v" }, "<leader>rc", "<Cmd>luafile %<CR>", { desc = "Reload config" })
 map({ "n", "i" }, "<Esc>", "<Cmd>nohlsearch<CR><esc>", { desc = "Clear hlsearch" })
 map("n", "<leader>l", "<Cmd>Lazy<CR>", { desc = "Lazy" })
 map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "View diagnostic" })
 map("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
+-- stylua: ignore start
+map("n", "]d", function() vim.diagnostic.jump({ count = vim.v.count1, float = true }) end)
+map("n", "[d", function() vim.diagnostic.jump({ count = -vim.v.count1, float = true }) end)
+-- stylua: ignore end
 
 -- better up/down, stolen from LazyVim
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
