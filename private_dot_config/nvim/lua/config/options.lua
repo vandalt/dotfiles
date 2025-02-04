@@ -1,5 +1,25 @@
 -- https://github.com/neovim/neovim/blob/master/runtime/ftplugin/python.vim
 vim.g.no_python_maps = 1
+vim.g.python3_host_prog = os.getenv("HOME") .. "/repos/perso/pynvim/venv/bin/python"
+
+-- TODO: Make available using require somehow
+function Foldexpr()
+  -- Copied from lazyvim
+  local buf = vim.api.nvim_get_current_buf()
+  if vim.b[buf].ts_folds == nil then
+    -- as long as we don't have a filetype, don't bother
+    -- checking if treesitter is available (it won't)
+    if vim.bo[buf].filetype == "" then
+      return "0"
+    end
+    if vim.bo[buf].filetype:find("dashboard") then
+      vim.b[buf].ts_folds = false
+    else
+      vim.b[buf].ts_folds = pcall(vim.treesitter.get_parser, buf)
+    end
+  end
+  return vim.b[buf].ts_folds and vim.treesitter.foldexpr() or "0"
+end
 
 local opt = vim.opt
 
@@ -20,8 +40,7 @@ opt.splitbelow = true -- Put new splits to the below
 opt.splitright = true -- Put new vsplits to the right
 opt.cursorline = true
 opt.cursorlineopt = "number"
--- TODO: listchars?
-opt.list = true  -- show some spaces and tabs
+opt.list = true -- show some spaces and tabs
 opt.inccommand = "nosplit" -- Preview substitutions in buffer
 opt.scrolloff = 4 -- Context when scrolling
 opt.sidescrolloff = 4 -- Context when scrolling to the side
@@ -29,12 +48,7 @@ opt.completeopt = "menu,menuone,noinsert"
 opt.conceallevel = 0 -- :h conceallevel
 opt.confirm = true -- Confirm save changes when exiting modified buffer
 opt.expandtab = true -- spaces instead of tabs and with > or <
--- TODO: fillchars?
--- TODO: foldexpr, foldmethod, foldtext?
-opt.foldlevel = 0 -- Default fold level
--- TODO: formatexpr?
 opt.formatoptions = "tcqj" -- autowrap [t]ext & [c]omments, g[q] for comments, [j]oin comments
--- TODO: jumpoptions?
 opt.laststatus = 3 -- Status line only on last window
 opt.linebreak = true -- Wrap line in a more readable way
 opt.pumblend = 10 -- Popup menu trasparency (0 is opaque)
@@ -44,9 +58,11 @@ opt.shiftround = true -- Round indent to multiple of shiftwidth with > and <
 opt.shiftwidth = 2 -- Default indent size
 opt.shortmess:append({ W = true, I = false, c = true, C = true }) -- Shorten some messages: [w]ritten, [Cc]completion, [I]ntro
 opt.smartindent = true
--- TODO: statuscolumn?
 opt.virtualedit = "block" -- Allow cursor where there is no text in visual block mode (c-v)
 opt.wildmode = "longest:full,full" -- Go to longest match & show menu, next use full match
 opt.wrap = true -- Line wrap
 opt.smoothscroll = true -- Scroll screen lines instead of text lines with c-e and c-y
-
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.Foldexpr()"
+opt.foldtext = "" -- Makes mkdnflow foldtext work
+opt.foldlevel = 99

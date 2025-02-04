@@ -1,11 +1,19 @@
 local map = vim.keymap.set
 
 map("n", "<leader>bd", "<Cmd>bdelete<CR>", { desc = "Close buffer" })
-
+map("n", "<S-l>", "<Cmd>bnext<CR>", { desc = "Next buffer" })
+map("n", "<S-h>", "<Cmd>bprev<CR>", { desc = "Previous buffer" })
 map({ "n", "i" }, "<Esc>", "<Cmd>nohlsearch<CR><esc>", { desc = "Clear hlsearch" })
 map("n", "<leader>l", "<Cmd>Lazy<CR>", { desc = "Lazy" })
 map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "View diagnostic" })
-map("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
+-- Clipboard things
+map({"n", "v"}, "<leader>y", [["+y]], { desc = "Yank to system clipboard" , remap=true})
+map("n", "<leader>Y", [["+Y]], { desc = "Yank EOL to system clipboard", remap=true})
+map({"n", "v"}, "<leader>p", [["+p]], { desc = "Put from system clipboard after cursor" , remap=true})
+map("n", "<leader>P", [["+P]], { desc = "Put from system clipboard before cursor", remap=true})
+
 
 -- stylua: ignore start
 map("n", "]d", function() vim.diagnostic.jump({ count = vim.v.count1, float = true }) end)
@@ -37,3 +45,12 @@ map("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move Down" })
 map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move Up" })
 map("v", "<A-j>", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { desc = "Move Down" })
 map("v", "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = "Move Up" })
+
+-- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
+map("n", "n", "'Nn'[v:searchforward].'zv'", { expr = true, desc = "Next Search Result" })
+map("x", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result" })
+map("o", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result" })
+map("n", "N", "'nN'[v:searchforward].'zv'", { expr = true, desc = "Prev Search Result" })
+map("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
+map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
+

@@ -9,6 +9,7 @@ return {
       ensure_installed = {
         "bibtex",
         "c",
+        "html",
         "latex",
         "lua",
         "luadoc",
@@ -39,25 +40,53 @@ return {
         },
       },
       textobjects = {
+        select = {
+          enable = true,
+          lookahead = true,
+          keymaps = {
+            ["af"] = "@function.outer",
+            ["if"] = "@function.inner",
+            ["ac"] = "@class.outer",
+            ["ic"] = "@class.inner",
+            ["ab"] = "@block.outer",
+            ["ib"] = "@block.inner",
+            -- Custom code cells defined for jupyter in after/queries/markdown/textobjects.scm
+            -- the default block was in conflict with indents etc.
+            ["aj"] = "@code_cell.outer",
+            ["ij"] = "@code_cell.inner",
+            ["aS"] = "@section.outer",
+          },
+          -- TODO: Replace with function
+          selection_modes = {
+            ["@function.outer"] = "V",
+            ["@function.inner"] = "V",
+            ["@class.outer"] = "V",
+            ["@class.inner"] = "V",
+            ["@block.outer"] = "V",
+            ["@block.inner"] = "V",
+            ["@conditional.outer"] = "V",
+            ["@conditional.inner"] = "V",
+            ["@loop.outer"] = "V",
+            ["@loop.inner"] = "V",
+            ["@section.outer"] = "V",
+          },
+          include_surrounding_whitespace = false,
+        },
         move = {
           enable = true,
           set_jumps = true,
           goto_next_start = {
-            ["]f"] = { query = "@function.outer", desc = "Next function" },
-            ["]c"] = { query = "@class.outer", desc = "Next class" },
+            ["]f"] = "@function.outer",
+            ["]c"] = "@class.outer",
+            ["]j"] = { query = { "@code_cell.inner", "@cell.comment" }, desc = "Goto next cell" },
           },
-          goto_next_end = {
-            ["]F"] = { query = "@function.outer", desc = "Next function" },
-            ["]C"] = { query = "@class.outer", desc = "Next class" },
-          },
+          goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]J"] = "@code_cell.outer" },
           goto_previous_start = {
-            ["[f"] = { query = "@function.outer", desc = "Previous function" },
-            ["[c"] = { query = "@class.outer", desc = "Previous class" },
+            ["[f"] = "@function.outer",
+            ["[c"] = "@class.outer",
+            ["[j"] = { query = { "@code_cell.inner", "@cell.comment" }, desc = "Goto prev cell" },
           },
-          goto_previous_end = {
-            ["[F"] = { query = "@function.outer", desc = "Previous function" },
-            ["[C"] = { query = "@class.outer", desc = "Previous class" },
-          },
+          goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer", ["[J"] = "@code_cell.outer" },
         },
       },
     },

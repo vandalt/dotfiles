@@ -21,7 +21,7 @@ return {
       { "<leader>ff", "<Cmd>Telescope find_files<CR>", desc = "Find files" },
       { "<leader>fg", "<Cmd>Telescope git_files<CR>", desc = "Find git files" },
       { "<leader>fb", "<Cmd>Telescope buffers<CR>", desc = "Find buffers" },
-      { "<leader>cs", "<Cmd>Telescope lsp_document_symbols<CR>", desc = "LSP symbols" },
+      { "<leader>ss", "<Cmd>Telescope lsp_document_symbols<CR>", desc = "Search LSP symbols" },
       { "<leader>sg", "<Cmd>Telescope live_grep<CR>", desc = "Search grep" },
       { "<leader>sh", "<Cmd>Telescope help_tags<CR>", desc = "Search help pages" },
       { "<leader>sk", "<Cmd>Telescope keymaps<CR>", desc = "Search keymaps" },

@@ -13,6 +13,7 @@ return {
   {
     "zk-org/zk-nvim",
     main = "zk",
+    cmd = { "ZkNotes", "ZkIndex", "ZkNew" },
     opts = {
       picker = "telescope",
     },
@@ -74,7 +75,7 @@ return {
         paths = false,
         tables = true,
         yaml = false,
-        cmp = false
+        cmp = false,
       },
       mappings = {
         MkdnNextLink = { "n", "]l" },
@@ -84,7 +85,39 @@ return {
         MkdnEnter = { "i", "<CR>" },
         -- Default "-" conflicts with oil.nvim
         MkdnDecreaseHeading = { "n", "=" },
+        MkdnCreateLinkFromClipboard = false,
       },
     },
+  },
+  {
+    "3rd/image.nvim",
+    opts = {
+      backend = "kitty", -- whatever backend you would like to use
+      max_width = 100,
+      max_height = 12,
+      max_height_window_percentage = math.huge,
+      max_width_window_percentage = math.huge,
+      window_overlap_clear_enabled = true, -- toggles images when windows are overlapped
+      window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "" },
+    },
+  },
+  {
+    "HakonHarnes/img-clip.nvim",
+    event = "VeryLazy",
+    cmd = { "PasteImage", "ImgClipDebug", "ImgClipConfig" },
+    opts = {
+      default = {
+        prompt_for_file_name = false,
+      },
+    },
+    keys = {
+      { "<leader>zp", "<Cmd>PasteImage<CR>", desc = "Paste image from system clipboard" },
+    },
+  },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    enabled = false,
+    ft = { "markdown" },
+    opts = {},
   },
 }

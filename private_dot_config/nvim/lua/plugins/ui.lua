@@ -1,9 +1,8 @@
 return {
   { "akinsho/bufferline.nvim", event = "VeryLazy", opts = { options = { always_show_bufferline = false } } },
-  { "lewis6991/gitsigns.nvim", opts = {} },
   {
     "echasnovski/mini.icons",
-    lazy = true,
+    lazy = false,
     opts = {},
     init = function()
       package.preload["nvim-web-devicons"] = function()
@@ -16,6 +15,17 @@ return {
     "nvim-lualine/lualine.nvim",
     opts = {
       options = { section_separators = "", component_separators = "|" },
+      sections = {
+        lualine_x = {
+          {
+            "copilot",
+            symbols = { status = { icons = { unknown = "" } } },
+          },
+          "encoding",
+          "fileformat",
+          "filetype",
+        },
+      },
     },
   },
 }

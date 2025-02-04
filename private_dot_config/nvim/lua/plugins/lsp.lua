@@ -49,6 +49,7 @@ return {
           map("K", vim.lsp.buf.hover, "Hover")
           map("<C-k>", vim.lsp.buf.signature_help, "Signature help", "i")
           map("<leader>ca", vim.lsp.buf.code_action, "Code actions", { "n", "v" })
+          map("<leader>cr", vim.lsp.buf.rename, "Rename")
           -- map("<leader>ci", "<Cmd>LspInfo<CR>", "LSP Info")
 
           -- We use pyright for hover so disable that in ruff
@@ -84,7 +85,14 @@ return {
           },
         },
         pyright = {},
-        ruff = {},
+        ruff = {
+          init_options = {
+            settings = {
+              logLevel = "debug",
+            }
+          }
+        },
+        texlab = {},
       }
 
       local server_names = vim.tbl_keys(servers)
@@ -93,6 +101,9 @@ return {
         automatic_installation = false, -- Don't auto-install since we're using handlers below
         handlers = {
           function(server_name)
+            if not servers[server_name] then
+              return
+            end
             local server_opts = servers[server_name]
             server_opts.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server_opts.capabilities or {})
             require("lspconfig")[server_name].setup(server_opts)

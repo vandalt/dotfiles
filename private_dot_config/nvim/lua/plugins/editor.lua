@@ -1,3 +1,16 @@
+---@param direction string
+local function trouble_move(direction)
+  -- from Lazyvim
+  if require("trouble").is_open() then
+    require("trouble")[direction]({ skip_groups = true, jump = true })
+  else
+    local ok, err = pcall(vim.cmd["c" .. direction])
+    if not ok then
+      vim.notify(err, vim.log.levels.ERROR)
+    end
+  end
+end
+
 return {
   {
     "folke/which-key.nvim",
@@ -7,15 +20,22 @@ return {
       spec = {
         {
           mode = { "n", "v" },
+          { "<leader>a", group = "ai" },
           { "<leader>b", group = "buffers" },
           { "<leader>c", group = "code" },
+          { "<leader>e", group = "explore" },
           { "<leader>f", group = "find" },
           { "<leader>g", group = "git" },
-          { "<leader>r", group = "reload" },
-          { "<leader>s", group = "search" },
-          { "<leader>u", group = "toggle" },
-          { "<leader>e", group = "explore" },
+          { "<leader>i", group = "ipython" },
+          { "<leader>j", group = "jupyter" },
+          { "<leader>n", group = "notifs" },
           { "<leader>q", group = "session" },
+          { "<leader>r", group = "rsync" },
+          { "<leader>s", group = "search" },
+          { "<leader>t", group = "trouble/treesj" },
+          { "<leader>u", group = "toggle" },
+          { "<leader>w", group = "windows" },
+          { "<leader>z", group = "zk/markdown", icon = "󱓩" },
           { "<localLeader>l", group = "vimtex" },
           { "g", group = "goto/capitalize" },
           { "gc", group = "comment" },
@@ -25,9 +45,14 @@ return {
       },
       icons = {
         rules = {
-          { plugin = "oil.nvim", cat = "filetype", name = "oil" },
+          { plugin = "copilot.lua", icon = " ", color = "orange" },
           { pattern = "explore", cat = "filetype", name = "oil" },
+          { pattern = "trouble", cat = "filetype", name = "trouble" },
+          { plugin = "oil.nvim", cat = "filetype", name = "oil" },
           { pattern = "vimtex", cat = "filetype", name = "tex" },
+          { pattern = "yank", icon = "󰅇", color = "yellow" },
+          { pattern = "put", icon = "󰅇", color = "yellow" },
+          { pattern = "clipboard", icon = "󰅇", color = "yellow" },
         },
       },
     },
@@ -83,6 +108,80 @@ return {
       { "<leader>qS", function() require("persistence").select() end, desc = "Select session" },
       { "<leader>ql", function() require("persistence").load({last=true}) end, desc = "Restore last session (anywhere)" },
       { "<leader>qd", function() require("persistence").stop() end, desc = "Don't save current session" },
+    },
+  },
+  {
+    "lewis6991/gitsigns.nvim",
+    opts = {
+      on_attach = function(bufnr)
+        local gs = require("gitsigns")
+        local function map(mode, l, r, desc)
+          vim.keymap.set(mode, l, r, { buffer = bufnr, desc = desc })
+        end
+
+        map("n", "]h", function()
+          if vim.wo.diff then
+            vim.cmd.normal({ "]c", bang = true })
+          else
+            gs.nav_hunk("next")
+          end
+        end, "Next hunk")
+
+        map("n", "[h", function()
+          if vim.wo.diff then
+            vim.cmd.normal({ "[c", bang = true })
+          else
+            gs.nav_hunk("prev")
+          end
+        end, "Previous hunk")
+
+        -- stylua: ignore start
+        map("n", "<leader>ghs", gs.stage_hunk, "Git stage hunk")
+        map("n", "<leader>ghr", gs.reset_hunk, "Git reset hunk")
+        map('v', '<leader>ghs', function() gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end, "Git stage hunk")
+        map('v', '<leader>ghr', function() gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end, "Git reset hunk")
+        map("n", "<leader>ghb", function() gs.blame_line({ full = true }) end, "Git blame line")
+        map("n", "<leader>ghd", gs.diffthis, "Git diff this")
+        map("n", "<leader>ghD", function() gs.diffthis("~") end, "Git diff this")
+        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+        -- stylua: ignore end
+      end,
+    },
+  },
+  "kmonad/kmonad-vim",
+  {
+    "chrisbra/csv.vim",
+    ft = "csv", -- Prevents warning in picker
+    config = function()
+      vim.g.csv_nomap_h = true
+      vim.g.csv_nomap_l = true
+    end,
+  },
+  {
+    "KenN7/vim-arsync",
+    dependencies = {
+      "prabirshrestha/async.vim",
+    },
+    cmd = { "ARsyncUp", "ARsyncUpDelete", "ARsyncDown" },
+    keys = {
+      { "<leader>ru", "<cmd>ARsyncUp<CR>", desc = "Push with rsync" },
+      { "<leader>rd", "<cmd>ARsyncUpDelete<CR>", desc = "Push with rsync and delete files" },
+      { "<leader>rl", "<cmd>ARsyncDown<CR>", desc = "Pull with rsync" },
+    },
+  },
+  {
+    "folke/trouble.nvim",
+    opts = {},
+    cmd = "Trouble",
+    -- stylua: ignore
+    keys = {
+      { "<leader>tD", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
+      { "<leader>td", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" },
+      { "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols (Trouble)" },
+      { "<leader>tl", "<cmd>Trouble loclist toggle<cr>", desc = "Location List (Trouble)" },
+      { "<leader>tq", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List (Trouble)" },
+      { "[q", function() trouble_move("prev") end, desc = "Previous Trouble/Quickfix Item" },
+      { "]q", function() trouble_move("next") end, desc = "Next Trouble/Quickfix Item" },
     },
   },
 }
