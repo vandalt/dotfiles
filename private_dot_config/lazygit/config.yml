@@ -1,0 +1,4 @@
+os:
+  editPreset: "nvim-remote"
+  # HACK: The last command fixes the missing cursor issue
+  edit: 'nvim --server "$NVIM" --remote-send "q" &&  nvim --server "$NVIM" --remote {{filename}} && nvim --server "$NVIM" --remote-send ":<Esc>"'
