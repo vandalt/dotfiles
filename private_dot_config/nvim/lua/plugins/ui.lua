@@ -13,19 +13,33 @@ return {
   },
   {
     "nvim-lualine/lualine.nvim",
-    opts = {
-      options = { section_separators = "", component_separators = "|" },
-      sections = {
-        lualine_x = {
-          {
-            "copilot",
-            symbols = { status = { icons = { unknown = "" } } },
+    opts = function()
+      local trouble = require("trouble")
+      local symbols = trouble.statusline({
+        mode = "lsp_document_symbols",
+        groups = {},
+        title = false,
+        filter = { range = true },
+        format = "{kind_icon}{symbol.name:Normal}",
+        -- The following line is needed to fix the background color
+        -- Set it to the lualine section you want to use
+        hl_group = "lualine_c_normal",
+      })
+      return {
+        options = { section_separators = "", component_separators = "|" },
+        sections = {
+          lualine_c = { "filename", { symbols.get, cond = symbols.has } },
+          lualine_x = {
+            {
+              "copilot",
+              symbols = { status = { icons = { unknown = "" } } },
+            },
+            "encoding",
+            "fileformat",
+            "filetype",
           },
-          "encoding",
-          "fileformat",
-          "filetype",
         },
-      },
-    },
+      }
+    end,
   },
 }

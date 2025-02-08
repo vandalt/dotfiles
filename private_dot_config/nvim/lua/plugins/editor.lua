@@ -175,11 +175,13 @@ return {
     cmd = "Trouble",
     -- stylua: ignore
     keys = {
-      { "<leader>tD", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
-      { "<leader>td", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" },
-      { "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols (Trouble)" },
-      { "<leader>tl", "<cmd>Trouble loclist toggle<cr>", desc = "Location List (Trouble)" },
-      { "<leader>tq", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List (Trouble)" },
+      { "<leader>tD", "<Cmd>Trouble diagnostics toggle<CR>", desc = "Diagnostics (Trouble)" },
+      { "<leader>td", "<Cmd>Trouble diagnostics toggle filter.buf=0<CR>", desc = "Buffer Diagnostics (Trouble)" },
+      { "<leader>cs", "<Cmd>Trouble symbols toggle focus=false<CR>", desc = "Symbols (Trouble)" },
+      { "<leader>tQ", "<Cmd>Trouble loclist toggle<CR>", desc = "Location List (Trouble)" },
+      { "<leader>tq", "<Cmd>Trouble qflist toggle<CR>", desc = "Quickfix List (Trouble)" },
+      { "<leader>tl", function() require("trouble").toggle("last") end, desc = "Toggle last Trouble" },
+      { "<leader>tt", "<Cmd>Trouble todo toggle<CR>", desc = "Toggle last Trouble" },
       { "[q", function() trouble_move("prev") end, desc = "Previous Trouble/Quickfix Item" },
       { "]q", function() trouble_move("next") end, desc = "Next Trouble/Quickfix Item" },
     },

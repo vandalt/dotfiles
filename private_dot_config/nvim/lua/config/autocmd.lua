@@ -10,8 +10,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end
 })
 
+-- HACK: helps having folding with ZkNotes
 vim.api.nvim_create_autocmd("BufReadPost", {
-  -- HACK: helps having folding with ZkNotes
   desc = "Set foldmethod when entering buffer",
   group = augroup("foldmethod"),
   callback = function()
@@ -24,28 +24,15 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end
 })
 
-
-
--- vim.api.nvim_create_autocmd("DiagnosticChanged", {
---   group = augroup("diagnosticchanged"),
---   callback = function(args)
---     vim.print(args.data)
---   end
--- })
-
--- vim.api.nvim_create_autocmd("BufReadPost", {
---   group = augroup("last-loc"),
---   callback = function(event)
---     local exclude = { "gitcommit" }
---     local buf = event.buf
---     if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].last_loc then
---       return
---     end
---     vim.b[buf].last_loc = true
---     local mark = vim.api.nvim_buf_get_mark(buf, '"')
---     local lcount = vim.api.nvim_buf_line_count(buf)
---     if mark[1] > 0 and mark[1] <= lcount then
---       pcall(vim.api.nvim_win_set_cursor, 0, mark)
---     end
---   end,
--- })
+vim.api.nvim_create_autocmd("BufRead", {
+  desc = "Replace quickfix with trouble.nvim",
+  group = augroup("trouble-quickfix"),
+  callback = function(ev)
+    if vim.bo[ev.buf].buftype == "quickfix" then
+      vim.schedule(function()
+        vim.cmd([[cclose]])
+        vim.cmd([[Trouble qflist open]])
+      end)
+    end
+  end,
+})

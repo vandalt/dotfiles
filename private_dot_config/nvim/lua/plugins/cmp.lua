@@ -23,7 +23,6 @@ return {
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           ['<C-Space>'] = cmp.mapping.complete {}, -- trigger completion
         }),
-        -- TODO: Add snippets!
         sources = {
           { name = "lazydev", group_index = 0 },
           { name = "nvim_lsp" },
