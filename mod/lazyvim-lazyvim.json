@@ -1,6 +1,7 @@
 {
   "extras": [
-    "lazyvim.plugins.extras.editor.telescope"
+    "lazyvim.plugins.extras.editor.telescope",
+    "lazyvim.plugins.extras.util.chezmoi"
   ],
   "news": {
     "NEWS.md": "10960"
