@@ -48,7 +48,7 @@ opt.completeopt = "menu,menuone,noinsert"
 opt.conceallevel = 0 -- :h conceallevel
 opt.confirm = true -- Confirm save changes when exiting modified buffer
 opt.expandtab = true -- spaces instead of tabs and with > or <
-opt.formatoptions = "tcqj" -- autowrap [t]ext & [c]omments, g[q] for comments, [j]oin comments
+opt.formatoptions = "tcqjro" -- autowrap [t]ext & [c]omments, g[q] for comments, [j]oin comments
 opt.laststatus = 3 -- Status line only on last window
 opt.linebreak = true -- Wrap line in a more readable way
 opt.pumblend = 10 -- Popup menu trasparency (0 is opaque)
@@ -57,7 +57,7 @@ opt.ruler = true -- Show ruler in statusline
 opt.shiftround = true -- Round indent to multiple of shiftwidth with > and <
 opt.shiftwidth = 2 -- Default indent size
 opt.shortmess:append({ W = true, I = false, c = true, C = true }) -- Shorten some messages: [w]ritten, [Cc]completion, [I]ntro
-opt.smartindent = true
+opt.smartindent = false -- Disble so >> and << work in Python
 opt.virtualedit = "block" -- Allow cursor where there is no text in visual block mode (c-v)
 opt.wildmode = "longest:full,full" -- Go to longest match & show menu, next use full match
 opt.wrap = true -- Line wrap
