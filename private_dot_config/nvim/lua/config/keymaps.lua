@@ -1,8 +1,6 @@
 local map = vim.keymap.set
 
 map("n", "<leader>bd", "<Cmd>bdelete<CR>", { desc = "Close buffer" })
-map("n", "<S-l>", "<Cmd>bnext<CR>", { desc = "Next buffer" })
-map("n", "<S-h>", "<Cmd>bprev<CR>", { desc = "Previous buffer" })
 map({ "n", "i" }, "<Esc>", "<Cmd>nohlsearch<CR><esc>", { desc = "Clear hlsearch" })
 map("n", "<leader>l", "<Cmd>Lazy<CR>", { desc = "Lazy" })
 map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "View diagnostic" })
@@ -31,6 +29,12 @@ map("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", remap = true })
 map("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
 map("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
 map("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", remap = true })
+
+
+-- Mange split windows
+map("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", remap = true })
+map("n", "<leader>|", "<C-W>v", { desc = "Split Window Right", remap = true })
+map("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
 
 -- Resize window using <ctrl> arrow keys, stolen from LazyVim
 map("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
