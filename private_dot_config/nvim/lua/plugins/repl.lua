@@ -1,17 +1,30 @@
+-- TODO: Is there a simpler way to do this?
+-- https://github.com/akinsho/toggleterm.nvim/issues/542
+_G.send_motion = function(motion_type)
+  require("toggleterm").send_lines_to_terminal(motion_type, false, { args = vim.v.count }, true)
+end
+_G.send_motion_d = function()
+  vim.go.operatorfunc = "v:lua.send_motion"
+  return "g@"
+end
+
 return {
   {
     "GCBallesteros/jupytext.nvim",
-    opts = {
-      -- style = "markdown",
-      -- output_extension = "md",
-      -- force_ft = "markdown",
-    },
+    dev = true,
+    opts = {},
   },
   {
     "toggleterm.nvim",
     keys = {
       { "<leader>il", "<Cmd>ToggleTermSendCurrentLine<CR>", desc = "Send line to terminal" },
-    }
+      {
+        "<leader>is", send_motion_d, desc = "Send motion to terminal", expr = true
+      },
+      {
+        "<leader>is", function() require("toggleterm").send_lines_to_terminal("visual_selection", false, {}, true) end, desc = "Send selection to terminal", mode = "v",
+      },
+    },
   },
   {
     "GCBallesteros/NotebookNavigator.nvim",

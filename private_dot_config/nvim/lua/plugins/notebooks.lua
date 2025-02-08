@@ -1,7 +1,8 @@
 return {}
--- {
+-- return {
 --   {
 --     "GCBallesteros/jupytext.nvim",
+--     dev = true,
 --     opts = {
 --       style = "markdown",
 --       output_extension = "md",

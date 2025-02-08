@@ -72,7 +72,6 @@ return {
       { "<leader>nd", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
       { "<leader>wf",  function() Snacks.zen() end, desc = "Toggle focus mode (zen)" },
       { "<leader>wm",  function() Snacks.zen.zoom() end, desc = "Toggle maximization (zen)" },
-      -- { "<C-/>", function() Snacks.terminal.toggle() end, desc = "Toggle terminal", mode = { "n", "t" } },
     },
   },
   {
