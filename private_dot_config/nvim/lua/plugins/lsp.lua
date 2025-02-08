@@ -84,7 +84,15 @@ return {
             },
           },
         },
-        pyright = {},
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                typeCheckingMode = "off",
+              }
+            },
+          },
+        },
         ruff = {
           init_options = {
             settings = {
