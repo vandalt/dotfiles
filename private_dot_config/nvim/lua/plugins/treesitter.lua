@@ -4,7 +4,6 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     main = "nvim-treesitter.configs", -- Call setup on this module
-    -- TODO: Add folding? https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file#folding
     opts = {
       ensure_installed = {
         "bibtex",
@@ -56,7 +55,7 @@ return {
             ["ij"] = "@code_cell.inner",
             ["aS"] = "@section.outer",
           },
-          -- TODO: Replace with function
+          -- Could replace with function but would not save that much space and would complicate
           selection_modes = {
             ["@function.outer"] = "V",
             ["@function.inner"] = "V",
@@ -76,17 +75,17 @@ return {
           enable = true,
           set_jumps = true,
           goto_next_start = {
-            ["]f"] = "@function.outer",
+            ["]m"] = "@function.outer",
             ["]c"] = "@class.outer",
             ["]j"] = { query = { "@code_cell.inner", "@cell.comment" }, desc = "Goto next cell" },
           },
-          goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]J"] = "@code_cell.outer" },
+          goto_next_end = { ["]M"] = "@function.outer", ["]C"] = "@class.outer", ["]J"] = "@code_cell.outer" },
           goto_previous_start = {
-            ["[f"] = "@function.outer",
+            ["[m"] = "@function.outer",
             ["[c"] = "@class.outer",
             ["[j"] = { query = { "@code_cell.inner", "@cell.comment" }, desc = "Goto prev cell" },
           },
-          goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer", ["[J"] = "@code_cell.outer" },
+          goto_previous_end = { ["[M"] = "@function.outer", ["[C"] = "@class.outer", ["[J"] = "@code_cell.outer" },
         },
       },
     },
