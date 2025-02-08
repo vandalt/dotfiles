@@ -1,4 +1,4 @@
--- NOTE: Must be set before plugins are loaded
+-- Must be set before plugins are loaded
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
