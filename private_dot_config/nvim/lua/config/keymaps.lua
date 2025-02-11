@@ -1,6 +1,7 @@
 local map = vim.keymap.set
 
-map("n", "<leader>bd", "<Cmd>bdelete<CR>", { desc = "Close buffer" })
+map("n", "<leader>bd", function() Snacks.bufdelete() end, { desc = "Close buffer" })
+map("n", "<leader>bD", "<Cmd>bdelete<CR>", { desc = "Close buffer and window" })
 map({ "n", "i" }, "<Esc>", "<Cmd>nohlsearch<CR><esc>", { desc = "Clear hlsearch" })
 map("n", "<leader>l", "<Cmd>Lazy<CR>", { desc = "Lazy" })
 map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "View diagnostic" })
@@ -10,7 +11,7 @@ map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 map({"n", "v"}, "<leader>y", [["+y]], { desc = "Yank to system clipboard" , remap=true})
 map("n", "<leader>Y", [["+Y]], { desc = "Yank EOL to system clipboard", remap=true})
 map({"n", "v"}, "<leader>p", [["+p]], { desc = "Put from system clipboard after cursor" , remap=true})
-map("n", "<leader>P", [["+P]], { desc = "Put from system clipboard before cursor", remap=true})
+map({"n", "v"}, "<leader>P", [["+P]], { desc = "Put from system clipboard before cursor", remap=true})
 
 
 -- stylua: ignore start

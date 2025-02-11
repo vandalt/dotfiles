@@ -41,5 +41,9 @@ return {
         end
       end,
     },
+    keys = {
+      -- { "<c-/>", "", "Toggle terminal" },
+      { "<c-s-/>", "<Cmd>ToggleTerm direction=vertical<CR>", desc = "Toggle vertical terminal" },
+    }
   },
 }

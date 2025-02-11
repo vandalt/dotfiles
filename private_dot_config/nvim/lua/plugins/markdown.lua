@@ -77,12 +77,14 @@ return {
         yaml = false,
         cmp = false,
       },
+        --     -- of lists and tables, it behaves as <CR> normally does.
+        -- -- MkdnNewListItem = {'i', '<CR>'} -- Use this command instead if you only want <CR> in
+      --         MkdnTableNextRow = false,
       mappings = {
         MkdnNextLink = { "n", "]l" },
         MkdnPrevLink = { "n", "[l" },
-        -- Enable in insert mode: lists and tables
-        -- Disable in normal and visual (link-related things)
-        MkdnEnter = { "i", "<CR>" },
+        MkdnNewListItem = {'i', '<CR>'},
+        MkdnEnter = false,
         -- Default "-" conflicts with oil.nvim
         MkdnDecreaseHeading = { "n", "=" },
         MkdnCreateLinkFromClipboard = false,
@@ -119,5 +121,36 @@ return {
     enabled = false,
     ft = { "markdown" },
     opts = {},
+  },
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdowPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = function()
+      require("lazy").load({ plugins = { "markdown-preview.nvim" } })
+      vim.fn["mkdp#util#install"]()
+    end,
+    keys = {
+      {
+        "<leader>zv",
+        ft = "markdown",
+        "<cmd>MarkdownPreviewToggle<cr>",
+        desc = "Markdown Preview",
+      },
+    },
+    init = function()
+      vim.g.mkdp_auto_close = false
+      vim.g.mkdp_combine_preview = true
+    end,
+    config = function()
+      -- TODO: Lua function?
+      vim.cmd([[
+        function OpenMarkdownPreview (url)
+        execute "silent ! firefox --new-window " . a:url
+        endfunction
+]])
+      vim.g.mkdp_browserfunc = "OpenMarkdownPreview"
+      -- Copied from lazyvim
+      vim.cmd([[do FileType]])
+    end,
   },
 }

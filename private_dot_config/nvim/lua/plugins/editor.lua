@@ -24,7 +24,7 @@ return {
           { "<leader>b", group = "buffers" },
           { "<leader>c", group = "code" },
           { "<leader>e", group = "explore" },
-          { "<leader>f", group = "find" },
+          { "<leader>f", group = "find/fstring" },
           { "<leader>g", group = "git" },
           { "<leader>i", group = "ipython" },
           { "<leader>j", group = "jupyter" },
@@ -87,7 +87,7 @@ return {
     "mbbill/undotree",
     cmd = "UndotreeToggle",
     keys = {
-      { "<leader>ud", "<Cmd>UndotreeToggle<CR>", desc = "Toggle Undotree" },
+      { "<leader>uu", "<Cmd>UndotreeToggle<CR>", desc = "Toggle Undotree" },
     },
   },
   {

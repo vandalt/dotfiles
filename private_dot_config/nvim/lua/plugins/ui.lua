@@ -2,7 +2,13 @@ return {
   {
     "akinsho/bufferline.nvim",
     event = "VeryLazy",
-    opts = { options = { always_show_bufferline = false } },
+    opts = {
+      options = {
+        always_show_bufferline = false,
+        -- stylua: ignore
+        close_command = function(n) Snacks.bufdelete(n) end,
+      },
+    },
     keys = {
       -- Cycle in bufferline's order, not vim's numbers
       { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle Pin" },
@@ -47,6 +53,7 @@ return {
             {
               "copilot",
               symbols = { status = { icons = { unknown = "" } } },
+              show_loading = false,
             },
             "encoding",
             "fileformat",
