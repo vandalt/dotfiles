@@ -66,3 +66,4 @@ opt.foldmethod = "expr"
 opt.foldexpr = "v:lua.Foldexpr()"
 opt.foldtext = "" -- Makes mkdnflow foldtext work
 opt.foldlevel = 99
+opt.spelllang = { "en", "fr"}
