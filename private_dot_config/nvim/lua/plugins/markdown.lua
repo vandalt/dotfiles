@@ -77,16 +77,14 @@ return {
         yaml = false,
         cmp = false,
       },
-        --     -- of lists and tables, it behaves as <CR> normally does.
-        -- -- MkdnNewListItem = {'i', '<CR>'} -- Use this command instead if you only want <CR> in
-      --         MkdnTableNextRow = false,
       mappings = {
         MkdnNextLink = { "n", "]l" },
         MkdnPrevLink = { "n", "[l" },
-        MkdnNewListItem = {'i', '<CR>'},
+        -- Replaced with MkdnNewListItem because tables
+        -- https://github.com/jakewvincent/mkdnflow.nvim/issues/263
         MkdnEnter = false,
-        -- Default "-" conflicts with oil.nvim
-        MkdnDecreaseHeading = { "n", "=" },
+        MkdnNewListItem = { "i", "<CR>" },
+        MkdnDecreaseHeading = { "n", "=" }, -- Default "-" conflicts with oil.nvim
         MkdnCreateLinkFromClipboard = false,
       },
     },
@@ -96,7 +94,7 @@ return {
     opts = {
       backend = "kitty", -- whatever backend you would like to use
       max_width = 100,
-      max_height = 12,
+      max_height = 20,
       max_height_window_percentage = math.huge,
       max_width_window_percentage = math.huge,
       window_overlap_clear_enabled = true, -- toggles images when windows are overlapped
