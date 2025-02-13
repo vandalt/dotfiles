@@ -29,7 +29,7 @@ return {
           { "<leader>i", group = "ipython" },
           { "<leader>j", group = "jupyter" },
           { "<leader>n", group = "notifs" },
-          { "<leader>q", group = "session" },
+          { "<leader>q", group = "session/quarto" },
           { "<leader>r", group = "rsync" },
           { "<leader>s", group = "search" },
           { "<leader>t", group = "trouble/treesj" },
@@ -165,8 +165,8 @@ return {
     cmd = { "ARsyncUp", "ARsyncUpDelete", "ARsyncDown" },
     keys = {
       { "<leader>ru", "<cmd>ARsyncUp<CR>", desc = "Push with rsync" },
-      { "<leader>rd", "<cmd>ARsyncUpDelete<CR>", desc = "Push with rsync and delete files" },
-      { "<leader>rl", "<cmd>ARsyncDown<CR>", desc = "Pull with rsync" },
+      { "<leader>rU", "<cmd>ARsyncUpDelete<CR>", desc = "Push with rsync and delete files" },
+      { "<leader>rd", "<cmd>ARsyncDown<CR>", desc = "Pull with rsync" },
     },
   },
   {

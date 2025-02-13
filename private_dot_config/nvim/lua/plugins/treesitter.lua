@@ -4,6 +4,11 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     main = "nvim-treesitter.configs", -- Call setup on this module
+    lazy = false,
+    keys = {
+      { "<C-Space>", desc = "Increment Selection" },
+      { "<C-BS>", desc = "Decrement Selection", mode = "x" },
+    },
     opts = {
       ensure_installed = {
         "bibtex",
@@ -32,10 +37,10 @@ return {
       incremental_selection = {
         enable = true,
         keymaps = {
-          init_selection = "grn", -- set to `false` to disable one of the mappings
-          node_incremental = "grn",
-          scope_incremental = "grc",
-          node_decremental = "grm",
+          init_selection = "<C-Space>", -- set to `false` to disable one of the mappings
+          node_incremental = "<C-Space>",
+          scope_incremental = false,
+          node_decremental = "<C-BS>"
         },
       },
       textobjects = {

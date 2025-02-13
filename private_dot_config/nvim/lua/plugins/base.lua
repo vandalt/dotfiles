@@ -26,6 +26,15 @@ return {
     },
   },
   {
+    "echasnovski/mini.operators",
+    opts = {
+      exchange = { prefix = "cx" },
+      replace = { prefix = "cr" },
+      multiply = { prefix = "" },
+      sort = { prefix = "" },
+    },
+  },
+  {
     "akinsho/toggleterm.nvim",
     dev = true,
     opts = {
@@ -42,7 +51,7 @@ return {
       end,
     },
     keys = {
-      -- { "<c-/>", "", "Toggle terminal" },
+      -- { "<c-/>", "", "Toggle Terminal" },
       { "<c-s-/>", "<Cmd>ToggleTerm direction=vertical<CR>", desc = "Toggle vertical terminal" },
     }
   },
