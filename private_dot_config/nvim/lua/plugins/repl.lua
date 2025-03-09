@@ -25,6 +25,7 @@ return {
         "<leader>is", function() require("toggleterm").send_lines_to_terminal("visual_selection", false, {}, true) end, desc = "Send selection to terminal", mode = "v",
       },
       { "<leader>jh", "m`vij<leader>is``", remap=true, silent=true, desc = "Toggleterm evaluate cell" },
+      { "<leader>ir", "m`vig<leader>is``", remap=true, silent=true, desc = "Toggleterm run file" },
       { "<leader>jj", "vij<leader>is]j", desc = "Toggleterm evaluate cell and go to next", remap = true },
     },
   },

@@ -11,8 +11,10 @@ return {
     },
     opts = {
       ensure_installed = {
+        "astro",
         "bibtex",
         "c",
+        "css",
         "html",
         "latex",
         "lua",
@@ -24,6 +26,7 @@ return {
         "query",
         "rst",
         "toml",
+        "typescript",
         "vim",
         "vimdoc",
         "yaml",
@@ -58,7 +61,7 @@ return {
             -- the default block was in conflict with indents etc.
             ["aj"] = "@code_cell.outer",
             ["ij"] = "@code_cell.inner",
-            ["aS"] = "@section.outer",
+            ["ah"] = "@section.outer",
           },
           -- Could replace with function but would not save that much space and would complicate
           selection_modes = {

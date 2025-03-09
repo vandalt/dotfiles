@@ -7,9 +7,8 @@ return {
   },
   {
     "xvzc/chezmoi.nvim",
-    -- TODO: Make ChezmoiEdit use path completion
     cmd = "ChezmoiEdit",
-    dev = true,
+    dev = false,
     opts = {},
     keys = {
       {
@@ -24,7 +23,7 @@ return {
         function()
           require("telescope").extensions.chezmoi.find_files({targets = vim.fn.stdpath("config")})
         end,
-        desc = "Find config files (chezmoi)",
+        desc = "Find nvim config files (chezmoi)",
       },
     },
     init = function()

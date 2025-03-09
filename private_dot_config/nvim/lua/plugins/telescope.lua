@@ -31,7 +31,7 @@ return {
       { "<leader>se", function() require("telescope.builtin").symbols({ sources = {"emoji"}}) end, desc = "Search emoji" },
       { "<leader>si", function() require("telescope.builtin").symbols() end, desc = "Search icons" },
       { "<leader>ss", "<Cmd>Telescope lsp_document_symbols<CR>", desc = "Search LSP symbols" },
-      { "<leader>st", "<Cmd>TodoTelescope<CR>", desc = "Search LSP symbols" },
+      { "<leader>st", "<Cmd>TodoTelescope<CR>", desc = "Search TODO comments" },
       { "<leader>sg", "<Cmd>Telescope live_grep<CR>", desc = "Search grep" },
       { "<leader>sh", "<Cmd>Telescope help_tags<CR>", desc = "Search help pages" },
       { "<leader>sk", "<Cmd>Telescope keymaps<CR>", desc = "Search keymaps" },

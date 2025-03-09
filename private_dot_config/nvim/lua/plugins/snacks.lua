@@ -2,15 +2,17 @@ return {
   {
     "folke/snacks.nvim",
     priority = 1000,
+    dev = false,
     lazy = false,
     ---@type snacks.Config
     opts = {
       words = { enabled = true }, -- Highlight words and lsp references
       indent = { enabled = true, animate = { enabled = true } }, -- Indent guides
+      image = { enabled = false },
       bigfile = { enabled = true }, -- Handle big files
       gitbrowse = { enabled = true },
       lazygit = { enabled = true, configure = true },
-      notifier = { enabled = true, style = "compact" },
+      notifier = { enabled = true, style = "compact", padding = false }, -- padding has statuscolumn color
       zen = {
         enabled = true,
         toggles = { dim = false },

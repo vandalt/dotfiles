@@ -38,10 +38,10 @@ return {
     dev = true,
     -- opts = function()
     --   return {
-    --     lsp = {
-    --       -- diagnostic_update_events = { "BufWritePost" },
-    --       diagnostic_update_events = { "BufWritePost", "InsertLeave", "TextChanged" },
-    --     },
+    --     -- lsp = {
+    --     --   -- diagnostic_update_events = { "BufWritePost" },
+    --     --   diagnostic_update_events = { "BufWritePost", "InsertLeave", "TextChanged" },
+    --     -- },
     --     buffers = {
     --       set_filetype = true,
     --       write_to_disk = true,
@@ -80,6 +80,7 @@ return {
       { "<leader>re", function() require("quarto.runner").run_cell() end, desc = "Run cell" },
       { "<leader>rr", "<leader>rc]j", desc = "Run cell" , remap = true },
       { "<leader>ra", function() require("quarto.runner").run_above() end, desc = "Run cell and above" },
+      { "<leader>rb", function() require("quarto.runner").run_below() end, desc = "Run cell and below" },
       { "<leader>rA", function() require("quarto.runner").run_all() end, desc = "Run all cells" },
       { "<leader>rl", function() require("quarto.runner").run_line() end, desc = "Run line" },
       { "<leader>r",  function() require("quarto.runner").run_range() end, mode = "v", desc = "Run visual range" },

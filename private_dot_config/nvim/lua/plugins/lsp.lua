@@ -72,6 +72,7 @@ return {
       capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
       local servers = {
+        bashls = {},
         lua_ls = {
           settings = {
             Lua = {
@@ -101,6 +102,7 @@ return {
           }
         },
         texlab = {},
+        astro = {},
       }
 
       local server_names = vim.tbl_keys(servers)

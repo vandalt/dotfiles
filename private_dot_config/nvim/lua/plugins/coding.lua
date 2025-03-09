@@ -72,8 +72,18 @@ return {
     "linux-cultist/venv-selector.nvim",
     branch = "regexp",
     opts = {
-      anaconda_base_path = os.getenv("HOME") .. "./miniforge3",
-      anaconda_envs_path = os.getenv("HOME") .. "./miniforge3/envs",
+      settings = {
+        search = {
+          miniconda_envs = {
+            command = "$FD 'bin/python$' ~/miniforge3/envs --full-path --color never",
+            type = "anaconda",
+          },
+          miniconda_base = {
+            command = "$FD '/python$' ~/miniforge3/bin --full-path --color never",
+            type = "anaconda",
+          },
+        },
+      },
     },
     keys = {
       { "<leader>cv", "<Cmd>VenvSelect<CR>", desc = "Select virtual envionment" },
@@ -81,11 +91,11 @@ return {
   },
   {
     "roobert/f-string-toggle.nvim",
-    config = function()
-      require("f-string-toggle").setup({
-        key_binding = "<leader>fs",
-        key_binding_desc = "Toggle f-string"
-      })
-    end,
+    dev = false,
+    opts = {
+      key_binding = "<leader>fs",
+      key_binding_desc = "Toggle f-string",
+      filetypes = { "python", "snakemake", "markdown", "org" },
+    },
   },
 }

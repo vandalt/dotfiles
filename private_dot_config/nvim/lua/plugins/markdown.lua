@@ -109,6 +109,13 @@ return {
       default = {
         prompt_for_file_name = false,
       },
+      filetypes = {
+        tex = {
+          template = [[
+\includegraphics[width=0.8\textwidth]{$FILE_PATH}
+    ]],
+        },
+      }
     },
     keys = {
       { "<leader>zp", "<Cmd>PasteImage<CR>", desc = "Paste image from system clipboard" },

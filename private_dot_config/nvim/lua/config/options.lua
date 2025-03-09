@@ -28,6 +28,7 @@ opt.autowrite = false -- Autowrite when switching buffers
 opt.number = true -- Line numbers
 opt.relativenumber = true
 opt.mouse = "a" -- Mouse everywhere
+opt.title = true -- Set title based on filename
 opt.showmode = false -- Show mode below status line
 opt.breakindent = true -- Wrapped lines respect indent level
 opt.undofile = true -- Save undo history
