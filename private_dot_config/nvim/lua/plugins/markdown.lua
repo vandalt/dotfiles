@@ -112,7 +112,9 @@ return {
       filetypes = {
         tex = {
           template = [[
-\includegraphics[width=0.8\textwidth]{$FILE_PATH}
+\begin{center}
+  \includegraphics[width=0.8\textwidth]{$FILE_PATH}
+\end{center}
     ]],
         },
       }

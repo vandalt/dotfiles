@@ -60,4 +60,5 @@ map("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result
 map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
 
 
+-- Useful in my notes
 map("i", "<A-d>", "📅", { desc = "Insert calendar (date) emoji"})

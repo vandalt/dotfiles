@@ -36,23 +36,23 @@ return {
   {
     "jmbuhr/otter.nvim",
     dev = true,
-    -- opts = function()
-    --   return {
+    opts = function()
+      return {
     --     -- lsp = {
     --     --   -- diagnostic_update_events = { "BufWritePost" },
     --     --   diagnostic_update_events = { "BufWritePost", "InsertLeave", "TextChanged" },
     --     -- },
-    --     buffers = {
-    --       set_filetype = true,
-    --       write_to_disk = true,
-    --     },
+        buffers = {
+          set_filetype = true,
+          write_to_disk = true,
+        },
     --     debug = false,
-    --   }
-    -- end,
-    -- keys = {
-    --   { "<leader>ja", function() require("otter").activate() end, desc = "Activate otter" },
-    --   { "<leader>jd", function() require("otter").deactivate() end, desc = "Deactivate otter" }
-    -- },
+      }
+    end,
+    keys = {
+      { "<leader>ja", function() require("otter").activate() end, desc = "Activate otter" },
+      { "<leader>jd", function() require("otter").deactivate() end, desc = "Deactivate otter" }
+    },
   },
   {
     "quarto-dev/quarto-nvim",

@@ -59,6 +59,7 @@ opt.shiftround = true -- Round indent to multiple of shiftwidth with > and <
 opt.shiftwidth = 2 -- Default indent size
 opt.shortmess:append({ W = true, I = false, c = true, C = true }) -- Shorten some messages: [w]ritten, [Cc]completion, [I]ntro
 opt.smartindent = false -- Disble so >> and << work in Python
+opt.tabstop = 2 -- Tab size
 opt.virtualedit = "block" -- Allow cursor where there is no text in visual block mode (c-v)
 opt.wildmode = "longest:full,full" -- Go to longest match & show menu, next use full match
 opt.wrap = true -- Line wrap
@@ -67,4 +68,4 @@ opt.foldmethod = "expr"
 opt.foldexpr = "v:lua.Foldexpr()"
 opt.foldtext = "" -- Makes mkdnflow foldtext work
 opt.foldlevel = 99
-opt.spelllang = { "en", "fr"}
+opt.spelllang = { "en", "fr" }

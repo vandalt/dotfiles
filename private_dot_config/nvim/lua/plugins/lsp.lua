@@ -50,7 +50,6 @@ return {
           map("<C-k>", vim.lsp.buf.signature_help, "Signature help", "i")
           map("<leader>ca", vim.lsp.buf.code_action, "Code actions", { "n", "v" })
           map("<leader>cr", vim.lsp.buf.rename, "Rename")
-          -- map("<leader>ci", "<Cmd>LspInfo<CR>", "LSP Info")
 
           -- We use pyright for hover so disable that in ruff
           local client = vim.lsp.get_client_by_id(event.data.client_id)

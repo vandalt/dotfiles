@@ -1,13 +1,7 @@
 return {
-  "tpope/vim-sleuth",
   "tpope/vim-eunuch",
   "justinmk/vim-gtfo",
   { "nvim-lua/plenary.nvim", lazy = true },
-  {
-    'windwp/nvim-autopairs',
-    event = "InsertEnter",
-    opts = {},
-  },
   {
     "echasnovski/mini.surround",
     opts = {
