@@ -85,7 +85,13 @@ return {
   },
   {
     "folke/todo-comments.nvim",
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     opts = {},
+    -- stylua: ignore
+    keys = {
+      { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
+      { "[t", function() require("todo-comments").jump_prev() end, desc = "Prev todo comment" },
+    },
   },
   {
     "mbbill/undotree",
@@ -152,7 +158,7 @@ return {
       end,
     },
   },
-  "kmonad/kmonad-vim",
+  { "kmonad/kmonad-vim", ft = "kbd" },
   {
     "chrisbra/csv.vim",
     ft = "csv", -- Prevents warning in picker

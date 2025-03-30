@@ -61,6 +61,7 @@ return {
   },
   {
     "jakewvincent/mkdnflow.nvim",
+    ft = { "markdown" },
     opts = {
       modules = {
         bib = false,
@@ -91,6 +92,7 @@ return {
   },
   {
     "3rd/image.nvim",
+    ft = { "markdown" },
     opts = {
       backend = "kitty", -- whatever backend you would like to use
       max_width = 100,
@@ -103,7 +105,6 @@ return {
   },
   {
     "HakonHarnes/img-clip.nvim",
-    event = "VeryLazy",
     cmd = { "PasteImage", "ImgClipDebug", "ImgClipConfig" },
     opts = {
       default = {
