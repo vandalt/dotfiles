@@ -1,3 +1,4 @@
+local markdownlint_cli2_args = { "--config", os.getenv("HOME") .. "/.config/markdownlint/config.markdownlint.yaml" }
 local zk_start_week = "sunday"
 local function get_date_zw(start_week_day)
   start_week_day = start_week_day or zk_start_week
@@ -10,6 +11,45 @@ local function get_date_zw(start_week_day)
 end
 
 return {
+  {
+    "stevearc/conform.nvim",
+    opts = {
+      formatters = {
+        ["markdownlint-cli2"] = {
+          prepend_args = markdownlint_cli2_args,
+        },
+        ["markdown-toc"] = {
+          -- only execute if there is a <!-- toc --> comment
+          condition = function(_, ctx)
+            for _, line in ipairs(vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, false)) do
+              if line:find("<!%-%- toc %-%->") then
+                return true
+              end
+            end
+          end,
+        },
+      },
+      formatters_by_ft = {
+        markdown = {
+          "markdownlint-cli2",
+          -- Has an annoying bug where it modifies fronmatter...
+          -- Ref: https://github.com/jonschlinkert/markdown-toc/issues/151
+          "markdown-toc",
+        },
+      },
+    },
+  },
+  {
+    "mfussenegger/nvim-lint",
+    opts = {
+      linters_by_ft = {
+        markdown = { "markdownlint-cli2" },
+      },
+      linters = {
+        ["markdownlint-cli2"] = { args = markdownlint_cli2_args },
+      },
+    },
+  },
   {
     "zk-org/zk-nvim",
     main = "zk",
@@ -118,7 +158,7 @@ return {
 \end{center}
     ]],
         },
-      }
+      },
     },
     keys = {
       { "<leader>zp", "<Cmd>PasteImage<CR>", desc = "Paste image from system clipboard" },
