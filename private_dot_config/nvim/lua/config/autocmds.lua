@@ -59,10 +59,34 @@ vim.api.nvim_create_autocmd("BufRead", {
 
 vim.api.nvim_create_autocmd("FileType", {
   desc = "Wrap and enable spell checking in some filetypes",
-  group = augroup("wrap_spell"),
+  group = augroup("wrap-spell"),
   pattern = { "text", "plaintex", "typst", "gitcommit", "markdown" },
   callback = function()
     vim.opt_local.wrap = true
     vim.opt_local.spell = true
   end,
+})
+
+-- From lazyvim
+vim.api.nvim_create_autocmd("FileType", {
+  desc = "Close some buffers with q directly, and don't list them",
+  group = augroup("close-with-q-no-list"),
+  pattern = {
+    "checkhealth",
+    "help",
+    "grug-far",
+  },
+  callback = function(event)
+    vim.bo[event.buf].buflisted = false
+    vim.schedule(function()
+      vim.keymap.set("n", "q", function()
+        vim.cmd("close")
+        pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
+      end, {
+        buffer = event.buf,
+        silent = true,
+        desc = "Quit buffer",
+      })
+    end)
+  end
 })
