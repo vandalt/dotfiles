@@ -8,8 +8,11 @@ _G.send_motion_d = function()
   return "g@"
 end
 
+
 return {
   {
+    -- Should not be lazy-loaded according to docs.
+    -- I tried BufReadPre but it did not work
     "GCBallesteros/jupytext.nvim",
     dev = true,
     opts = {},
@@ -32,24 +35,9 @@ return {
   {
     "GCBallesteros/NotebookNavigator.nvim",
     dev = true,
-    event = "VeryLazy",
+    enabled = true,
+    lazy = true,
     main = "notebook-navigator",
-    keys = {
-      {
-        "<leader>ih",
-        function()
-          require("notebook-navigator").run_cell({ trim_spaces = false, use_bracketed_paste = true })
-        end,
-        desc = "Run cell",
-      },
-      {
-        "<leader>ii",
-        function()
-          require("notebook-navigator").run_and_move({ trim_spaces = false, use_bracketed_paste = true })
-        end,
-        desc = "Run cell and move",
-      },
-    },
     opts = {},
   },
   {
@@ -63,24 +51,14 @@ return {
   },
   {
     "echasnovski/mini.ai",
-    opts = function()
-      local ai = require("mini.ai")
-      return {
-        -- TODO: Add to which-key
+    event = "VeryLazy",
+    opts = function(_, opts)
+      local new_opts = {
         custom_textobjects = {
           j = require("notebook-navigator").miniai_spec,
-          u = ai.gen_spec.function_call(),
-          -- Buffer
-          g = function()
-            local from = { line = 1, col = 1 }
-            local to = {
-              line = vim.fn.line("$"),
-              col = math.max(vim.fn.getline("$"):len(), 1),
-            }
-            return { from = from, to = to }
-          end,
         },
       }
+      return vim.tbl_deep_extend("error", opts, new_opts)
     end,
   },
 }
