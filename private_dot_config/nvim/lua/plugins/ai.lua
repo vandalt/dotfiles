@@ -20,10 +20,16 @@ return {
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     build = "make tiktoken", -- Only on MacOS or Linux
-    opts = { auto_insert_mode = true },
+    opts = {
+      auto_insert_mode = true,
+      question_header = "## vandalt",
+      window = {
+        width = 0.4,
+      },
+    },
     keys = {
       { "<leader>aa", "<Cmd>CopilotChatToggle<CR>", desc = "Toggle Copilot Chat" },
     },
   },
-  "AndreM222/copilot-lualine",
+  "AndreM222/copilot-lualine", -- Configured in lualine config
 }
