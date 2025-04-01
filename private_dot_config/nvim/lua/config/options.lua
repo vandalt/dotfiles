@@ -37,6 +37,7 @@ opt.smartcase = true -- except when there are capital letters
 opt.signcolumn = "yes" -- Always show signcolumn to avoid shifting text
 opt.updatetime = 200 -- Save swap and trigger CursorHold more frequently
 opt.timeoutlen = 300 -- Time for mapped sequence to complete
+opt.timeout = true
 opt.splitbelow = true -- Put new splits to the below
 opt.splitright = true -- Put new vsplits to the right
 opt.cursorline = true

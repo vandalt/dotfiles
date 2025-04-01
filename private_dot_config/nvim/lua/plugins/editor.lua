@@ -44,7 +44,9 @@ return {
         },
       },
       triggers = {
-        { "<auto>", mode = "nixsotc" },
+        -- This causes issue with double-escape in terminal
+        -- { "<auto>", mode = "nixsotc" },
+        { "<auto>", mode = "nxso" },
         { "s", mode = { "n", "v" } },
       },
       icons = {
