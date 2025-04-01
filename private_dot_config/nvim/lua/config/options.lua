@@ -57,9 +57,9 @@ opt.pumheight = 0 -- Max number of items in popup menu (0 uses available screen 
 opt.ruler = true -- Show ruler in statusline
 opt.shiftround = true -- Round indent to multiple of shiftwidth with > and <
 opt.shiftwidth = 2 -- Default indent size
+opt.tabstop = 2 -- Tab size
 opt.shortmess:append({ W = true, I = false, c = true, C = true }) -- Shorten some messages: [w]ritten, [Cc]completion, [I]ntro
 opt.smartindent = false -- Disble so >> and << work in Python
-opt.tabstop = 2 -- Tab size
 opt.virtualedit = "block" -- Allow cursor where there is no text in visual block mode (c-v)
 opt.wildmode = "longest:full,full" -- Go to longest match & show menu, next use full match
 opt.wrap = true -- Line wrap
@@ -69,3 +69,10 @@ opt.foldexpr = "v:lua.Foldexpr()"
 opt.foldtext = "" -- Makes mkdnflow foldtext work
 opt.foldlevel = 99
 opt.spelllang = { "en", "fr" }
+
+
+---@diagnostic disable-next-line: duplicate-set-field
+vim.deprecate = function() end
+
+-- Prevent ftplugin from setting markdown indent to 4
+vim.g.markdown_recommended_style = 0

@@ -25,17 +25,21 @@ return {
     opts = {},
     config = function(_, opts)
       local lint = require("lint")
-      lint.linters_by_ft = opts.linters_by_ft
-      for name, linter in pairs(opts.linters) do
-        if type(linter) == "table" and type(lint.linters[name]) == "table" then
-          ---@diagnostic disable-next-line: param-type-mismatch
-          lint.linters[name] = vim.tbl_deep_extend("force", lint.linters[name], linter)
-          if type(linter.prepend_args) == "table" then
-            lint.linters[name].args = lint.linters[name].args or {}
-            vim.list_extend(lint.linters[name].args, linter.prepend_args)
+      if opts.linters_by_ft then
+        lint.linters_by_ft = opts.linters_by_ft
+      end
+      if opts.linters then
+        for name, linter in pairs(opts.linters) do
+          if type(linter) == "table" and type(lint.linters[name]) == "table" then
+            ---@diagnostic disable-next-line: param-type-mismatch
+            lint.linters[name] = vim.tbl_deep_extend("force", lint.linters[name], linter)
+            if type(linter.prepend_args) == "table" then
+              lint.linters[name].args = lint.linters[name].args or {}
+              vim.list_extend(lint.linters[name].args, linter.prepend_args)
+            end
+          else
+            lint.linters[name] = linter
           end
-        else
-          lint.linters[name] = linter
         end
       end
       vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
@@ -96,7 +100,7 @@ return {
   },
   {
     "linux-cultist/venv-selector.nvim",
-    branch = "regexp",
+    branch = "regexp", -- Maintained branch as of 2024
     opts = {
       settings = {
         search = {
@@ -117,10 +121,13 @@ return {
   },
   {
     "roobert/f-string-toggle.nvim",
-    dev = false,
+    dev = true,
+    -- stylua: ignore
+    keys = {
+      { "<leader>fs", function() require("f-string-toggle").toggle_fstring() end, desc = "Toggle f-string" }
+    },
     opts = {
-      key_binding = "<leader>fs",
-      key_binding_desc = "Toggle f-string",
+      key_binding = false,
       filetypes = { "python", "snakemake", "markdown", "org" },
     },
   },

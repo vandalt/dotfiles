@@ -16,6 +16,10 @@ return {
         "c",
         "css",
         "html",
+        "go",
+        "gomod",
+        "gowork",
+        "gosum",
         "latex",
         "lua",
         "luadoc",
@@ -43,7 +47,7 @@ return {
           init_selection = "<C-Space>", -- set to `false` to disable one of the mappings
           node_incremental = "<C-Space>",
           scope_incremental = false,
-          node_decremental = "<C-BS>"
+          node_decremental = "<C-BS>",
         },
       },
       textobjects = {

@@ -31,5 +31,8 @@ return {
       { "<leader>aa", "<Cmd>CopilotChatToggle<CR>", desc = "Toggle Copilot Chat" },
     },
   },
-  "AndreM222/copilot-lualine", -- Configured in lualine config
+  {
+    "AndreM222/copilot-lualine", -- Configured in lualine config
+    dev = false,
+  }
 }

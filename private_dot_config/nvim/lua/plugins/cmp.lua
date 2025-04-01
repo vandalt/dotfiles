@@ -18,6 +18,10 @@ return {
       local cmp = require("cmp")
       return {
         snippet = { expand = function(args) vim.snippet.expand(args.body) end },
+        -- TODO: Remove when done testing zk
+        -- completion = {
+        --   autocomplete = false,
+        -- },
         mapping = cmp.mapping.preset.insert({
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
