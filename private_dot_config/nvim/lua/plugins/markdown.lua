@@ -52,6 +52,7 @@ return {
   },
   {
     "zk-org/zk-nvim",
+    dev = false,
     main = "zk",
     cmd = { "ZkNotes", "ZkIndex", "ZkNew" },
     opts = {
@@ -132,6 +133,7 @@ return {
   },
   {
     "3rd/image.nvim",
+    enabled = false,
     ft = { "markdown" },
     opts = {
       backend = "kitty", -- whatever backend you would like to use
