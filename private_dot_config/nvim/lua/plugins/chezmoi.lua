@@ -8,7 +8,7 @@ return {
   {
     "xvzc/chezmoi.nvim",
     cmd = "ChezmoiEdit",
-    dev = true,
+    dev = false,
     opts = {},
     keys = {
       {
