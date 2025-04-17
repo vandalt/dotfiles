@@ -1,6 +1,7 @@
 return {
-  "tpope/vim-eunuch",
-  "justinmk/vim-gtfo",
+  "tpope/vim-sleuth", -- Indent, keeping for md and qmd notebooks mostly
+  "tpope/vim-eunuch", -- Shell commands
+  "justinmk/vim-gtfo", -- Exit vim, keeping for gof, not using got
   { "nvim-lua/plenary.nvim", lazy = true },
   {
     "echasnovski/mini.pairs",
