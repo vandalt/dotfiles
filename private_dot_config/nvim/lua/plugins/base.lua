@@ -8,17 +8,20 @@ return {
     opts = {
       skip_unbalanced = true, -- Custom option, not part of mini.pairs spec
       mappings = {
-        -- TODO: F-strings: complete when f| in Python, ideally not off|, or even better not "off| (any word ending in f)
-        ["("] = { action = "open", pair = "()", neigh_pattern = "[^\\][^%w]" },
-        ["["] = { action = "open", pair = "[]", neigh_pattern = "[^\\][^%w]" },
-        ["{"] = { action = "open", pair = "{}", neigh_pattern = "[^\\][^%w]" },
+        -- TODO: Add _, ~ etc.
+        ["("] = { action = "open", pair = "()", neigh_pattern = "[^\\][^%w_~\\]" },
+        ["["] = { action = "open", pair = "[]", neigh_pattern = "[^\\][^%w_~\\]" },
+        ["{"] = { action = "open", pair = "{}", neigh_pattern = "[^\\][^%w_~\\]" },
 
+        -- TODO: Handle """ for docstrings, like `` below?
         ['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '[^\\%w][^%w]',   register = { cr = false } },
         ["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '[^\\%w][^%w]', register = { cr = false } },
         -- Handle markdown codeblocks by skipping when previous is ``
         ['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\%w(``)][^%w]',   register = { cr = false } },
 
-        [" "] = { action = "open", pair = "  ", neigh_pattern = "[%(%[{][%)%]}]" },
+        -- Comment out to auto-insert space in brackets
+        -- Square bracket ([) is removed because of markdown checkboxes
+        -- [" "] = { action = "open", pair = "  ", neigh_pattern = "[%({][%)%]}]" },
       },
     },
     config = function(_, opts)
@@ -44,8 +47,8 @@ return {
         local cursor = vim.api.nvim_win_get_cursor(0)
         local next = line:sub(cursor[2] + 1, cursor[2] + 1)
         if opts.skip_unbalanced and next == c and c ~= o then
-          local _, count_open = line:gsub(vim.pesc(pair:sub(1, 1)), "")
-          local _, count_close = line:gsub(vim.pesc(pair:sub(2, 2)), "")
+          local _, count_open = line:gsub(vim.pesc(o), "")
+          local _, count_close = line:gsub(vim.pesc(c), "")
           if count_close > count_open then
             return o
           end
@@ -54,7 +57,7 @@ return {
       end
       -- Add latex
       local map_tex = function()
-        MiniPairs.map_buf(0, "i", "$", { action = "closeopen", pair = "$$" })
+        MiniPairs.map_buf(0, "i", "$", { action = "closeopen", pair = "$$", neigh_pattern = "[^\\%w][^%w]" })
       end
       vim.api.nvim_create_autocmd("FileType", {
         group = vim.api.nvim_create_augroup("pairs-tex", { clear = true }),
