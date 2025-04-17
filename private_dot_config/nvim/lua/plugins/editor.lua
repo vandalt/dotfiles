@@ -193,7 +193,7 @@ return {
       { "<leader>tQ", "<Cmd>Trouble loclist toggle<CR>", desc = "Location List (Trouble)" },
       { "<leader>tq", "<Cmd>Trouble qflist toggle<CR>", desc = "Quickfix List (Trouble)" },
       { "<leader>tl", function() require("trouble").toggle("last") end, desc = "Toggle last Trouble" },
-      { "<leader>tt", "<Cmd>Trouble todo toggle<CR>", desc = "Toggle last Trouble" },
+      { "<leader>tt", "<Cmd>Trouble todo toggle<CR>", desc = "TODO comments (Trouble)" },
       { "[q", function() trouble_move("prev") end, desc = "Previous Trouble/Quickfix Item" },
       { "]q", function() trouble_move("next") end, desc = "Next Trouble/Quickfix Item" },
     },
