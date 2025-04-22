@@ -104,6 +104,7 @@ return {
         texlab = {},
         gopls = {},
         astro = {},
+        vtsls = {},
       }
 
       local server_names = vim.tbl_keys(servers)

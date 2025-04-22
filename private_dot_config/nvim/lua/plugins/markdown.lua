@@ -52,7 +52,7 @@ return {
   },
   {
     "zk-org/zk-nvim",
-    dev = false,
+    dev = true,
     main = "zk",
     cmd = { "ZkNotes", "ZkIndex", "ZkNew" },
     opts = {
