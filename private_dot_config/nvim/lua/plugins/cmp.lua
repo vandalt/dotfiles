@@ -1,6 +1,7 @@
 return {
   {
     "hrsh7th/nvim-cmp",
+    enabled = false,
     event = "InsertEnter",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
@@ -17,15 +18,19 @@ return {
     opts = function()
       local cmp = require("cmp")
       return {
-        snippet = { expand = function(args) vim.snippet.expand(args.body) end },
+        snippet = {
+          expand = function(args)
+            vim.snippet.expand(args.body)
+          end,
+        },
         -- TODO: Remove when done testing zk
         -- completion = {
         --   autocomplete = false,
         -- },
         mapping = cmp.mapping.preset.insert({
-          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete {}, -- trigger completion
+          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-Space>"] = cmp.mapping.complete({}), -- trigger completion
         }),
         sources = {
           { name = "lazydev", group_index = 0 },
@@ -36,6 +41,38 @@ return {
           { name = "buffer" },
         },
       }
-      end
+    end,
+  },
+  {
+    "saghen/blink.cmp",
+    dependencies = { "rafamadriz/friendly-snippets" },
+
+    -- use a release tag to download pre-built binaries or use cargo
+    version = "1.*",
+    -- build = 'cargo build --release',
+
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
+    opts = {
+      -- See :h blink-cmp-config-keymap for defining your own keymap
+      keymap = { preset = "default" },
+      appearance = {
+        nerd_font_variant = "mono",
+      },
+      completion = { documentation = { auto_show = false } },
+      sources = {
+        default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+        providers = {
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            -- make lazydev completions top priority (see `:h blink.cmp`)
+            score_offset = 100,
+          },
+        },
+      },
+      fuzzy = { implementation = "prefer_rust_with_warning" },
+    },
+    opts_extend = { "sources.default" },
   },
 }
