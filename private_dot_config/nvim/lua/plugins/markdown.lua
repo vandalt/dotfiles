@@ -56,7 +56,7 @@ return {
     main = "zk",
     cmd = { "ZkNotes", "ZkIndex", "ZkNew" },
     opts = {
-      picker = "telescope",
+      picker = "snacks_picker",
     },
     keys = {
       {

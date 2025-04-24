@@ -43,10 +43,10 @@ return {
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
           end
 
-          map("gd", require("telescope.builtin").lsp_definitions, "Goto definition")
+          map("gd", function() Snacks.picker.lsp_definitions() end, "Goto definition")
+          map("gr", function() Snacks.picker.lsp_references() end, "Goto references")
+          map("gI", function() Snacks.picker.lsp_implementations() end, "Goto implementation")
           map("gD", vim.lsp.buf.declaration, "Goto declaration")
-          map("gr", require("telescope.builtin").lsp_references, "Goto references")
-          map("gI", require("telescope.builtin").lsp_implementations, "Goto implementation")
           map("K", vim.lsp.buf.hover, "Hover")
           map("<C-k>", vim.lsp.buf.signature_help, "Signature help", "i")
           map("<leader>ca", vim.lsp.buf.code_action, "Code actions", { "n", "v" })

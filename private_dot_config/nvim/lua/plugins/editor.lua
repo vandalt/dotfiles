@@ -65,6 +65,7 @@ return {
   },
   {
     "stevearc/oil.nvim",
+    enabled = true,
     cmd = "Oil",
     event = "VimEnter",
     ---@module 'oil'
@@ -93,6 +94,8 @@ return {
     keys = {
       { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
       { "[t", function() require("todo-comments").jump_prev() end, desc = "Prev todo comment" },
+      ---@diagnostic disable-next-line: undefined-field
+      { "<leader>st", function() Snacks.picker.todo_comments() end, desc = "Search TODO comments" },
     },
   },
   {
@@ -184,6 +187,26 @@ return {
   {
     "folke/trouble.nvim",
     opts = {},
+    specs = {
+      "folke/snacks.nvim",
+      opts = function(_, opts)
+        return vim.tbl_deep_extend("force", opts or {}, {
+          picker = {
+            actions = require("trouble.sources.snacks").actions,
+            win = {
+              input = {
+                keys = {
+                  ["<c-t>"] = {
+                    "trouble_open",
+                    mode = { "n", "i" },
+                  },
+                },
+              },
+            },
+          },
+        })
+      end,
+    },
     cmd = "Trouble",
     -- stylua: ignore
     keys = {

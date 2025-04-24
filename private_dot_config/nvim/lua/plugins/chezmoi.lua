@@ -1,3 +1,38 @@
+local function snacks_picker_chezmoi(targets)
+  -- Ref: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/extras/util/chezmoi.lua
+  local results = require("chezmoi.commands").list({
+    targets = targets,
+    args = {
+      "--path-style",
+      "absolute",
+      "--include",
+      "files",
+      "--exclude",
+      "externals",
+    },
+  })
+  local items = {}
+
+  for _, czFile in ipairs(results) do
+    table.insert(items, {
+      text = czFile,
+      file = czFile,
+    })
+  end
+
+  ---@type snacks.picker.Config
+  local opts = {
+    items = items,
+    confirm = function(picker, item)
+      picker:close()
+      require("chezmoi.commands").edit({
+        targets = { item.text },
+        args = { "--watch" },
+      })
+    end,
+  }
+  Snacks.picker.pick(opts)
+end
 return {
   {
     "alker0/chezmoi.vim",
@@ -14,14 +49,15 @@ return {
       {
         "<leader>fz",
         function()
-          require("telescope").extensions.chezmoi.find_files()
+          snacks_picker_chezmoi()
         end,
         desc = "Find chezmoi files",
       },
       {
+        -- TODO: Replace with snacks
         "<leader>fc",
         function()
-          require("telescope").extensions.chezmoi.find_files({targets = vim.fn.stdpath("config")})
+          snacks_picker_chezmoi(vim.fn.stdpath("config"))
         end,
         desc = "Find nvim config files (chezmoi)",
       },

@@ -6,13 +6,30 @@ return {
     lazy = false,
     ---@type snacks.Config
     opts = {
-      words = { enabled = true }, -- Highlight words and lsp references
-      indent = { enabled = true, animate = { enabled = true } }, -- Indent guides
-      image = { enabled = false },
       bigfile = { enabled = true }, -- Handle big files
-      gitbrowse = { enabled = true },
-      lazygit = { enabled = true, configure = true },
+      explorer = { enabled = true, replace_netrw = false }, -- Explorer
+      gitbrowse = { enabled = true }, -- Browse to GitHub
+      image = { enabled = true }, -- Display images
+      indent = { enabled = true, animate = { enabled = true } }, -- Indent guides
+      lazygit = { enabled = true, configure = true }, -- Lazygit
       notifier = { enabled = true, style = "compact", padding = false }, -- padding has statuscolumn color
+      picker = {
+        enabled = true,
+        ui_select = false,
+        layouts = {
+          ivy_nopreview = {
+            preset = "ivy",
+            hidden = {"preview"},
+            layout = {}
+          }
+        },
+        layout = {
+          preset = function()
+            return vim.o.columns >= 120 and "ivy" or "ivy_nopreview"
+          end,
+        },
+      }, -- Pickers
+      words = { enabled = true }, -- Highlight words and lsp references
       zen = {
         enabled = true,
         toggles = { dim = false },
@@ -58,6 +75,16 @@ return {
       { "<leader>nd", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
       { "<leader>wf",  function() Snacks.zen() end, desc = "Toggle focus mode (zen)" },
       { "<leader>wm",  function() Snacks.zen.zoom() end, desc = "Toggle maximization (zen)" },
+      { "<leader><space>", function() Snacks.picker.smart() end, desc = "Find smart" },
+      { "<leader>ff", function() Snacks.picker.files() end, desc = "Find files" },
+      { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Find buffers" },
+      { "<leader>sg", function() Snacks.picker.grep() end, desc = "Search grep" },
+      { "<leader>se", function() Snacks.picker.icons() end, desc = "Search emojis and icons" },
+      { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "Search LSP symbvols" },
+      { "<leader>sh", function() Snacks.picker.help() end, desc = "Search help" },
+      { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "Search keymaps" },
+      { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Snacks git status" },
+      { "<leader>e", function() Snacks.explorer() end, desc = "File explorer" },
     },
   },
 }
