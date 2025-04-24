@@ -57,6 +57,7 @@ return {
     cmd = { "ZkNotes", "ZkIndex", "ZkNew" },
     opts = {
       picker = "snacks_picker",
+      lsp = { auto_attach = { enabled = true } },
     },
     keys = {
       {
@@ -102,22 +103,24 @@ return {
   },
   {
     "jakewvincent/mkdnflow.nvim",
+    enabled = true,
+    dev = true,
     ft = { "markdown" },
     opts = {
       modules = {
-        bib = false,
-        buffers = false, -- Disable navigation with Backspace and Del - Use C-I and C-O
-        conceal = false,
-        cursor = true,
-        folds = false, -- Use default vim folding
-        foldtext = true,
-        lists = true,
-        links = true, -- Using zk for that (might want to enable for citations and mapping at some point)
-        maps = true,
-        paths = false,
-        tables = true,
-        yaml = false,
-        cmp = false,
+        bib = false, -- Parse bib files and follow citations
+        buffers = false, -- Buffer forward and backward navigation (disabled: using C-I and C-O)
+        conceal = false, -- Conceal wiki-links (disabled: using nvim's conceal)
+        cursor = true, -- Jump to links and headings, yank anchor links
+        folds = false, -- Custom folding (disabled: using nvim's folding)
+        foldtext = true, -- Custom fold text with icons
+        lists = true, -- Auto-add next bullet, toggle checkboxes
+        links = true, -- Create, destroy and follow links
+        maps = true, -- Set keymaps using the mappings table
+        paths = false, -- Interpret and follow links (disabled: using zk lsp)
+        tables = true, -- Format and navigate tables
+        yaml = false, -- Parse YAML blocks (disabled: not using bib)
+        cmp = false, -- Autocomplete links (disabled: using zk lsp)
       },
       mappings = {
         MkdnNextLink = { "n", "]l" },

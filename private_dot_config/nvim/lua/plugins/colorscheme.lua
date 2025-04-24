@@ -1,6 +1,7 @@
 return {
   {
     "folke/tokyonight.nvim",
+    event = "VeryLazy", -- Enables completion for alternative colorschemes
     lazy = true,
   },
   {

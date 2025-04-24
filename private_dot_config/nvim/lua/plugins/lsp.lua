@@ -87,6 +87,7 @@ return {
             },
           },
         },
+        marksman = {},
         pyright = {
           settings = {
             python = {

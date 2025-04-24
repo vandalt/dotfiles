@@ -12,10 +12,13 @@ return {
   {
     "toggleterm.nvim",
     keys = {
+      -- TODO: count args
       { "<leader>il", "<Cmd>ToggleTermSendCurrentLine<CR>", desc = "Send line to terminal" },
+      -- { "<leader>il", funhction, desc = "Send line to terminal" },
       {
         "<leader>is", send_motion_d, desc = "Send motion to terminal", expr = true
       },
+      -- TODO: count args
       {
         "<leader>is", function() require("toggleterm").send_lines_to_terminal("visual_selection", false, {}, true) end, desc = "Send selection to terminal", mode = "v",
       },
