@@ -9,6 +9,7 @@ return {
     lazy = false, -- Load main colorscheme during startup...
     priority = 1000, -- before all other start plugins
     opts = {
+      transparent = true,
       overrides = function(colors)
         return {
           ["@string.special.url"] = { fg = colors.theme.syn.special1, underline = true, undercurl = false },

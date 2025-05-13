@@ -1,6 +1,9 @@
 theme = dark:kanagawa-wave,light:kanagawa-lotus
 font-family = "JetBrainsMono Nerd Font"
-background-opacity = 1.0
+background-opacity = 0.90
 font-size = 10
-window-width=90
-window-height=30
+window-width = 90
+window-height = 30
+keybind = ctrl+shift+plus=increase_font_size:1
+keybind = ctrl+shift+minus=decrease_font_size:1
+keybind = ctrl+equal=equalize_splits
