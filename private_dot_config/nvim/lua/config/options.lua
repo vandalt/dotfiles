@@ -2,6 +2,8 @@
 vim.g.no_python_maps = 1
 vim.g.python3_host_prog = os.getenv("HOME") .. "/repos/perso/pynvim/venv/bin/python"
 
+vim.g.my_cmp_plugin = "blink"
+
 -- TODO: Make available using require somehow
 function Foldexpr()
   -- Copied from lazyvim

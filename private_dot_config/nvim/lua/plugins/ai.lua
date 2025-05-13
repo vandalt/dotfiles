@@ -33,7 +33,7 @@ return {
   },
   {
     "zbirenbaum/copilot-cmp",
-    enabled = false,
+    enabled = vim.g.my_cmp_plugin == "cmp",
     opts = {},
   },
   {

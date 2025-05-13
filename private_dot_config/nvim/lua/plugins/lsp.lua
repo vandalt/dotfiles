@@ -2,7 +2,11 @@ return {
   {
     "j-hui/fidget.nvim",
     event = { "LspProgress" },
-    opts = {},
+    opts = {
+      notification = {
+        window = { winblend = 0 },
+      },
+    },
   },
   {
     "williamboman/mason.nvim",
@@ -43,9 +47,15 @@ return {
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
           end
 
-          map("gd", function() Snacks.picker.lsp_definitions() end, "Goto definition")
-          map("gr", function() Snacks.picker.lsp_references() end, "Goto references")
-          map("gI", function() Snacks.picker.lsp_implementations() end, "Goto implementation")
+          map("gd", function()
+            Snacks.picker.lsp_definitions()
+          end, "Goto definition")
+          map("gr", function()
+            Snacks.picker.lsp_references()
+          end, "Goto references")
+          map("gI", function()
+            Snacks.picker.lsp_implementations()
+          end, "Goto implementation")
           map("gD", vim.lsp.buf.declaration, "Goto declaration")
           map("K", vim.lsp.buf.hover, "Hover")
           map("<C-k>", vim.lsp.buf.signature_help, "Signature help", "i")
@@ -70,8 +80,12 @@ return {
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       -- TODO: Remove at some point
-      -- capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-      capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
+      if vim.g.my_cmp_plugin == "cmp" then
+        capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+      elseif vim.g.my_cmp_plugin == "blink" then
+        capabilities = vim.tbl_deep_extend("force", capabilities, require("blink.cmp").get_lsp_capabilities({}, false))
+        -- capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
+      end
 
       local servers = {
         bashls = {},
@@ -93,7 +107,7 @@ return {
             python = {
               analysis = {
                 typeCheckingMode = "off",
-              }
+              },
             },
           },
         },
@@ -101,29 +115,23 @@ return {
           init_options = {
             settings = {
               logLevel = "debug",
-            }
-          }
+            },
+          },
         },
         texlab = {},
         gopls = {},
         astro = {},
         vtsls = {},
       }
+      for server_name, server_opts in pairs(servers) do
+        server_opts.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server_opts.capabilities or {})
+        vim.lsp.config(server_name, server_opts)
+      end
 
       local server_names = vim.tbl_keys(servers)
       require("mason-lspconfig").setup({
+        automatic_enable = true, -- Default, included to remove lint error
         ensure_installed = server_names,
-        automatic_installation = false, -- Don't auto-install since we're using handlers below
-        handlers = {
-          function(server_name)
-            if not servers[server_name] then
-              return
-            end
-            local server_opts = servers[server_name]
-            server_opts.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server_opts.capabilities or {})
-            require("lspconfig")[server_name].setup(server_opts)
-          end,
-        },
       })
     end,
   },
