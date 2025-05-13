@@ -12,18 +12,29 @@ return {
   {
     "toggleterm.nvim",
     keys = {
-      -- TODO: count args
-      { "<leader>il", "<Cmd>ToggleTermSendCurrentLine<CR>", desc = "Send line to terminal" },
-      -- { "<leader>il", funhction, desc = "Send line to terminal" },
       {
-        "<leader>is", send_motion_d, desc = "Send motion to terminal", expr = true
+        "<leader>il",
+        function()
+          require("toggleterm").send_lines_to_terminal("single_line", false, { args = vim.v.count }, false)
+        end,
+        desc = "Send line to terminal",
       },
-      -- TODO: count args
       {
-        "<leader>is", function() require("toggleterm").send_lines_to_terminal("visual_selection", false, {}, true) end, desc = "Send selection to terminal", mode = "v",
+        "<leader>is",
+        send_motion_d,
+        desc = "Send motion to terminal",
+        expr = true,
       },
-      { "<leader>jh", "m`vij<leader>is``", remap=true, silent=true, desc = "Toggleterm evaluate cell" },
-      { "<leader>ir", "m`vig<leader>is``", remap=true, silent=true, desc = "Toggleterm run file" },
+      {
+        "<leader>is",
+        function()
+          require("toggleterm").send_lines_to_terminal("visual_selection", false, { args = vim.v.count }, true)
+        end,
+        desc = "Send selection to terminal",
+        mode = "v",
+      },
+      { "<leader>jh", "m`vij<leader>is``", remap = true, silent = true, desc = "Toggleterm evaluate cell" },
+      { "<leader>ir", "m`vig<leader>is``", remap = true, silent = true, desc = "Toggleterm run file" },
       { "<leader>jj", "vij<leader>is]j", desc = "Toggleterm evaluate cell and go to next", remap = true },
     },
   },
@@ -88,7 +99,7 @@ return {
       { "<leader>je", "<Cmd>noautocmd MoltenEnterOutput<CR>", desc = "Molten enter output" },
       { "<leader>jq", "<Cmd>MoltenHideOutput<CR>", desc = "Molten hide output" },
       { "<leader>j", "<Cmd>MoltenEvaluateVisual<CR>", mode = "v", desc = "Molten evaluate selection" },
-      { "<leader>jh", "vij<leader>j<Esc>", remap=true, silent=true, desc = "Molten evaluate cell" },
+      { "<leader>jh", "vij<leader>j<Esc>", remap = true, silent = true, desc = "Molten evaluate cell" },
       { "<leader>jj", "vij<leader>j<Esc>]j", desc = "Molten evaluate cell and go to next", remap = true },
     },
   },
@@ -109,8 +120,20 @@ return {
       }
     end,
     keys = {
-      { "<leader>ja", function() require("otter").activate() end, desc = "Activate otter" },
-      { "<leader>jd", function() require("otter").deactivate() end, desc = "Deactivate otter" }
+      {
+        "<leader>ja",
+        function()
+          require("otter").activate()
+        end,
+        desc = "Activate otter",
+      },
+      {
+        "<leader>jd",
+        function()
+          require("otter").deactivate()
+        end,
+        desc = "Deactivate otter",
+      },
     },
   },
   {

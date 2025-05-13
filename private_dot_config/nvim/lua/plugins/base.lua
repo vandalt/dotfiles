@@ -5,6 +5,7 @@ return {
   { "nvim-lua/plenary.nvim", lazy = true },
   {
     "echasnovski/mini.pairs",
+    enabled = false,
     opts = {
       skip_unbalanced = true, -- Custom option, not part of mini.pairs spec
       mappings = {
@@ -141,6 +142,10 @@ return {
     keys = {
       -- { "<c-/>", "", "Toggle Terminal" },
       { "<c-s-/>", "<Cmd>ToggleTerm direction=vertical<CR>", desc = "Toggle vertical terminal" },
+      -- See source to setup with args if need it
+      { "<leader>ip", "<Cmd>TermExec cmd='ipython' go_back=0<CR>", desc = "Terminal with IPython" },
+      { "<leader>rp", "<Cmd>TermExec cmd='python %'<CR>", desc = "Run Python file" },
+      { "<leader>rt", "<Cmd>TermExec cmd='pytest'<CR>", desc = "Run Pytest" },
     },
   },
   {
