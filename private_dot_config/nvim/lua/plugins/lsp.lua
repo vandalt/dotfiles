@@ -28,7 +28,8 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    -- lazy = false,
+    event = { "BufReadPre", "BufNewFile", "BufWritePre" },
     cmd = { "LspInfo", "LspStart" },
     dependencies = {
       "williamboman/mason.nvim",
@@ -126,6 +127,7 @@ return {
       for server_name, server_opts in pairs(servers) do
         server_opts.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server_opts.capabilities or {})
         vim.lsp.config(server_name, server_opts)
+        -- vim.lsp.enable(server_name)
       end
 
       local server_names = vim.tbl_keys(servers)
