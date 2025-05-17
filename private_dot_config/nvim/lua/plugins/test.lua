@@ -31,4 +31,12 @@ return {
       { "<leader>tw", function() require("neotest").watch.toggle(vim.fn.expand("%")) end, desc = "Toggle Watch (Neotest)" },
     },
   },
+  {
+    "mfussenegger/nvim-dap",
+    optional = true,
+    -- stylua: ignore
+    keys = {
+      { "<leader>td", function() require("neotest").run.run({strategy = "dap"}) end, desc = "Debug Nearest" },
+    },
+  },
 }
