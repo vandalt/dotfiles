@@ -79,6 +79,7 @@ return {
       { "<leader>ff", function() Snacks.picker.files() end, desc = "Find files" },
       { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Find buffers" },
       { "<leader>sg", function() Snacks.picker.grep() end, desc = "Search grep" },
+      { "<leader>sb", function() Snacks.picker.grep_buffers() end, desc = "Search (grep) buffers" },
       { "<leader>se", function() Snacks.picker.icons() end, desc = "Search emojis and icons" },
       { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "Search LSP symbvols" },
       { "<leader>sh", function() Snacks.picker.help() end, desc = "Search help" },
