@@ -84,7 +84,7 @@ return {
     "Wansmer/treesj",
     -- stylua: ignore
     keys = {
-      { "<leader>ts", function() require("treesj").toggle() end, desc = "Toggle split/join for code block" },
+      { "<leader>xs", function() require("treesj").toggle() end, desc = "Toggle split/join for code block" },
     },
     opts = {
       use_default_keymaps = false,

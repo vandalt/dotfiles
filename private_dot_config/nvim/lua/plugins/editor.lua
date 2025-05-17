@@ -32,7 +32,8 @@ return {
           { "<leader>q", group = "session/quarto" },
           { "<leader>r", group = "rsync" },
           { "<leader>s", group = "search" },
-          { "<leader>t", group = "trouble/treesj" },
+          { "<leader>x", group = "trouble/treesj" },
+          { "<leader>t", group = "test" },
           { "<leader>u", group = "toggle" },
           { "<leader>w", group = "windows" },
           { "<leader>z", group = "zk/markdown", icon = "󱓩" },
@@ -166,7 +167,8 @@ return {
   { "kmonad/kmonad-vim", ft = "kbd" },
   {
     "chrisbra/csv.vim",
-    ft = "csv", -- Prevents warning in picker
+    lazy = false, -- Prevents warning in picker...
+    ft = "csv",  -- ...This too
     config = function()
       vim.g.csv_nomap_h = true
       vim.g.csv_nomap_l = true
@@ -210,13 +212,13 @@ return {
     cmd = "Trouble",
     -- stylua: ignore
     keys = {
-      { "<leader>tD", "<Cmd>Trouble diagnostics toggle<CR>", desc = "Diagnostics (Trouble)" },
-      { "<leader>td", "<Cmd>Trouble diagnostics toggle filter.buf=0<CR>", desc = "Buffer Diagnostics (Trouble)" },
+      { "<leader>xD", "<Cmd>Trouble diagnostics toggle<CR>", desc = "Diagnostics (Trouble)" },
+      { "<leader>xd", "<Cmd>Trouble diagnostics toggle filter.buf=0<CR>", desc = "Buffer Diagnostics (Trouble)" },
       { "<leader>cs", "<Cmd>Trouble symbols toggle focus=false<CR>", desc = "Symbols (Trouble)" },
-      { "<leader>tQ", "<Cmd>Trouble loclist toggle<CR>", desc = "Location List (Trouble)" },
-      { "<leader>tq", "<Cmd>Trouble qflist toggle<CR>", desc = "Quickfix List (Trouble)" },
-      { "<leader>tl", function() require("trouble").toggle("last") end, desc = "Toggle last Trouble" },
-      { "<leader>tt", "<Cmd>Trouble todo toggle<CR>", desc = "TODO comments (Trouble)" },
+      { "<leader>xQ", "<Cmd>Trouble loclist toggle<CR>", desc = "Location List (Trouble)" },
+      { "<leader>xq", "<Cmd>Trouble qflist toggle<CR>", desc = "Quickfix List (Trouble)" },
+      { "<leader>xl", function() require("trouble").toggle("last") end, desc = "Toggle last Trouble" },
+      { "<leader>xt", "<Cmd>Trouble todo toggle<CR>", desc = "TODO comments (Trouble)" },
       { "[q", function() trouble_move("prev") end, desc = "Previous Trouble/Quickfix Item" },
       { "]q", function() trouble_move("next") end, desc = "Next Trouble/Quickfix Item" },
     },
