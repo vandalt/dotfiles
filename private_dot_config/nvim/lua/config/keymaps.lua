@@ -1,19 +1,26 @@
 local map = vim.keymap.set
 
-map("n", "<leader>bd", function() Snacks.bufdelete() end, { desc = "Close buffer" })
-map("n", "<leader>bD", "<Cmd>bdelete<CR>", { desc = "Close buffer and window" })
+-- Useful
 map({ "n", "i" }, "<Esc>", "<Cmd>nohlsearch<CR><esc>", { desc = "Clear hlsearch" })
-map("n", "<leader>l", "<Cmd>Lazy<CR>", { desc = "Lazy" })
-map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "View diagnostic" })
+map({ "n", "i" }, "<C-s>", "<Cmd>w<CR>", { desc = "Save/write" })
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+map("n", "<leader>l", "<Cmd>Lazy<CR>", { desc = "Lazy" })
+map("n", "<leader>cw", "<Cmd>%s/\\s\\+$//e<CR>", { desc = "Clear white spaces" })
+
+-- Buffers
+map("n", "<leader>bd", function()
+  Snacks.bufdelete()
+end, { desc = "Close buffer" })
+map("n", "<leader>bD", "<Cmd>bdelete<CR>", { desc = "Close buffer and window" })
 
 -- Clipboard things
-map({"n", "v"}, "<leader>y", [["+y]], { desc = "Yank to system clipboard" , remap=true})
-map("n", "<leader>Y", [["+Y]], { desc = "Yank EOL to system clipboard", remap=true})
-map({"n", "v"}, "<leader>p", [["+p]], { desc = "Put from system clipboard after cursor" , remap=true})
-map({"n", "v"}, "<leader>P", [["+P]], { desc = "Put from system clipboard before cursor", remap=true})
+map({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank to system clipboard", remap = true })
+map("n", "<leader>Y", [["+Y]], { desc = "Yank EOL to system clipboard", remap = true })
+map({ "n", "v" }, "<leader>p", [["+p]], { desc = "Put from system clipboard after cursor", remap = true })
+map({ "n", "v" }, "<leader>P", [["+P]], { desc = "Put from system clipboard before cursor", remap = true })
 
-
+-- Diagnostics
+map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "View diagnostic" })
 -- stylua: ignore start
 map("n", "]d", function() vim.diagnostic.jump({ count = vim.v.count1, float = true }) end)
 map("n", "[d", function() vim.diagnostic.jump({ count = -vim.v.count1, float = true }) end)
@@ -30,7 +37,6 @@ map("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", remap = true })
 map("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
 map("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
 map("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", remap = true })
-
 
 -- Mange split windows
 map("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", remap = true })
@@ -59,6 +65,5 @@ map("n", "N", "'nN'[v:searchforward].'zv'", { expr = true, desc = "Prev Search R
 map("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
 map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
 
-
 -- Useful in my notes
-map("i", "<A-d>", "📅", { desc = "Insert calendar (date) emoji"})
+map("i", "<A-d>", "📅", { desc = "Insert calendar (date) emoji" })

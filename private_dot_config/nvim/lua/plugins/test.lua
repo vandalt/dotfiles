@@ -3,7 +3,7 @@ return {
     "nvim-neotest/neotest",
     dependencies = {
       "nvim-neotest/nvim-nio",
-      "nvim-neotest/neotest-python",
+      { "nvim-neotest/neotest-python", dev = true },
     },
     config = function()
       local opts = {

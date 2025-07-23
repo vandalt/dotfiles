@@ -67,6 +67,15 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+
+vim.api.nvim_create_autocmd("FileType", {
+  desc = "Force tabs of 4 in quarto documents despite frontmatter",
+  group = augroup("wrap-spell"),
+  pattern = { "quarto" },
+  callback = function()
+    vim.opt_local.shiftwidth = 4
+  end,
+})
 -- From lazyvim
 vim.api.nvim_create_autocmd("FileType", {
   desc = "Close some buffers with q directly, and don't list them",

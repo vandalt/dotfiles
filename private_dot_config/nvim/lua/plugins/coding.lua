@@ -4,8 +4,12 @@ return {
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
     opts = {
+      formatters = {
+        ["ruff_format"] = {},
+      },
       formatters_by_ft = {
         lua = { "stylua" },
+        -- python = { "ruff_format" },
       },
       default_format_opts = { lsp_format = "fallback" },
     },
@@ -128,7 +132,7 @@ return {
     },
     opts = {
       key_binding = false,
-      filetypes = { "python", "snakemake", "markdown", "org" },
+      filetypes = { "python", "snakemake", "markdown", "org", "quarto" },
     },
   },
 }

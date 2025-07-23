@@ -168,7 +168,7 @@ return {
   {
     "chrisbra/csv.vim",
     lazy = false, -- Prevents warning in picker...
-    ft = "csv",  -- ...This too
+    ft = "csv", -- ...This too
     config = function()
       vim.g.csv_nomap_h = true
       vim.g.csv_nomap_l = true
@@ -188,7 +188,16 @@ return {
   },
   {
     "folke/trouble.nvim",
-    opts = {},
+    opts = {
+      modes = {
+        symbols = {
+          filter = {
+            -- NOTE: For some reason does not seem to extend so need to keep markdown and help
+            any = { ft = { "quarto", "markdown", "help" } },
+          },
+        },
+      },
+    },
     specs = {
       "folke/snacks.nvim",
       opts = function(_, opts)
@@ -229,11 +238,11 @@ return {
     ---@type Flash.Config
     opts = {
       modes = {
-      char = {
+        char = {
           enabled = true,
           autohide = true,
           jump_labels = false,
-          -- This disables the highlights. It leaves some flicker 
+          -- This disables the highlights. It leaves some flicker
           highlight = { backdrop = false },
         },
       },

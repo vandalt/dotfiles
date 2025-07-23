@@ -140,7 +140,7 @@ return {
       end,
     },
     keys = {
-      -- { "<c-/>", "", "Toggle Terminal" },
+      { "<c-/>", desc = "Toggle Terminal" }, -- this key is useful to load plugin, not just desc
       { "<c-s-/>", "<Cmd>ToggleTerm direction=vertical<CR>", desc = "Toggle vertical terminal" },
       -- See source to setup with args if need it
       { "<leader>ip", "<Cmd>TermExec cmd='ipython' go_back=0<CR>", desc = "Terminal with IPython" },

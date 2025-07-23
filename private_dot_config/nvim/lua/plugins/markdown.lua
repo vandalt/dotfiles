@@ -28,11 +28,27 @@ return {
             end
           end,
         },
+        ["injected"] = {
+          options = {
+            lang_to_formatters = {
+              -- Need to run ruff outside of LSP when in markdown code blocks
+              python = {"ruff_format"}
+            },
+          }
+        },
       },
       formatters_by_ft = {
         markdown = {
+          "injected",
           "markdownlint-cli2",
-          -- Has an annoying bug where it modifies fronmatter...
+          -- Has an annoying bug where it modifies frontmatter...
+          -- Ref: https://github.com/jonschlinkert/markdown-toc/issues/151
+          "markdown-toc",
+        },
+        quarto = {
+          "injected",
+          "markdownlint-cli2",
+          -- Has an annoying bug where it modifies frontmatter...
           -- Ref: https://github.com/jonschlinkert/markdown-toc/issues/151
           "markdown-toc",
         },
@@ -44,6 +60,7 @@ return {
     opts = {
       linters_by_ft = {
         markdown = { "markdownlint-cli2" },
+        quarto = { "markdownlint-cli2" },
       },
       linters = {
         ["markdownlint-cli2"] = { args = markdownlint_cli2_args },
@@ -105,7 +122,7 @@ return {
     "jakewvincent/mkdnflow.nvim",
     enabled = true,
     dev = true,
-    ft = { "markdown" },
+    ft = { "markdown", "quarto" },
     opts = {
       modules = {
         bib = false, -- Parse bib files and follow citations
@@ -131,6 +148,11 @@ return {
         MkdnNewListItem = { "i", "<CR>" },
         MkdnDecreaseHeading = { "n", "=" }, -- Default "-" conflicts with oil.nvim
         MkdnCreateLinkFromClipboard = false,
+      },
+      filetypes = {
+        quarto = true,
+        qmd = true,
+        ipynb = true,
       },
     },
   },

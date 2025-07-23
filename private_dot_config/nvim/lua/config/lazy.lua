@@ -26,8 +26,8 @@ require("lazy").setup({
   install = { colorscheme = { "default" } },
   ---@diagnostic disable-next-line: assign-type-mismatch
   dev = { path = "~/repos/perso" },
-  -- automatically check for plugin updates, every 12 hours
-  checker = { enabled = true, frequency = 3600 * 12 },
+  -- automatically check for plugin updates, every 24 hours
+  checker = { enabled = false, frequency = 3600 * 24 },
   change_detection = { notify = false },
   rocks = {
     hererocks = true,

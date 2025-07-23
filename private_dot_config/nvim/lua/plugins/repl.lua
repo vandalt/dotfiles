@@ -42,13 +42,13 @@ return {
     "GCBallesteros/NotebookNavigator.nvim",
     dev = true,
     enabled = true,
-    lazy = true,
+    lazy = false,
     main = "notebook-navigator",
     opts = {},
   },
   {
     "echasnovski/mini.hipatterns",
-    ft = { "python" }, -- avoids empty filetype warning
+    ft = { "python" }, -- avoids empty filetype warning (note: otter will trigger this for notebooks)
     opts = function()
       return {
         highlighters = { cells = require("notebook-navigator").minihipatterns_spec },
@@ -69,15 +69,28 @@ return {
   },
   {
     -- NOTE: Should not be lazy-loaded according to docs.
-    -- I tried BufReadPre but it did not work
+    -- I tried BufReadPre but it did not work, so leaving non-lazy
     "GCBallesteros/jupytext.nvim",
     dev = true,
     opts = {
+      -- style = "quarto",
+      -- output_extension = "qmd",
+      -- force_ft = "quarto",
       style = "markdown",
       output_extension = "md",
       force_ft = "markdown",
     },
   },
+  -- {
+  --   "goerz/jupytext.nvim",
+  --   -- "jupytext.nvim-goerz",
+  --   main = "jupytext",
+  --   dev = false,
+  --   opts = {
+  --     format = "quarto",
+  --     async_write = true,
+  --   },
+  -- },
   {
     "benlubas/molten-nvim",
     enabled = false,
@@ -138,12 +151,15 @@ return {
   },
   {
     "quarto-dev/quarto-nvim",
+    dev = true,
+    lazy = false,
+    ft = { "quarto" }, -- required so treesitter works
     dependencies = { "jmbuhr/otter.nvim" },
     opts = {
       debug = true,
       lspFeatures = {
         enabled = true,
-        chunks = "plain",
+        chunks = "all",
       },
       codeRunner = {
         default_method = function(cell, _)
@@ -157,7 +173,8 @@ return {
     },
     -- stylua: ignore
     keys = {
-      { "<leader>qp", function() require("quarto").quartoPreview({}) end, desc = "Preview Quarto" },
+      { "<leader>qp", function() require("quarto").quartoPreview({ args = "--execute" }) end, desc = "Preview Quarto" },
+      { "<leader>qP", function() require("quarto").quartoPreview({}) end, desc = "Preview Quarto" },
       { "<leader>qa", function() require("quarto").activate() end, desc = "Activate Quarto" },
       { "<leader>re", function() require("quarto.runner").run_cell() end, desc = "Run cell" },
       { "<leader>rr", "<leader>rc]j", desc = "Run cell" , remap = true },

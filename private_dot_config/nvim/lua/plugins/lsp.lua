@@ -75,6 +75,10 @@ return {
                 apply = true,
               })
             end, "Organize Imports (ruff)")
+          elseif client and client.name == "marksman" then
+            -- TODO: Enable when zk not enabled (e.g. quarto, readmes, etc.)
+            client.server_capabilities.hoverProvider = false
+            client.server_capabilities.definitionProvider = false
           end
         end,
       })
@@ -102,10 +106,13 @@ return {
             },
           },
         },
-        marksman = {},
-        pyright = {
+        marksman = {
+          cmd = { "marksman", "server", "-v=5" },
+          filetypes = { "markdown", "markdown.mdx", "quarto", "ipynb" },
+        },
+        basedpyright = {
           settings = {
-            python = {
+            basedpyright = {
               analysis = {
                 typeCheckingMode = "off",
               },

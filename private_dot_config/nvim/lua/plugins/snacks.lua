@@ -28,6 +28,13 @@ return {
             return vim.o.columns >= 120 and "ivy" or "ivy_nopreview"
           end,
         },
+        sources = {
+          lsp_symbols = {
+            filter = {
+              quarto = true,
+            },
+          },
+        },
       }, -- Pickers
       words = { enabled = true }, -- Highlight words and lsp references
       zen = {
@@ -85,7 +92,7 @@ return {
       { "<leader>sh", function() Snacks.picker.help() end, desc = "Search help" },
       { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "Search keymaps" },
       { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Snacks git status" },
-      { "<leader>e", function() Snacks.explorer() end, desc = "File explorer" },
+      { "<leader>fe", function() Snacks.explorer() end, desc = "File explorer" },
     },
   },
 }

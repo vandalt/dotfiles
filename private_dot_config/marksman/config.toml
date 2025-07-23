@@ -1,2 +1,5 @@
+[core]
+markdown.file_extensions = ["md", "markdown", "qmd", "quarto", "ipynb"]
+
 [completion]
 wiki.style = "file-path-stem"

@@ -4,6 +4,8 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     main = "nvim-treesitter.configs", -- Call setup on this module
+    -- TODO: Switch to main when more stable
+    -- branch = "main",
     lazy = false,
     keys = {
       { "<C-Space>", desc = "Increment Selection" },

@@ -1,15 +1,19 @@
 return {
   {
     "folke/tokyonight.nvim",
-    event = "VeryLazy", -- Enables completion for alternative colorschemes
-    lazy = true,
+    lazy = false,
+    priority = 1000, -- before all other start plugins
+    config = function()
+      vim.cmd([[colorscheme tokyonight]])
+    end
   },
   {
     "rebelot/kanagawa.nvim",
-    lazy = false, -- Load main colorscheme during startup...
-    priority = 1000, -- before all other start plugins
+    lazy = true, -- Load main colorscheme during startup...
+    event = "VeryLazy", -- Enables completion for alternative colorschemes
+    -- priority = 1000, -- before all other start plugins
     opts = {
-      transparent = true,
+      transparent = false,
       overrides = function(colors)
         return {
           ["@string.special.url"] = { fg = colors.theme.syn.special1, underline = true, undercurl = false },
@@ -23,7 +27,7 @@ return {
     config = function(_, opts)
       require("kanagawa").setup(opts)
       -- load the colorscheme here
-      vim.cmd([[colorscheme kanagawa]])
+      -- vim.cmd([[colorscheme kanagawa]])
     end,
   }
 }
