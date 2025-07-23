@@ -36,6 +36,7 @@ HISTSIZE=10000
 SAVEHIST=10000
 
 setopt autocd
+setopt extended_glob
 
 zstyle ':compinstall:*' menu select
 autoload -Uz compinit
@@ -171,9 +172,10 @@ if [ $TERM = "alacritty" ]; then
   alias ttoggle="alacritty-colorscheme toggle $LIGHT_COLOR $DARK_COLOR"
 fi
 
-# TODO: Fix this to make less annoying
+# CORRECT will correct commands, CORRECT_ALL will correct arguments
 setopt CORRECT_ALL
-export CORRECT_IGNORE_FILE="go|.config|.astropy|.snakemake|.ipython"
+export CORRECT_IGNORE_FILE="go|.config|.astropy|.snakemake|.ipython|.zshrc"
+export CORRECT_IGNORE="make"
 
 
 # Go to notes and open nvim
