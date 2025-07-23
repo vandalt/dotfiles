@@ -1,0 +1,14 @@
+profile {
+  output eDP-1 resolution 3840x2160 scale 2 position 0,0
+  output "ASUSTek COMPUTER INC ASUS VG289 0x00015835" resolution 3840x2160 scale 1.5 position 1920,0
+}
+
+profile {
+  output eDP-1 resolution 3840x2160 scale 2 position 0,1200
+  output "Hewlett Packard HP L2445m 3CQ9400Z1V" resolution 3840x2160 scale 1.0 position 0,0
+}
+
+profile {
+  output eDP-1 resolution 3840x2160 scale 2 position 0,0
+  output "BNQ BenQ GW2780 ET54M0172904U" resolution 1920x1080 scale 1.0 position 1920,0
+}
