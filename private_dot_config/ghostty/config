@@ -1,7 +1,7 @@
 theme = dark:tokyonight_moon,light:tokyonight-day
 gtk-single-instance = true
 font-family = "JetBrainsMono Nerd Font"
-window-decoration = false
+window-decoration = auto
 background-opacity = 1.0
 font-size = 10
 window-width = 90
