@@ -39,7 +39,7 @@ return {
         local parser_fts = vim.treesitter.language.get_filetypes(parser)
         for _, ft in ipairs(parser_fts) do
           if not filetype_seen[ft] then
-            all_filetypes[#all_filetypes+1] = ft
+            all_filetypes[#all_filetypes + 1] = ft
             filetype_seen[ft] = true
           end
         end
@@ -56,66 +56,198 @@ return {
       })
     end,
   },
-  -- "nvim-treesitter/nvim-treesitter-textobjects",
-  -- {
-  --   "nvim-treesitter/nvim-treesitter",
-  --   build = ":TSUpdate",
-  --   -- main = "nvim-treesitter.configs", -- Call setup on this module
-  --   -- TODO: Switch to main when more stable
-  --   branch = "main",
-  --   lazy = false,
-  --   opts = {
-  --     indent = { enable = true },
-  --     -- textobjects = {
-  --     --   select = {
-  --     --     enable = true,
-  --     --     lookahead = true,
-  --     --     keymaps = {
-  --     --       ["af"] = "@function.outer",
-  --     --       ["if"] = "@function.inner",
-  --     --       ["ac"] = "@class.outer",
-  --     --       ["ic"] = "@class.inner",
-  --     --       ["ab"] = "@block.outer",
-  --     --       ["ib"] = "@block.inner",
-  --     --       -- Custom code cells defined for jupyter in after/queries/markdown/textobjects.scm
-  --     --       -- the default block was in conflict with indents etc.
-  --     --       ["aj"] = "@code_cell.outer",
-  --     --       ["ij"] = "@code_cell.inner",
-  --     --       ["ah"] = "@section.outer",
-  --     --     },
-  --     --     -- Could replace with function but would not save that much space and would complicate
-  --     --     selection_modes = {
-  --     --       ["@function.outer"] = "V",
-  --     --       ["@function.inner"] = "V",
-  --     --       ["@class.outer"] = "V",
-  --     --       ["@class.inner"] = "V",
-  --     --       ["@block.outer"] = "V",
-  --     --       ["@block.inner"] = "V",
-  --     --       ["@conditional.outer"] = "V",
-  --     --       ["@conditional.inner"] = "V",
-  --     --       ["@loop.outer"] = "V",
-  --     --       ["@loop.inner"] = "V",
-  --     --       ["@section.outer"] = "V",
-  --     --     },
-  --     --     include_surrounding_whitespace = false,
-  --     --   },
-  --     --   move = {
-  --     --     enable = true,
-  --     --     set_jumps = true,
-  --     --     goto_next_start = {
-  --     --       ["]m"] = "@function.outer",
-  --     --       ["]c"] = "@class.outer",
-  --     --       ["]j"] = { query = { "@code_cell.inner", "@cell.comment" }, desc = "Goto next cell" },
-  --     --     },
-  --     --     goto_next_end = { ["]M"] = "@function.outer", ["]C"] = "@class.outer", ["]J"] = "@code_cell.outer" },
-  --     --     goto_previous_start = {
-  --     --       ["[m"] = "@function.outer",
-  --     --       ["[c"] = "@class.outer",
-  --     --       ["[j"] = { query = { "@code_cell.inner", "@cell.comment" }, desc = "Goto prev cell" },
-  --     --     },
-  --     --     goto_previous_end = { ["[M"] = "@function.outer", ["[C"] = "@class.outer", ["[J"] = "@code_cell.outer" },
-  --     --   },
-  --     -- },
-  --   },
-  -- },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "main",
+    opts = {
+      select = {
+        lookahead = true,
+        -- Could replace with function but would not save that much space and would complicate
+        selection_modes = {
+          ["@function.outer"] = "V",
+          ["@function.inner"] = "V",
+          ["@class.outer"] = "V",
+          ["@class.inner"] = "V",
+          ["@block.outer"] = "V",
+          ["@block.inner"] = "V",
+          ["@conditional.outer"] = "V",
+          ["@conditional.inner"] = "V",
+          ["@loop.outer"] = "V",
+          ["@loop.inner"] = "V",
+          ["@section.outer"] = "V",
+        },
+        include_surrounding_whitespace = false,
+      },
+      move = { set_jumps = true },
+    },
+    keys = {
+      {
+        "af",
+        function()
+          require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
+        end,
+        mode = { "x", "o" },
+        desc = "function",
+      },
+      {
+        "if",
+        function()
+          require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
+        end,
+        mode = { "x", "o" },
+        desc = "function",
+      },
+      {
+        "ac",
+        function()
+          require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
+        end,
+        mode = { "x", "o" },
+        desc = "class",
+      },
+      {
+        "ic",
+        function()
+          require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
+        end,
+        mode = { "x", "o" },
+        desc = "class",
+      },
+      {
+        "ab",
+        function()
+          require("nvim-treesitter-textobjects.select").select_textobject("@block.outer", "textobjects")
+        end,
+        mode = { "x", "o" },
+        desc = "block",
+      },
+      {
+        "ib",
+        function()
+          require("nvim-treesitter-textobjects.select").select_textobject("@block.inner", "textobjects")
+        end,
+        mode = { "x", "o" },
+        desc = "block",
+      },
+      {
+        "aj",
+        function()
+          require("nvim-treesitter-textobjects.select").select_textobject("@code_cell.outer", "textobjects")
+        end,
+        mode = { "x", "o" },
+      },
+      {
+        "ij",
+        function()
+          require("nvim-treesitter-textobjects.select").select_textobject("@code_cell.inner", "textobjects")
+        end,
+        mode = { "x", "o" },
+        desc = "code cell",
+      },
+      {
+        "ah",
+        function()
+          require("nvim-treesitter-textobjects.select").select_textobject("@selection.outer", "textobjects")
+        end,
+        mode = { "x", "o" },
+        desc = "selection",
+      },
+      {
+        "]m",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_next_start("@function.outer", "textobjects")
+        end,
+        mode = { "n" , "x" , "o" },
+        desc = "Next function",
+      },
+      {
+        "]c",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_next_start("@class.outer", "textobjects")
+        end,
+        mode = { "n" , "x" , "o" },
+        desc = "Next class",
+      },
+      {
+        "]j",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_next_start({ "@code_cell.inner", "@cell.comment" }, "textobjects")
+        end,
+        mode = { "n" , "x" , "o" },
+        desc = "Next code cell",
+      },
+      {
+        "]M",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_next_end("@function.outer", "textobjects")
+        end,
+        mode = { "n" , "x" , "o" },
+        desc = "Next function end",
+      },
+      {
+        "]C",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_next_end("@class.outer", "textobjects")
+        end,
+        mode = { "n" , "x" , "o" },
+        desc = "Next class end",
+      },
+      {
+        "]J",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_next_end("@code_cell.outer", "textobjects")
+        end,
+        mode = { "n" , "x" , "o" },
+        desc = "Next code cell end",
+      },
+      {
+        "[m",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_previous_start("@function.outer", "textobjects")
+        end,
+        mode = { "n" , "x" , "o" },
+        desc = "Previous code cell",
+      },
+      {
+        "[c",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_previous_start("@class.outer", "textobjects")
+        end,
+        mode = { "n" , "x" , "o" },
+        desc = "Previous class",
+      },
+      {
+        "[j",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_previous_start({ "@code_cell.inner", "@cell.comment" }, "textobjects")
+        end,
+        mode = { "n" , "x" , "o" },
+        desc = "Previous code cell",
+      },
+      {
+        "[M",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_previous_end("@function.outer", "textobjects")
+        end,
+        mode = { "n" , "x" , "o" },
+        desc = "Previous function end",
+      },
+      {
+        "[C",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_previous_end("@class.outer", "textobjects")
+        end,
+        mode = { "n" , "x" , "o" },
+        desc = "Previous class end",
+      },
+      {
+        "[J",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_previous_end("@code_cell.outer", "textobjects")
+        end,
+        mode = { "n" , "x" , "o" },
+        desc = "Previous code cell end",
+      },
+    },
+  },
 }
