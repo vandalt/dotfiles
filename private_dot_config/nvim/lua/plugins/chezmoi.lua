@@ -54,7 +54,6 @@ return {
         desc = "Find chezmoi files",
       },
       {
-        -- TODO: Replace with snacks
         "<leader>fc",
         function()
           snacks_picker_chezmoi(vim.fn.stdpath("config"))

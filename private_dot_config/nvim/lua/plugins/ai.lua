@@ -34,6 +34,7 @@ return {
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     build = "make tiktoken", -- Only on MacOS or Linux
+    cmd = "CopilotChat",
     opts = {
       auto_insert_mode = true,
       question_header = "## vandalt",

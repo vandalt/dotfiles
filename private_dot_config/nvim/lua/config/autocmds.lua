@@ -10,7 +10,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end
 })
 
--- HACK: helps having folding with ZkNotes
+-- Helps having folding with ZkNotes
 vim.api.nvim_create_autocmd("BufReadPost", {
   desc = "Set foldmethod when entering buffer",
   group = augroup("foldmethod"),
@@ -24,7 +24,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end
 })
 
--- From lazyvim
+-- From Lazyvim
 vim.api.nvim_create_autocmd("BufReadPost", {
   desc = "Restore cursor position when opening a buffer",
   group = augroup("last-loc"),
@@ -73,9 +73,11 @@ vim.api.nvim_create_autocmd("FileType", {
   group = augroup("wrap-spell"),
   pattern = { "quarto" },
   callback = function()
-    vim.opt_local.shiftwidth = 4
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.spell = true
   end,
 })
+
 -- From lazyvim
 vim.api.nvim_create_autocmd("FileType", {
   desc = "Close some buffers with q directly, and don't list them",

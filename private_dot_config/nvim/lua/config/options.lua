@@ -2,29 +2,26 @@
 vim.g.no_python_maps = 1
 vim.g.python3_host_prog = os.getenv("HOME") .. "/repos/perso/pynvim/venv/bin/python"
 
-
--- TODO: Make available using require somehow
-function Foldexpr()
-  -- Copied from lazyvim
-  local buf = vim.api.nvim_get_current_buf()
-  if vim.b[buf].ts_folds == nil then
-    -- as long as we don't have a filetype, don't bother
-    -- checking if treesitter is available (it won't)
-    if vim.bo[buf].filetype == "" then
-      return "0"
-    end
-    if vim.bo[buf].filetype:find("dashboard") then
-      vim.b[buf].ts_folds = false
-    else
-      vim.b[buf].ts_folds = pcall(vim.treesitter.get_parser, buf)
-    end
-  end
-  return vim.b[buf].ts_folds and vim.treesitter.foldexpr() or "0"
-end
+-- function Foldexpr()
+--   -- Copied from lazyvim
+--   local buf = vim.api.nvim_get_current_buf()
+--   if vim.b[buf].ts_folds == nil then
+--     -- as long as we don't have a filetype, don't bother
+--     -- checking if treesitter is available (it won't)
+--     if vim.bo[buf].filetype == "" then
+--       return "0"
+--     end
+--     if vim.bo[buf].filetype:find("dashboard") then
+--       vim.b[buf].ts_folds = false
+--     else
+--       vim.b[buf].ts_folds = pcall(vim.treesitter.get_parser, buf)
+--     end
+--   end
+--   return vim.b[buf].ts_folds and vim.treesitter.foldexpr() or "0"
+-- end
 
 local opt = vim.opt
 
--- TODO: Clipboard with schedule?
 opt.autowrite = false -- Autowrite when switching buffers
 opt.number = true -- Line numbers
 opt.relativenumber = true
@@ -67,7 +64,7 @@ opt.wildmode = "longest:full,full" -- Go to longest match & show menu, next use 
 opt.wrap = true -- Line wrap
 opt.smoothscroll = true -- Scroll screen lines instead of text lines with c-e and c-y
 opt.foldmethod = "expr"
-opt.foldexpr = "v:lua.Foldexpr()"
+-- opt.foldexpr = "v:lua.Foldexpr()"
 opt.foldtext = "" -- Makes mkdnflow foldtext work
 opt.foldlevel = 99
 opt.spelllang = { "en", "fr" }
