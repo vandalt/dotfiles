@@ -19,9 +19,9 @@ return {
         layouts = {
           ivy_nopreview = {
             preset = "ivy",
-            hidden = {"preview"},
-            layout = {}
-          }
+            hidden = { "preview" },
+            layout = {},
+          },
         },
         layout = {
           preset = function()
@@ -77,22 +77,26 @@ return {
       { "]]", function() Snacks.words.jump(vim.v.count1) end, desc = "Next reference (snacks)", mode = { "n", "t" } },
       { "[[", function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev reference (snacks)", mode = { "n", "t" } },
       { "<leader>gb", function() Snacks.gitbrowse() end, desc = "Git browse (snacks)" },
-      { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit (snacks)" },
+      { "<leader>gg", function() Snacks.lazygit({ cwd = require("util.root").get() }) end, desc = "Lazygit (root)" },
+      { "<leader>gG", function() Snacks.lazygit() end, desc = "Lazygit (cwd)" },
       { "<leader>nh", function() Snacks.notifier.show_history() end, desc = "Notification history" },
       { "<leader>nd", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
       { "<leader>wf",  function() Snacks.zen() end, desc = "Toggle focus mode (zen)" },
       { "<leader>wm",  function() Snacks.zen.zoom() end, desc = "Toggle maximization (zen)" },
       { "<leader><space>", function() Snacks.picker.smart() end, desc = "Find smart" },
-      { "<leader>ff", function() Snacks.picker.files() end, desc = "Find files" },
+      { "<leader>ff", function() Snacks.picker.files({ cwd = require("util.root").get() }) end, desc = "Find files (root)" },
+      { "<leader>fF", function() Snacks.picker.files() end, desc = "Find files (cwd)" },
       { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Find buffers" },
-      { "<leader>sg", function() Snacks.picker.grep() end, desc = "Search grep" },
+      { "<leader>sg", function() Snacks.picker.grep({ cwd = require("util.root").get() }) end, desc = "Search grep (root)" },
+      { "<leader>sG", function() Snacks.picker.grep() end, desc = "Search grep (cwd)" },
       { "<leader>sb", function() Snacks.picker.grep_buffers() end, desc = "Search (grep) buffers" },
       { "<leader>se", function() Snacks.picker.icons() end, desc = "Search emojis and icons" },
       { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "Search LSP symbvols" },
       { "<leader>sh", function() Snacks.picker.help() end, desc = "Search help" },
       { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "Search keymaps" },
       { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Snacks git status" },
-      { "<leader>fe", function() Snacks.explorer() end, desc = "File explorer" },
+      { "<leader>fe", function() Snacks.explorer({ cwd = require("util.root").get() }) end, desc = "File explorer (root)" },
+      { "<leader>fE", function() Snacks.explorer() end, desc = "File explorer (cwd)" },
     },
   },
 }
