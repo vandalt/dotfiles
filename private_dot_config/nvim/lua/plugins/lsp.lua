@@ -84,13 +84,7 @@ return {
       })
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      -- TODO: Remove at some point
-      if vim.g.my_cmp_plugin == "cmp" then
-        capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-      elseif vim.g.my_cmp_plugin == "blink" then
-        capabilities = vim.tbl_deep_extend("force", capabilities, require("blink.cmp").get_lsp_capabilities({}, false))
-        -- capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
-      end
+      capabilities = vim.tbl_deep_extend("force", capabilities, require("blink.cmp").get_lsp_capabilities({}, false))
 
       local servers = {
         bashls = {},

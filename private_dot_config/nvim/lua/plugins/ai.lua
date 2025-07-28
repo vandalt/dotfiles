@@ -13,29 +13,24 @@ return {
       { "<leader>ad", "<cmd>Copilot disable<CR>", desc = "Disable Copilot" },
     },
   },
-  {
-    "saghen/blink.cmp",
-    optional = true,
-    dependencies = { "giuxtaposition/blink-cmp-copilot" },
-    opts = {
-      sources = {
-        default = { "copilot" },
-        providers = {
-          copilot = {
-            name = "copilot",
-            module = "blink-cmp-copilot",
-            score_offset = 100,
-            async = true,
-          },
-        },
-      },
-    },
-  },
-  {
-    "zbirenbaum/copilot-cmp",
-    enabled = vim.g.my_cmp_plugin == "cmp",
-    opts = {},
-  },
+  -- {
+  --   "saghen/blink.cmp",
+  --   optional = true,
+  --   dependencies = { "giuxtaposition/blink-cmp-copilot" },
+  --   opts = {
+  --     sources = {
+  --       default = { "copilot" },
+  --       providers = {
+  --         copilot = {
+  --           name = "copilot",
+  --           module = "blink-cmp-copilot",
+  --           score_offset = 100,
+  --           async = true,
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     build = "make tiktoken", -- Only on MacOS or Linux
