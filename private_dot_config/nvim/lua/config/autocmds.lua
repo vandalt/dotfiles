@@ -78,6 +78,7 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+
 -- From lazyvim
 vim.api.nvim_create_autocmd("FileType", {
   desc = "Close some buffers with q directly, and don't list them",

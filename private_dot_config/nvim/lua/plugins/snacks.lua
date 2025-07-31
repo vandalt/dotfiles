@@ -95,8 +95,8 @@ return {
       { "<leader>sh", function() Snacks.picker.help() end, desc = "Search help" },
       { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "Search keymaps" },
       { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Snacks git status" },
-      { "<leader>fe", function() Snacks.explorer({ cwd = require("util.root").get() }) end, desc = "File explorer (root)" },
-      { "<leader>fE", function() Snacks.explorer() end, desc = "File explorer (cwd)" },
+      { "<leader>e", function() Snacks.explorer({ cwd = require("util.root").get() }) end, desc = "File explorer (root)" },
+      { "<leader>E", function() Snacks.explorer() end, desc = "File explorer (cwd)" },
     },
   },
 }

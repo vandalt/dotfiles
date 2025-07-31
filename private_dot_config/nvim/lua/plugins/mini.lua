@@ -1,69 +1,5 @@
 return {
   {
-    "echasnovski/mini.pairs",
-    enabled = false,
-    opts = {
-      skip_unbalanced = true, -- Custom option, not part of mini.pairs spec
-      mappings = {
-        -- TODO: Add _, ~ etc in markdown files
-        ["("] = { action = "open", pair = "()", neigh_pattern = "[^\\][^%w_~\\]" },
-        ["["] = { action = "open", pair = "[]", neigh_pattern = "[^\\][^%w_~\\]" },
-        ["{"] = { action = "open", pair = "{}", neigh_pattern = "[^\\][^%w_~\\]" },
-
-        -- TODO: Handle """ for docstrings, like `` below?
-        ['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '[^\\%w][^%w]',   register = { cr = false } },
-        ["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '[^\\%w][^%w]', register = { cr = false } },
-        -- Handle markdown codeblocks by skipping when previous is ``
-        ['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\%w(``)][^%w]',   register = { cr = false } },
-
-        -- Comment out to auto-insert space in brackets
-        -- Square bracket ([) is removed because of markdown checkboxes
-        -- [" "] = { action = "open", pair = "  ", neigh_pattern = "[%({][%)%]}]" },
-      },
-    },
-    config = function(_, opts)
-      Snacks.toggle({
-        name = "Mini Pairs",
-        get = function()
-          return not vim.g.minipairs_disable
-        end,
-        set = function(state)
-          vim.g.minipairs_disable = not state
-        end,
-      }):map("<leader>up")
-      -- Create default mappings
-      local pairs = require("mini.pairs")
-      pairs.setup(opts)
-      -- Override the open function to skip unbalanced pairs
-      local open = pairs.open
-      ---@diagnostic disable-next-line: duplicate-set-field
-      pairs.open = function(pair, neigh_pattern)
-        -- From lazyvim
-        local o, c = pair:sub(1, 1), pair:sub(2, 2)
-        local line = vim.api.nvim_get_current_line()
-        local cursor = vim.api.nvim_win_get_cursor(0)
-        local next = line:sub(cursor[2] + 1, cursor[2] + 1)
-        if opts.skip_unbalanced and next == c and c ~= o then
-          local _, count_open = line:gsub(vim.pesc(o), "")
-          local _, count_close = line:gsub(vim.pesc(c), "")
-          if count_close > count_open then
-            return o
-          end
-        end
-        return open(pair, neigh_pattern)
-      end
-      -- Add latex
-      local map_tex = function()
-        MiniPairs.map_buf(0, "i", "$", { action = "closeopen", pair = "$$", neigh_pattern = "[^\\%w][^%w]" })
-      end
-      vim.api.nvim_create_autocmd("FileType", {
-        group = vim.api.nvim_create_augroup("pairs-tex", { clear = true }),
-        pattern = "tex",
-        callback = map_tex,
-      })
-    end,
-  },
-  {
     "echasnovski/mini.surround",
     opts = {
       mappings = {
@@ -151,6 +87,70 @@ return {
         require("mini.icons").mock_nvim_web_devicons()
         return package.loaded["nvim-web-devicons"]
       end
+    end,
+  },
+  {
+    "echasnovski/mini.pairs",
+    enabled = false,
+    opts = {
+      skip_unbalanced = true, -- Custom option, not part of mini.pairs spec
+      mappings = {
+        -- TODO: Add _, ~ etc in markdown files
+        ["("] = { action = "open", pair = "()", neigh_pattern = "[^\\][^%w_~\\]" },
+        ["["] = { action = "open", pair = "[]", neigh_pattern = "[^\\][^%w_~\\]" },
+        ["{"] = { action = "open", pair = "{}", neigh_pattern = "[^\\][^%w_~\\]" },
+
+        -- TODO: Handle """ for docstrings, like `` below?
+        ['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '[^\\%w][^%w]',   register = { cr = false } },
+        ["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '[^\\%w][^%w]', register = { cr = false } },
+        -- Handle markdown codeblocks by skipping when previous is ``
+        ['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\%w(``)][^%w]',   register = { cr = false } },
+
+        -- Comment out to auto-insert space in brackets
+        -- Square bracket ([) is removed because of markdown checkboxes
+        -- [" "] = { action = "open", pair = "  ", neigh_pattern = "[%({][%)%]}]" },
+      },
+    },
+    config = function(_, opts)
+      Snacks.toggle({
+        name = "Mini Pairs",
+        get = function()
+          return not vim.g.minipairs_disable
+        end,
+        set = function(state)
+          vim.g.minipairs_disable = not state
+        end,
+      }):map("<leader>up")
+      -- Create default mappings
+      local pairs = require("mini.pairs")
+      pairs.setup(opts)
+      -- Override the open function to skip unbalanced pairs
+      local open = pairs.open
+      ---@diagnostic disable-next-line: duplicate-set-field
+      pairs.open = function(pair, neigh_pattern)
+        -- From lazyvim
+        local o, c = pair:sub(1, 1), pair:sub(2, 2)
+        local line = vim.api.nvim_get_current_line()
+        local cursor = vim.api.nvim_win_get_cursor(0)
+        local next = line:sub(cursor[2] + 1, cursor[2] + 1)
+        if opts.skip_unbalanced and next == c and c ~= o then
+          local _, count_open = line:gsub(vim.pesc(o), "")
+          local _, count_close = line:gsub(vim.pesc(c), "")
+          if count_close > count_open then
+            return o
+          end
+        end
+        return open(pair, neigh_pattern)
+      end
+      -- Add latex
+      local map_tex = function()
+        MiniPairs.map_buf(0, "i", "$", { action = "closeopen", pair = "$$", neigh_pattern = "[^\\%w][^%w]" })
+      end
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("pairs-tex", { clear = true }),
+        pattern = "tex",
+        callback = map_tex,
+      })
     end,
   },
 }

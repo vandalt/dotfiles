@@ -30,8 +30,6 @@ return {
     },
     config = function(_, opts)
       require("kanagawa").setup(opts)
-      -- load the colorscheme here
-      -- vim.cmd([[colorscheme kanagawa]])
     end,
   }
 }
