@@ -110,7 +110,8 @@ alias cz='chezmoi'
 # export NVIM_NIGHTLY_PATH="$HOME/neovim/bin/nvim"
 # alias nvim="$NVIM_NIGHTLY_PATH"
 # alias nvo=/usr/bin/nvim
-alias lvim="NVIM_APPNAME=lazyvim nvim"
+alias lazyvim="NVIM_APPNAME=lazyvim nvim"
+alias oldvim="NVIM_APPNAME=nvim-lazy nvim"
 # alias lvn="NVIM_APPNAME=lazyvim $NVIM_NIGHTLY_PATH"
 alias knvim="NVIM_APPNAME=kickstart-nvim nvim"
 # alias knvn="NVIM_APPNAME=kickstart-nvim $NVIM_NIGHTLY_PATH"
@@ -174,7 +175,7 @@ fi
 
 # CORRECT will correct commands, CORRECT_ALL will correct arguments
 setopt CORRECT_ALL
-export CORRECT_IGNORE_FILE="go|.config|.astropy|.snakemake|.ipython|.zshrc"
+export CORRECT_IGNORE_FILE="go|.config|.astropy|.snakemake|.ipython|.zshrc|.task"
 export CORRECT_IGNORE="make"
 
 
@@ -273,7 +274,7 @@ source /usr/share/doc/pkgfile/command-not-found.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 {{ else if eq .chezmoi.osRelease.id "fedora" }}
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 {{ end }}
 

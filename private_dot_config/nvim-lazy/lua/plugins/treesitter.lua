@@ -84,7 +84,7 @@ return {
       {
         "af",
         function()
-          require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
+          require("nvim-treesitter-textobjects.select").select_textobject("@function.outer")
         end,
         mode = { "x", "o" },
         desc = "function",
@@ -92,7 +92,7 @@ return {
       {
         "if",
         function()
-          require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
+          require("nvim-treesitter-textobjects.select").select_textobject("@function.inner")
         end,
         mode = { "x", "o" },
         desc = "function",
@@ -100,7 +100,7 @@ return {
       {
         "ac",
         function()
-          require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
+          require("nvim-treesitter-textobjects.select").select_textobject("@class.outer")
         end,
         mode = { "x", "o" },
         desc = "class",
@@ -108,7 +108,7 @@ return {
       {
         "ic",
         function()
-          require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
+          require("nvim-treesitter-textobjects.select").select_textobject("@class.inner")
         end,
         mode = { "x", "o" },
         desc = "class",
@@ -116,7 +116,7 @@ return {
       {
         "ab",
         function()
-          require("nvim-treesitter-textobjects.select").select_textobject("@block.outer", "textobjects")
+          require("nvim-treesitter-textobjects.select").select_textobject("@block.outer")
         end,
         mode = { "x", "o" },
         desc = "block",
@@ -124,7 +124,7 @@ return {
       {
         "ib",
         function()
-          require("nvim-treesitter-textobjects.select").select_textobject("@block.inner", "textobjects")
+          require("nvim-treesitter-textobjects.select").select_textobject("@block.inner")
         end,
         mode = { "x", "o" },
         desc = "block",
@@ -132,14 +132,14 @@ return {
       {
         "aj",
         function()
-          require("nvim-treesitter-textobjects.select").select_textobject("@code_cell.outer", "textobjects")
+          require("nvim-treesitter-textobjects.select").select_textobject("@code_cell.outer")
         end,
         mode = { "x", "o" },
       },
       {
         "ij",
         function()
-          require("nvim-treesitter-textobjects.select").select_textobject("@code_cell.inner", "textobjects")
+          require("nvim-treesitter-textobjects.select").select_textobject("@code_cell.inner")
         end,
         mode = { "x", "o" },
         desc = "code cell",
@@ -147,7 +147,7 @@ return {
       {
         "ah",
         function()
-          require("nvim-treesitter-textobjects.select").select_textobject("@selection.outer", "textobjects")
+          require("nvim-treesitter-textobjects.select").select_textobject("@selection.outer")
         end,
         mode = { "x", "o" },
         desc = "selection",
@@ -155,7 +155,7 @@ return {
       {
         "]m",
         function()
-          require("nvim-treesitter-textobjects.move").goto_next_start("@function.outer", "textobjects")
+          require("nvim-treesitter-textobjects.move").goto_next_start("@function.outer")
         end,
         mode = { "n" , "x" , "o" },
         desc = "Next function",
