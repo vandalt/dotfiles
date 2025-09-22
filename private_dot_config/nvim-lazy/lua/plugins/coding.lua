@@ -164,7 +164,7 @@ return {
   },
   {
     "roobert/f-string-toggle.nvim",
-    dev = true,
+    dev = false,
     -- stylua: ignore
     keys = {
       { "<leader>fs", function() require("f-string-toggle").toggle_fstring() end, desc = "Toggle f-string" }

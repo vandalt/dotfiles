@@ -25,7 +25,7 @@ require("lazy").setup({
   -- colorscheme that will be used when installing plugins.
   install = { colorscheme = { "default" } },
   ---@diagnostic disable-next-line: assign-type-mismatch
-  dev = { path = "~/repos/perso" },
+  dev = { path = "~/repos/nvim-local/opt" },
   -- automatically check for plugin updates, every 24 hours
   checker = { enabled = false, frequency = 3600 * 24 },
   change_detection = { notify = false },

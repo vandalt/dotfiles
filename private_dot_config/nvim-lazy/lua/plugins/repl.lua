@@ -151,7 +151,7 @@ return {
   },
   {
     "quarto-dev/quarto-nvim",
-    dev = true,
+    dev = false,
     lazy = false,
     ft = { "quarto" }, -- required so treesitter works
     dependencies = { "jmbuhr/otter.nvim" },
