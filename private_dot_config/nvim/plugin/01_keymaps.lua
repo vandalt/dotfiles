@@ -44,6 +44,7 @@ map("n", "<leader>ff", function() MiniPick.builtin.files() end, "Find file")
 map("n", "<leader>sg", function() MiniPick.builtin.grep_live() end, "Search grep")
 map("n", "<leader>fb", function() MiniPick.builtin.buffers() end, "Find buffer")
 map("n", "<leader>sh", function() MiniPick.builtin.help() end, "Search help")
+map("n", "<leader>sk", function() MiniExtra.pickers.keymaps() end, "Search keymaps")
 
 -- Sessions
 map("n", "<leader>ss", function() MiniSessions.write("Session.vim") end, "Save session")
