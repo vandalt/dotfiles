@@ -107,17 +107,11 @@ alias blue='bluetuith'
 
 alias cz='chezmoi'
 
-# export NVIM_NIGHTLY_PATH="$HOME/neovim/bin/nvim"
-# alias nvim="$NVIM_NIGHTLY_PATH"
-# alias nvo=/usr/bin/nvim
-alias lazyvim="NVIM_APPNAME=lazyvim nvim"
+# Alternative nvim configurations
+alias lvim="NVIM_APPNAME=lazyvim nvim"
 alias ovim="NVIM_APPNAME=nvim-lazy nvim"
-# alias lvn="NVIM_APPNAME=lazyvim $NVIM_NIGHTLY_PATH"
-alias knvim="NVIM_APPNAME=kickstart-nvim nvim"
-# alias knvn="NVIM_APPNAME=kickstart-nvim $NVIM_NIGHTLY_PATH"
-alias codew="code --ozone-platform-hint=auto"
+alias kvim="NVIM_APPNAME=kickstart-nvim nvim"
 
-# alias jwst-apt='~/programs/APT/APT'
 
 setopt +o nomatch
 alias tclean='rm *.aux *.fls *.fdb_latexmk *.log *.out *.vrb *.nav *.snm *.synctex.* *.toc *.bbl *.blg *.lof'
@@ -140,7 +134,7 @@ export PYSYN_CDBS=$HOME/Documents/data/package-data/trds
 export CRDS_PATH=$HOME/Documents/data/package-data/crds_cache
 export CRDS_SERVER_URL=https://jwst-crds.stsci.edu
 export MIRAGE_DATA=$HOME/Documents/data/package-data/mirage-data/mirage_data
-# Dsiable jupyter "frozen packges" warning for python 3.11
+# Disable jupyter "frozen packges" warning for python 3.11
 export PYDEVD_DISABLE_FILE_VALIDATION=1
 export JUPYTERLAB_DIR=$HOME/.local/share/jupyter/lab
 export MPLBACKEND_KITTY_SIZING=manual
