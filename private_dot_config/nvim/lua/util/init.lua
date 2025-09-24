@@ -32,4 +32,14 @@ M.get_date_zw  = function(start_week_day)
   end
 end
 
+M.combined_cell_spec = function(ai_type, id, opts)
+  if vim.bo.filetype == "python" then
+    vim.notify("python")
+    return require("notebook-navigator").miniai_spec(ai_type)
+  else
+    return require("mini.ai").gen_spec.treesitter({ a = "@cell.outer", i = "@cell.inner" })(ai_type, id, opts)
+  end
+end
+
+
 return M

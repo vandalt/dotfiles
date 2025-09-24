@@ -120,16 +120,6 @@ vim.lsp.config("*", {
   ),
 })
 
-function combined_cell_spec(ai_type, id, opts)
-  if vim.bo.filetype == "python" then
-    vim.notify("python")
-    return require("notebook-navigator").miniai_spec(ai_type)
-  else
-    vim.print("not python")
-    return require("mini.ai").gen_spec.treesitter({ a = "@cell.outer", i = "@cell.inner" })(ai_type, id, opts)
-  end
-end
-
 -- Next two plugins use notebook-navigator so need to run later
 later(function()
   -- Highlight stuff
@@ -147,9 +137,10 @@ later(function()
   local ai = require("mini.ai")
   require("mini.ai").setup({
     custom_textobjects = {
-      j = combined_cell_spec,
+      j = require("util").combined_cell_spec,
       o = ai.gen_spec.treesitter({ a = "@block.outer", i = "@block.inner" }),
-      -- j = ai.gen_spec.treesitter({ a = "@cell.comment", i = "@cell.comment" }),
     },
   })
 end)
+
+later(function() require("mini.extra").setup() end)
