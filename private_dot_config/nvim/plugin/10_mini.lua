@@ -17,7 +17,7 @@ require("mini.splitjoin").setup()
 -- Load snippets from collection (e.g. friendly-snippets)
 local gen_loader = require("mini.snippets").gen_loader
 require("mini.snippets").setup({
-  snippets = { gen_loader.from_lang() },
+  snippets = { gen_loader.from_lang({ lang_patterns = { markdown_inline = { "markdown.json" } } }) },
 })
 -- Without this "fake" LSP, mini.snippets won't show up in mini.completion
 -- Only actual LSP snippets will and mini.snippets need to be manually expanded with "name<c-j>"
