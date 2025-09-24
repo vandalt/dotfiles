@@ -33,6 +33,7 @@ require("mini.diff").setup({ view = { style = "number" } })
 require("mini.sessions").setup()
 
 -- Picker
+-- For built-in pickers, configure the tool directly (example ripgrep config file for smart case)
 require("mini.pick").setup({
   mappings = {
     choose_alt = { char = "<C-y>", func = function() vim.api.nvim_input("<CR>") end },
