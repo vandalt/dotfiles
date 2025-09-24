@@ -39,6 +39,9 @@ add("justinmk/vim-gtfo")
 vim.g["chezmoi#use_tmp_buffer"] = 1
 add("alker0/chezmoi.vim")
 
+add("xvzc/chezmoi.nvim")
+require("chezmoi").setup({})
+
 -- LSP, snippets and linting and formatting ============================================================================
 add("mason-org/mason.nvim")
 require("mason").setup()
