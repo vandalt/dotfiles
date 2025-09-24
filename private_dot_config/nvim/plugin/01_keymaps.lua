@@ -42,6 +42,8 @@ map("", "grf", function() require("conform").format({ async = true }) end, "Form
 -- Picker
 map("n", "<leader>ff", function() MiniPick.builtin.files() end, "Find file")
 map("n", "<leader>fb", function() MiniPick.builtin.buffers() end, "Find buffer")
+map("n", "<leader>fz", function() require("util").pick_chezmoi() end, "Find chezmoi file")
+map("n", "<leader>fc", function() require("util").pick_chezmoi(vim.fn.stdpath("config")) end, "Find chezmoi file")
 map("n", "<leader>sg", function() MiniPick.builtin.grep_live() end, "Search grep")
 map("n", "<leader>sh", function() MiniPick.builtin.help() end, "Search help")
 map("n", "<leader>sk", function() MiniExtra.pickers.keymaps() end, "Search keymaps")

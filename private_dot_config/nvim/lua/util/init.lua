@@ -41,5 +41,25 @@ M.combined_cell_spec = function(ai_type, id, opts)
   end
 end
 
+M.pick_chezmoi = function(targets)
+  local results = require("chezmoi.commands").list({
+    targets = targets,
+    args = {
+      "--include",
+      "files",
+      "--exclude",
+      "externals",
+    },
+  })
+
+  local function choose_fn(item)
+    local source_path = require("chezmoi.commands").source_path({
+      targets = { item },
+    })[1]
+    require("mini.pick").default_choose(source_path)
+  end
+  require("mini.pick").start({ source = { items = results, name = "Chezmoi", cwd = vim.fn.expand("~"), choose = choose_fn }})
+end
+
 
 return M
