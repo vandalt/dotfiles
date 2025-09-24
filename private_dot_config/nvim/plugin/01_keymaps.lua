@@ -36,13 +36,13 @@ map("n", "<leader>bd", function() require("mini.bufremove").delete() end, "Close
 map("n", "<leader>bD", "<Cmd>bdelete<CR>", "Close buffer and window")
 
 -- LSP-related
-map("n", "<leader>cm", "<Cmd>Mason<CR>", "Open Mason")
-map("", "<leader>cf", function() require("conform").format({ async = true }) end, "Format buffer or selection")
+map("n", "grm", "<Cmd>Mason<CR>", "Open Mason")
+map("", "grf", function() require("conform").format({ async = true }) end, "Format buffer or selection")
 
 -- Picker
 map("n", "<leader>ff", function() MiniPick.builtin.files() end, "Find file")
-map("n", "<leader>sg", function() MiniPick.builtin.grep_live() end, "Search grep")
 map("n", "<leader>fb", function() MiniPick.builtin.buffers() end, "Find buffer")
+map("n", "<leader>sg", function() MiniPick.builtin.grep_live() end, "Search grep")
 map("n", "<leader>sh", function() MiniPick.builtin.help() end, "Search help")
 map("n", "<leader>sk", function() MiniExtra.pickers.keymaps() end, "Search keymaps")
 
@@ -77,8 +77,6 @@ map("n", "<leader>to", function() require("neotest").output.open({ enter = true,
 map("n", "<leader>tp", function() require("neotest").output_panel.toggle() end, "Toggle Output Panel (Neotest)")
 ---@diagnostic disable-next-line:missing-fields
 map("n", "<leader>td", function() require("neotest").run.run({ strategy = "dap" }) end, "Debug Nearest test")
-
--- Treesitter textobjects: see plugin/treesitter.lua because it depends on the branch used and main is unstable
 
 -- REPL
 local trim_spaces = false
