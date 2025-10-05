@@ -7,7 +7,7 @@ require("oil").setup({
     ["<C-h>"] = false,
     ["<C-l>"] = false,
     ["<C-a>"] = { "actions.select", opts = { horizontal = true } },
-  }
+  },
 })
 
 vim.cmd([[packadd toggleterm.nvim]])
@@ -27,12 +27,15 @@ add({
 })
 require("CopilotChat").setup({ headers = { user = "vandalt" }, auto_insert_mode = true })
 
+add("lukas-reineke/indent-blankline.nvim")
+-- Use mini.indentscope for the scope
+require("ibl").setup({ scope = { enabled = false } })
+
 add({
   source = "kenn7/vim-arsync",
   depends = { "prabirshrestha/async.vim" },
 })
 add("justinmk/vim-gtfo")
-
 
 -- Needs to be a 'start' plugin, either add directly from init.lua or move to 'start' subdir with
 -- mv ~/.local/share/nvim/site/pack/deps/opt/chezmoi.vim/ ~/.local/share/nvim/site/pack/deps/start/
@@ -65,6 +68,11 @@ vim.lsp.config("basedpyright", {
 vim.lsp.enable({ "lua_ls", "basedpyright", "ruff" })
 
 add("rafamadriz/friendly-snippets")
+add("danymat/neogen")
+require("neogen").setup({
+  snippet_engine = "mini",
+  languages = { python = { template = { annotation_convention = "reST" } } },
+})
 
 add("stevearc/conform.nvim")
 require("conform").setup({
@@ -73,7 +81,6 @@ require("conform").setup({
   },
   default_format_opts = { lsp_format = "fallback" },
 })
-
 
 -- Debugging and testing ===============================================================================================
 add({ source = "mfussenegger/nvim-dap", depends = { "jbyuki/one-small-step-for-vimkind" } })
@@ -97,7 +104,7 @@ add({
 })
 ---@diagnostic disable-next-line: missing-fields
 require("neotest").setup({
-  adapters = { require("neotest-python")({ dap = { justMyCode = false }}) },
+  adapters = { require("neotest-python")({ dap = { justMyCode = false } }) },
 })
 
 -- Jupyter notebooks and REPL ==========================================================================================
@@ -130,7 +137,7 @@ require("quarto").setup({
 -- Markdown and notes ==================================================================================================
 add({
   source = "iamcco/markdown-preview.nvim",
-   hooks = {
+  hooks = {
     post_install = later(function() vim.fn["mkdp#util#install"]() end),
     post_checkout = function() vim.fn["mkdp#util#install"]() end,
   },
@@ -142,3 +149,6 @@ add("zk-org/zk-nvim")
 require("zk").setup({
   picker = "minipick",
 })
+
+add("HakonHarnes/img-clip.nvim")
+require("img-clip").setup()

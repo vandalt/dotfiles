@@ -61,5 +61,11 @@ M.pick_chezmoi = function(targets)
   require("mini.pick").start({ source = { items = results, name = "Chezmoi", cwd = vim.fn.expand("~"), choose = choose_fn }})
 end
 
+M.yank_path = function(register)
+  register = register or "@"
+  local file_path = vim.fn.expand("%:~")
+  vim.fn.setreg(register, file_path)
+  vim.notify("Yanked file " .. file_path .. " to register '" .. register .. "'")
+end
 
 return M

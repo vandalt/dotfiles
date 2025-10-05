@@ -5,11 +5,23 @@ vim.cmd("colorscheme default")
 
 require("mini.surround").setup()
 
+require("mini.pairs").setup({
+  mappings = {
+    ['"'] = { action = "closeopen", pair = '""', neigh_pattern = '[^\\"].', register = { cr = false } },
+    ["'"] = { action = "closeopen", pair = "''", neigh_pattern = "[^%aç\\'].", register = { cr = false } },
+    ["`"] = { action = "closeopen", pair = "``", neigh_pattern = "[^\\`].", register = { cr = false } },
+  },
+})
+local map_tex = function() MiniPairs.map_buf(0, "i", "$", { action = "closeopen", pair = "$$" }) end
+vim.api.nvim_create_autocmd("FileType", { pattern = { "tex", "plaintex" }, callback = map_tex })
+
 require("mini.icons").setup()
 later(MiniIcons.mock_nvim_web_devicons)
 later(MiniIcons.tweak_lsp_kind)
 
 require("mini.statusline").setup()
+
+require("mini.indentscope").setup({ draw = { animation = require("mini.indentscope").gen_animation.none()}})
 
 -- gS to split and join
 require("mini.splitjoin").setup()
@@ -34,12 +46,15 @@ require("mini.sessions").setup()
 
 -- Picker
 -- For built-in pickers, configure the tool directly (example ripgrep config file for smart case)
+-- The ui.select stuff before and after is to preserve default for now.
+local ui_select_orig = vim.ui.select
 require("mini.pick").setup({
   mappings = {
     choose_alt = { char = "<C-y>", func = function() vim.api.nvim_input("<CR>") end },
     choose_marked_alt = { char = "<C-S-y>", func = function() vim.api.nvim_input("<M-CR>") end },
   },
 })
+vim.ui.select = ui_select_orig
 
 local miniclue = require("mini.clue")
 miniclue.setup({
@@ -89,12 +104,13 @@ miniclue.setup({
     miniclue.gen_clues.z(),
     { mode = "n", keys = "<leader>a", desc = "+ai" },
     { mode = "n", keys = "<leader>b", desc = "+buffers" },
-    { mode = "n", keys = "<leader>c", desc = "+coding" },
     { mode = "n", keys = "<leader>d", desc = "+debug" },
     { mode = "n", keys = "<leader>f", desc = "+find" },
     { mode = "n", keys = "<leader>j", desc = "+jupyter" },
-    { mode = "n", keys = "<leader>m", desc = "+markdown" },
-    { mode = "n", keys = "<leader>r", desc = "+rsync" },
+    { mode = "n", keys = "<leader>m", desc = "+markdown/mini" },
+    { mode = "n", keys = "<leader>md", desc = "+mini.deps" },
+    { mode = "n", keys = "<leader>i", desc = "+image" },
+    { mode = "n", keys = "<leader>r", desc = "+rsync/run" },
     { mode = "n", keys = "<leader>s", desc = "+search/session" },
     { mode = "n", keys = "<leader>t", desc = "+tests" },
     { mode = "n", keys = "<leader>z", desc = "+zk" },
@@ -137,11 +153,17 @@ later(function()
   -- Custom textobjects with "a" and "i"
   local ai = require("mini.ai")
   require("mini.ai").setup({
+    n_lines = 300,
     custom_textobjects = {
       j = require("util").combined_cell_spec,
       o = ai.gen_spec.treesitter({ a = "@block.outer", i = "@block.inner" }),
+      f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
+      c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),
+      u = ai.gen_spec.function_call(),
     },
   })
 end)
+
+require("mini.jump2d").setup()
 
 later(function() require("mini.extra").setup() end)

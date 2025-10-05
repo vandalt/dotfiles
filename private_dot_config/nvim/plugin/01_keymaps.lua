@@ -8,8 +8,10 @@ end
 map("n", "-", "<Cmd>Oil<CR>", "Open oil.nvim") -- See plugin config for other oil mappings
 map("n", "<Esc>", "<Cmd>:nohlsearch<CR>")
 map("t", "<Esc><Esc>", "<C-\\><C-n>", "Normal mode (terminal)")
-map("n", "<leader>du", "<Cmd>DepsUpdate<CR>", "MiniDeps Update")
-map("n", "<leader>dd", "<Cmd>DepsClean<CR>", "MiniDeps Delete")
+map("n", "<leader>mdu", "<Cmd>DepsUpdate<CR>", "MiniDeps Update")
+map("n", "<leader>mdc", "<Cmd>DepsClean<CR>", "MiniDeps Delete")
+map("n", "yp", function() require("util").yank_path() end, "Yank current path")
+map("n", "<leader>yp", function() require("util").yank_path("+") end, "Yank current to system clipboard")
 
 -- Yank and put from system clipboard
 map({ "n", "v" }, "<leader>y", [["+y]], "Yank to system clipboard", { remap = true })
@@ -39,14 +41,30 @@ map("n", "<leader>bD", "<Cmd>bdelete<CR>", "Close buffer and window")
 map("n", "grm", "<Cmd>Mason<CR>", "Open Mason")
 map("", "grf", function() require("conform").format({ async = true }) end, "Format buffer or selection")
 
+-- Docstrings
+map("n", "grd", function() require("neogen").generate() end, "Generate docstrings")
+map(
+  "n",
+  "grp",
+  function() require("neogen").generate({ annotation_convention = { python = "numpydoc" } }) end,
+  "Numpy docstrings"
+)
+map(
+  "n",
+  "grg",
+  function() require("neogen").generate({ annotation_convention = { python = "google_docstrins" } }) end,
+  "Google docstrings"
+)
+
 -- Picker
 map("n", "<leader>ff", function() MiniPick.builtin.files() end, "Find file")
 map("n", "<leader>fb", function() MiniPick.builtin.buffers() end, "Find buffer")
 map("n", "<leader>fz", function() require("util").pick_chezmoi() end, "Find chezmoi file")
-map("n", "<leader>fc", function() require("util").pick_chezmoi(vim.fn.stdpath("config")) end, "Find chezmoi file")
+map("n", "<leader>fc", function() require("util").pick_chezmoi(vim.fn.stdpath("config")) end, "Find config file (chezmoi)")
 map("n", "<leader>sg", function() MiniPick.builtin.grep_live() end, "Search grep")
 map("n", "<leader>sh", function() MiniPick.builtin.help() end, "Search help")
 map("n", "<leader>sk", function() MiniExtra.pickers.keymaps() end, "Search keymaps")
+map("n", "<leader>sm", function() MiniExtra.pickers.marks() end, "Search marks")
 
 -- Sessions
 map("n", "<leader>ss", function() MiniSessions.write("Session.vim") end, "Save session")
@@ -86,6 +104,7 @@ local use_bracketed_paste = true
 local tt_opts = { trim_spaces, { args = vim.v.count }, use_bracketed_paste }
 
 -- Run code in toggleterm
+map("n", "<leader>rp", "<Cmd>TermExec cmd='python %'<CR>", "Run Python script")
 map(
   "n",
   "<leader>jl",
@@ -116,9 +135,14 @@ map("n", "<leader>ja", function() require("quarto.runner").run_above() end, "Run
 map("n", "<leader>jA", function() require("quarto.runner").run_all() end, "Run all cells")
 map("n", "<leader>jb", function() require("quarto.runner").run_below() end, "Run cell and below")
 
+map("n", "<leader>jn", "icodeblock<C-j>python<C-l>", "New cell", { remap = true })
+map("i", "<C-CR>", "codeblock<C-j>python<C-l>", "New cell", { remap = true })
+
 -- Markdown preview
 map("n", "<leader>mp", "<Cmd>MarkdownPreviewToggle<CR>", "Toggle markdown preview")
 
+-- Paste images
+map("n", "<leader>ip", "<Cmd>PasteImage<CR>", "Paste image")
 
 -- Zk notes
 -- stylua: ignore start
