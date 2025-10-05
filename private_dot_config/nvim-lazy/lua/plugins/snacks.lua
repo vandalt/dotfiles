@@ -10,7 +10,7 @@ return {
       explorer = { enabled = true, replace_netrw = false }, -- Explorer
       gitbrowse = { enabled = true }, -- Browse to GitHub
       image = { enabled = true }, -- Display images
-      indent = { enabled = true, animate = { enabled = true } }, -- Indent guides
+      indent = { enabled = true, animate = { enabled = false } }, -- Indent guides
       lazygit = { enabled = true, configure = true }, -- Lazygit
       notifier = { enabled = true, style = "compact", padding = false }, -- padding has statuscolumn color
       picker = {
