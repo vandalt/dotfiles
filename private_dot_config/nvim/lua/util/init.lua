@@ -78,6 +78,7 @@ end
 
 M.pick_git_status = function()
   local show_fn = function(buf_id, items, query)
+    -- Convert items to a table and extract path to get file icons
     for i, item in ipairs(items) do
       local _, filename = string.match(item, "^%s*(%S+)%s+(%S+)$")
       items[i] = { text = item, path = filename }
@@ -86,7 +87,7 @@ M.pick_git_status = function()
   end
   local local_opts = { command = { "git", "status", "-s" } }
   local source = {
-    name = "Git files (modified + untracked)",
+    name = "Git status",
     show = show_fn,
   }
   return MiniPick.builtin.cli(local_opts, { source = source })

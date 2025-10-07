@@ -41,9 +41,6 @@ require("mini.git").setup()
 -- Diff in sidebar
 require("mini.diff").setup({ view = { style = "number" } })
 
--- Save and load sessions
-require("mini.sessions").setup()
-
 -- Picker
 -- For built-in pickers, configure the tool directly (example ripgrep config file for smart case)
 -- The ui.select stuff before and after is to preserve default for now.

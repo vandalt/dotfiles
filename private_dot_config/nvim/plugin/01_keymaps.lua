@@ -69,8 +69,9 @@ map("n", "<leader>sm", function() MiniExtra.pickers.marks() end, "Search marks")
 map("n", "<leader>fg", function() require("util").pick_git_status() end, "Find git")
 
 -- Sessions
-map("n", "<leader>ss", function() MiniSessions.write("Session.vim") end, "Save session")
-map("n", "<leader>sr", function() MiniSessions.read() end, "Read session")
+map("n", "<leader>sd", function() require("persistence").stop() end, "Save session")
+map("n", "<leader>sr", function() require("persistence").load() end, "Read session")
+map("n", "<leader>ss", function() require("persistence").select() end, "Select session")
 
 -- Copilot
 map("n", "<leader>ai", "<Cmd>CopilotChatToggle<CR>", "Copilot chat")

@@ -40,6 +40,9 @@ add("justinmk/vim-gtfo")
 add("folke/flash.nvim")
 require("flash").setup({ modes = { char = { enabled = false } } })
 
+add("folke/persistence.nvim")
+require("persistence").setup()
+
 -- Needs to be a 'start' plugin, either add directly from init.lua or move to 'start' subdir with
 -- mv ~/.local/share/nvim/site/pack/deps/opt/chezmoi.vim/ ~/.local/share/nvim/site/pack/deps/start/
 vim.g["chezmoi#use_tmp_buffer"] = 1
