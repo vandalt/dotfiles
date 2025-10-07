@@ -12,6 +12,7 @@ map("n", "<leader>mdu", "<Cmd>DepsUpdate<CR>", "MiniDeps Update")
 map("n", "<leader>mdc", "<Cmd>DepsClean<CR>", "MiniDeps Delete")
 map("n", "yp", function() require("util").yank_path() end, "Yank current path")
 map("n", "<leader>yp", function() require("util").yank_path("+") end, "Yank current to system clipboard")
+map({ "n", "x", "o" }, "<CR>", function() require("flash").jump() end, "Flash (jump)" )
 
 -- Yank and put from system clipboard
 map({ "n", "v" }, "<leader>y", [["+y]], "Yank to system clipboard", { remap = true })

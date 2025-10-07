@@ -164,6 +164,4 @@ later(function()
   })
 end)
 
-require("mini.jump2d").setup()
-
 later(function() require("mini.extra").setup() end)
