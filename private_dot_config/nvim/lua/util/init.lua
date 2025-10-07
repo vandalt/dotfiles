@@ -22,7 +22,7 @@ M.toggleterm_send_motion = function(trim_spaces, cmd_data, use_bracketed_paste)
   end
 end
 
-M.get_date_zw  = function(start_week_day)
+M.get_date_zw = function(start_week_day)
   start_week_day = start_week_day or "sunday"
   ---@diagnostic disable-next-line: param-type-mismatch
   if string.lower(os.date("%A")) == start_week_day then
@@ -58,7 +58,15 @@ M.pick_chezmoi = function(targets)
     })[1]
     require("mini.pick").default_choose(source_path)
   end
-  require("mini.pick").start({ source = { items = results, name = "Chezmoi", cwd = vim.fn.expand("~"), choose = choose_fn }})
+  require("mini.pick").start({
+    source = {
+      items = results,
+      name = "Chezmoi",
+      cwd = vim.fn.expand("~"),
+      choose = choose_fn,
+      show = function(buf_id, items, query) return MiniPick.default_show(buf_id, items, query, { show_icons = true }) end,
+    },
+  })
 end
 
 M.yank_path = function(register)
@@ -66,6 +74,22 @@ M.yank_path = function(register)
   local file_path = vim.fn.expand("%:~")
   vim.fn.setreg(register, file_path)
   vim.notify("Yanked file " .. file_path .. " to register '" .. register .. "'")
+end
+
+M.pick_git_status = function()
+  local show_fn = function(buf_id, items, query)
+    for i, item in ipairs(items) do
+      local _, filename = string.match(item, "^%s*(%S+)%s+(%S+)$")
+      items[i] = { text = item, path = filename }
+    end
+    return MiniPick.default_show(buf_id, items, query, { show_icons = true })
+  end
+  local local_opts = { command = { "git", "status", "-s" } }
+  local source = {
+    name = "Git files (modified + untracked)",
+    show = show_fn,
+  }
+  return MiniPick.builtin.cli(local_opts, { source = source })
 end
 
 return M
