@@ -106,15 +106,25 @@ add("mfussenegger/nvim-dap-python")
 require("dap-python").setup(vim.env.MASON .. "/packages/debugpy/venv/bin/python")
 require("dap-python").test_runner = "pytest"
 
-add({
-  source = "nvim-neotest/neotest",
-  depends = { "nvim-lua/plenary.nvim", "nvim-neotest/nvim-nio", "nvim-neotest/neotest-python" },
-})
+local neotest_local = true
+if not neotest_local then
+  add({
+    source = "nvim-neotest/neotest",
+    depends = { "nvim-lua/plenary.nvim", "nvim-neotest/nvim-nio", "nvim-neotest/neotest-python" },
+  })
+else
+  vim.cmd[[packadd neotest]]
+  vim.cmd[[packadd neotest-python]]
+  add({
+    source = "nvim-neotest/nvim-nio",
+    depends = { "nvim-lua/plenary.nvim",  },
+  })
+end
 ---@diagnostic disable-next-line: missing-fields
 require("neotest").setup({
-  adapters = { require("neotest-python")({ dap = { justMyCode = false } }) },
+  adapters = { require("neotest-python")({ dap = { justMyCode = false }, pytest_discover_instances = false }) },
 })
-
+--
 -- Jupyter notebooks and REPL ==========================================================================================
 vim.cmd([[packadd jupytext.nvim]])
 -- add("GCBallesteros/jupytext.nvim")
