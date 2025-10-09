@@ -14,7 +14,7 @@ add({
     post_checkout = function() vim.cmd("TSUpdate") end,
   },
 })
-add({ source = "nvim-treesitter/nvim-treesitter-textobjects", checkout = "main" })
+add({ source = "nvim-treesitter/nvim-treesitter-textobjects", checkout = "main", monitor = "main" })
 local parsers = {
   "diff",
   "lua",
