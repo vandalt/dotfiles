@@ -80,15 +80,20 @@ M.pick_git_status = function()
   local show_fn = function(buf_id, items, query)
     -- Convert items to a table and extract path to get file icons
     for i, item in ipairs(items) do
-      local _, filename = string.match(item, "^%s*(%S+)%s+(%S+)$")
-      items[i] = { text = item, path = filename }
+      local _, filepath = string.match(item, "^%s*(%S+)%s+(%S+)$")
+      items[i] = { text = item, path = filepath }
     end
     return MiniPick.default_show(buf_id, items, query, { show_icons = true })
+  end
+  local choose_fn = function(item)
+    local _, path = string.match(item, "^%s*(%S+)%s+(%S+)$")
+    return MiniPick.default_choose(path)
   end
   local local_opts = { command = { "git", "status", "-s" } }
   local source = {
     name = "Git status",
     show = show_fn,
+    choose = choose_fn,
   }
   return MiniPick.builtin.cli(local_opts, { source = source })
 end
