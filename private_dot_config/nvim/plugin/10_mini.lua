@@ -103,6 +103,7 @@ miniclue.setup({
     { mode = "n", keys = "<leader>b", desc = "+buffers" },
     { mode = "n", keys = "<leader>d", desc = "+debug" },
     { mode = "n", keys = "<leader>f", desc = "+find" },
+    { mode = "n", keys = "<leader>g", desc = "+git" },
     { mode = "n", keys = "<leader>j", desc = "+jupyter" },
     { mode = "n", keys = "<leader>m", desc = "+markdown/mini" },
     { mode = "n", keys = "<leader>md", desc = "+mini.deps" },

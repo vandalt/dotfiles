@@ -66,7 +66,7 @@ map("n", "<leader>sg", function() MiniPick.builtin.grep_live() end, "Search grep
 map("n", "<leader>sh", function() MiniPick.builtin.help() end, "Search help")
 map("n", "<leader>sk", function() MiniExtra.pickers.keymaps() end, "Search keymaps")
 map("n", "<leader>sm", function() MiniExtra.pickers.marks() end, "Search marks")
-map("n", "<leader>fg", function() require("util").pick_git_status() end, "Find git")
+map("n", "<leader>gs", function() require("util").pick_git_status() end, "Git status picker")
 
 -- Sessions
 map("n", "<leader>sd", function() require("persistence").stop() end, "Save session")
