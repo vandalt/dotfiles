@@ -106,24 +106,16 @@ add("mfussenegger/nvim-dap-python")
 require("dap-python").setup(vim.env.MASON .. "/packages/debugpy/venv/bin/python")
 require("dap-python").test_runner = "pytest"
 
-local neotest_local = true
-if not neotest_local then
-  add({
-    source = "nvim-neotest/neotest",
-    depends = { "nvim-lua/plenary.nvim", "nvim-neotest/nvim-nio", "nvim-neotest/neotest-python" },
-  })
-else
-  vim.cmd[[packadd neotest]]
-  vim.cmd[[packadd neotest-python]]
-  add({
-    source = "nvim-neotest/nvim-nio",
-    depends = { "nvim-lua/plenary.nvim",  },
-  })
-end
+add({
+  source = "ribru17/neotest",
+  checkout = "fast_parse_fixup",
+  depends = { "nvim-lua/plenary.nvim", "nvim-neotest/nvim-nio", "nvim-neotest/neotest-python" },
+})
 ---@diagnostic disable-next-line: missing-fields
 require("neotest").setup({
   adapters = { require("neotest-python")({ dap = { justMyCode = false }, pytest_discover_instances = false }) },
 })
+
 --
 -- Jupyter notebooks and REPL ==========================================================================================
 vim.cmd([[packadd jupytext.nvim]])
@@ -169,4 +161,6 @@ require("zk").setup({
 })
 
 add("HakonHarnes/img-clip.nvim")
-require("img-clip").setup()
+require("img-clip").setup({
+  default = { prompt_for_file_name = false },
+})
