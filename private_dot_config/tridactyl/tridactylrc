@@ -27,4 +27,4 @@ blacklistadd typ.ing
 
 setnull searchurls.github
 set searchurls.gh https://github.com/search?utf8=✓&q=
-set searchengine duckduckgo
+set searchengine google
