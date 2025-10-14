@@ -68,6 +68,9 @@ map("n", "<leader>sk", function() MiniExtra.pickers.keymaps() end, "Search keyma
 map("n", "<leader>sm", function() MiniExtra.pickers.marks() end, "Search marks")
 map("n", "<leader>gs", function() require("util").pick_git_status() end, "Git status picker")
 
+-- Git
+map("n", "<leader>gb", "<Cmd>vertical Git blame -- %<CR>", "Git blame")
+
 -- Sessions
 map("n", "<leader>sd", function() require("persistence").stop() end, "Save session")
 map("n", "<leader>sr", function() require("persistence").load() end, "Read session")
@@ -75,6 +78,9 @@ map("n", "<leader>ss", function() require("persistence").select() end, "Select s
 
 -- Copilot
 map("n", "<leader>ai", "<Cmd>CopilotChatToggle<CR>", "Copilot chat")
+
+-- Undotree
+map("n", "<leader>uu", "<Cmd>Undotree<CR>", "Toggle undotree")
 
 -- Dap
 map("n", "<leader>db", function() require("dap").toggle_breakpoint() end, "Toggle breakpoint")

@@ -1,8 +1,5 @@
 local later = require("mini.deps").later
 
--- Required even when default so hipatterns look good
-vim.cmd("colorscheme default")
-
 require("mini.surround").setup()
 
 require("mini.pairs").setup({
@@ -140,6 +137,7 @@ later(function()
   -- Highlight stuff
   require("mini.hipatterns").setup({
     highlighters = {
+      hex_color = require('mini.hipatterns').gen_highlighter.hex_color(),
       fixme = { pattern = "FIXME", group = "MiniHipatternsFixme" },
       bug = { pattern = "BUG", group = "MiniHipatternsFixme" },
       hack = { pattern = "HACK", group = "MiniHipatternsHack" },

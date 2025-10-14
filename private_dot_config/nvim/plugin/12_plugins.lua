@@ -1,6 +1,7 @@
 local add, later = require("mini.deps").add, require("mini.deps").later
 
 -- Misc useful plugins =================================================================================================
+vim.cmd[[packadd nvim.undotree]]
 add("stevearc/oil.nvim")
 require("oil").setup({
   keymaps = {
@@ -38,7 +39,12 @@ add({
 add("justinmk/vim-gtfo")
 
 add("folke/flash.nvim")
-require("flash").setup({ modes = { char = { enabled = false } } })
+require("flash").setup( { modes = { char = { enabled = false } } })
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "qf",
+  callback = function() vim.keymap.set('n', '<CR>', '<CR>', { buffer = true }) end,
+})
+
 
 add("folke/persistence.nvim")
 require("persistence").setup()
@@ -107,8 +113,7 @@ require("dap-python").setup(vim.env.MASON .. "/packages/debugpy/venv/bin/python"
 require("dap-python").test_runner = "pytest"
 
 add({
-  source = "ribru17/neotest",
-  checkout = "fast_parse_fixup",
+  source = "nvim-neotest/neotest",
   depends = { "nvim-lua/plenary.nvim", "nvim-neotest/nvim-nio", "nvim-neotest/neotest-python" },
 })
 ---@diagnostic disable-next-line: missing-fields

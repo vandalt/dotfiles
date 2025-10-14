@@ -2,7 +2,7 @@ M = {}
 
 -- Create a global 'send_motion' function that sends a motion to toggleterm
 -- The motion type should be compatible with operatorfunc and g@
--- This wrapper is used to enable passing argumetns to send_lines_to_terminal
+-- This wrapper is used to enable passing arguments to send_lines_to_terminal
 local function create_send_motion(trim_spaces, cmd_data, use_bracketed_paste)
   _G.send_motion = function(motion_type)
     require("toggleterm").send_lines_to_terminal(motion_type, trim_spaces, cmd_data, use_bracketed_paste)
@@ -77,16 +77,19 @@ M.yank_path = function(register)
 end
 
 M.pick_git_status = function()
+  local _split_status_path = function(status) return string.match(status, "^%s*(%S+)%s+(%S+)$") end
+  -- Convert str items to table with text and path fields.
+  -- That way the path is used to get file icons, but the full status is shown
   local show_fn = function(buf_id, items, query)
-    -- Convert items to a table and extract path to get file icons
     for i, item in ipairs(items) do
-      local _, filepath = string.match(item, "^%s*(%S+)%s+(%S+)$")
-      items[i] = { text = item, path = filepath }
+      local _, path = _split_status_path(item)
+      items[i] = { text = item, path = path }
     end
     return MiniPick.default_show(buf_id, items, query, { show_icons = true })
   end
+  -- Extract the file path from the status str, otherwise `default_choose` will not open it
   local choose_fn = function(item)
-    local _, path = string.match(item, "^%s*(%S+)%s+(%S+)$")
+    local _, path = _split_status_path(item)
     return MiniPick.default_choose(path)
   end
   local local_opts = { command = { "git", "status", "-s" } }
