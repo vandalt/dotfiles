@@ -33,3 +33,4 @@ opt.formatexpr = "v:lua.require'conform'.formatexpr()" -- Use conform/lsp for gq
 opt.completeopt = "menu,popup,longest,fuzzy"
 opt.foldlevel = 99
 opt.laststatus = 3 -- Show single statusline at the bottom
+opt.fillchars = "eob: "

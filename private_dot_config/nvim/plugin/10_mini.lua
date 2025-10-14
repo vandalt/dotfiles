@@ -18,6 +18,9 @@ later(MiniIcons.tweak_lsp_kind)
 
 require("mini.statusline").setup()
 
+-- TODO: On the fence, could also replace lsp progress
+-- require("mini.notify").setup()
+
 require("mini.indentscope").setup({ draw = { animation = require("mini.indentscope").gen_animation.none()}})
 
 -- gS to split and join
@@ -101,13 +104,14 @@ miniclue.setup({
     { mode = "n", keys = "<leader>d", desc = "+debug" },
     { mode = "n", keys = "<leader>f", desc = "+find" },
     { mode = "n", keys = "<leader>g", desc = "+git" },
+    { mode = "n", keys = "<leader>i", desc = "+image" },
     { mode = "n", keys = "<leader>j", desc = "+jupyter" },
     { mode = "n", keys = "<leader>m", desc = "+markdown/mini" },
     { mode = "n", keys = "<leader>md", desc = "+mini.deps" },
-    { mode = "n", keys = "<leader>i", desc = "+image" },
     { mode = "n", keys = "<leader>r", desc = "+rsync/run" },
     { mode = "n", keys = "<leader>s", desc = "+search/session" },
     { mode = "n", keys = "<leader>t", desc = "+tests" },
+    { mode = "n", keys = "<leader>u", desc = "+toggle" },
     { mode = "n", keys = "<leader>z", desc = "+zk" },
   },
 })

@@ -38,6 +38,7 @@ add({
 })
 add("justinmk/vim-gtfo")
 
+
 add("folke/flash.nvim")
 require("flash").setup( { modes = { char = { enabled = false } } })
 vim.api.nvim_create_autocmd("FileType", {
@@ -119,6 +120,17 @@ add({
 ---@diagnostic disable-next-line: missing-fields
 require("neotest").setup({
   adapters = { require("neotest-python")({ dap = { justMyCode = false }, pytest_discover_instances = false }) },
+  -- Override some of the highlight groups that look bad with the light theme
+  -- TODO: Remove or uncomment: https://github.com/nvim-neotest/neotest/pull/553
+  -- highlights = {
+  --   passed = "DiagnosticOk",
+  --   running = "DiagnosticWarn",
+  --   skipped = "DiagnosticInfo",
+  --   file = "DiagnosticInfo",
+  --   dir = "DiagnosticInfo",
+  --   select_win = "Title",
+  --   watching = "DiagnosticWarn",
+  -- }
 })
 
 --
@@ -169,3 +181,6 @@ add("HakonHarnes/img-clip.nvim")
 require("img-clip").setup({
   default = { prompt_for_file_name = false },
 })
+add("3rd/image.nvim")
+---@diagnostic disable-next-line: missing-fields
+require("image").setup({processor = "magick_cli"})

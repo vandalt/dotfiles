@@ -38,6 +38,11 @@ map("v", "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", "
 map("n", "<leader>bd", function() require("mini.bufremove").delete() end, "Close buffer")
 map("n", "<leader>bD", "<Cmd>bdelete<CR>", "Close buffer and window")
 
+-- Toggle things
+-- mini.basics has some builtin but not for most plugins
+map("n", "<leader>up", function() vim.g.minipairs_disable = not vim.g.minipairs_disable end, "Toggle pairs")
+map("n", "<leader>uu", "<Cmd>Undotree<CR>", "Toggle undotree")
+
 -- LSP-related
 map("n", "grm", "<Cmd>Mason<CR>", "Open Mason")
 map("", "grf", function() require("conform").format({ async = true }) end, "Format buffer or selection")
@@ -61,7 +66,12 @@ map(
 map("n", "<leader>ff", function() MiniPick.builtin.files() end, "Find file")
 map("n", "<leader>fb", function() MiniPick.builtin.buffers() end, "Find buffer")
 map("n", "<leader>fz", function() require("util").pick_chezmoi() end, "Find chezmoi file")
-map("n", "<leader>fc", function() require("util").pick_chezmoi(vim.fn.stdpath("config")) end, "Find config file (chezmoi)")
+map(
+  "n",
+  "<leader>fc",
+  function() require("util").pick_chezmoi(vim.fn.stdpath("config")) end,
+  "Find config file (chezmoi)"
+)
 map("n", "<leader>sg", function() MiniPick.builtin.grep_live() end, "Search grep")
 map("n", "<leader>sh", function() MiniPick.builtin.help() end, "Search help")
 map("n", "<leader>sk", function() MiniExtra.pickers.keymaps() end, "Search keymaps")
@@ -78,9 +88,6 @@ map("n", "<leader>ss", function() require("persistence").select() end, "Select s
 
 -- Copilot
 map("n", "<leader>ai", "<Cmd>CopilotChatToggle<CR>", "Copilot chat")
-
--- Undotree
-map("n", "<leader>uu", "<Cmd>Undotree<CR>", "Toggle undotree")
 
 -- Dap
 map("n", "<leader>db", function() require("dap").toggle_breakpoint() end, "Toggle breakpoint")
