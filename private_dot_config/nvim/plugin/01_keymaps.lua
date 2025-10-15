@@ -83,19 +83,17 @@ local ts_map = function(lhs, move, query, desc)
   local modes = { "n", "x", "o" }
   map(modes, lhs, function() require("nvim-treesitter-textobjects.move")[move](query) end, desc)
 end
--- stylua: ignore start
--- TODO: Do a version where one mapping does all four of an object
-ts_map("]m", "goto_next_start", "@function.outer", "next method")
-ts_map("]M", "goto_next_end", "@function.outer", "next method end")
-ts_map("[m", "goto_previous_start", "@function.outer", "previous method")
-ts_map("[M", "goto_previous_end", "@function.outer", "previous method end")
-ts_map("]c", "goto_next_start", "@class.outer", "next class")
-ts_map("]C", "goto_next_end", "@class.outer", "next class end")
-ts_map("[c", "goto_previous_start", "@class.outer", "previous class")
-ts_map("[C", "goto_previous_end", "@class.outer", "previous class end")
-ts_map("]j", "goto_next_start", { "@cell.outer", "@cell.comment" }, "next cell")
-ts_map("[j", "goto_previous_start", { "@cell.outer", "@cell.comment" }, "previous cell")
--- stylua: ignore end
+
+local ts_map_all = function(char, query, name)
+  name = name or query
+  ts_map("]" .. char:lower(), "goto_next_start", query, "next " .. name)
+  ts_map("]" .. char:upper(), "goto_next_end", query, "next " .. name .. " end")
+  ts_map("[" .. char:lower(), "goto_previous_start", query, "previous " .. name)
+  ts_map("[" .. char:upper(), "goto_previous_end", query, "previous " .. name .. " end")
+end
+ts_map_all("m", "@function.outer", "method")
+ts_map_all("c", "@class.outer", "method")
+ts_map_all("j", { "@cell.outer", "@cell.comment" }, "cell")
 -- }}}
 
 -- {{{ mini plugins ====================================================================================================
