@@ -1,7 +1,7 @@
 -- vim: foldmethod=marker
 local add, later = require("mini.deps").add, require("mini.deps").later
 
--- {{{ Misc useful plugins =================================================================================================
+-- {{{ Misc useful plugins =============================================================================================
 vim.cmd[[packadd nvim.undotree]]
 add("stevearc/oil.nvim")
 require("oil").setup({
@@ -59,7 +59,7 @@ add("xvzc/chezmoi.nvim")
 require("chezmoi").setup({})
 -- }}}
 
--- {{{ LSP, snippets and linting and formatting ============================================================================
+-- {{{ LSP, snippets and linting and formatting ========================================================================
 add("mason-org/mason.nvim")
 require("mason").setup()
 
@@ -97,7 +97,7 @@ require("conform").setup({
 })
 -- }}}
 
--- {{{ Treesitter
+-- {{{ Treesitter ======================================================================================================
 add({
   source = "nvim-treesitter/nvim-treesitter",
   checkout = "main",
@@ -148,7 +148,7 @@ require("nvim-treesitter-textobjects").setup({
 })
 -- }}}
 
--- {{{ Debugging and testing ===============================================================================================
+-- {{{ Debugging and testing ===========================================================================================
 add({ source = "mfussenegger/nvim-dap", depends = { "jbyuki/one-small-step-for-vimkind" } })
 local dap = require("dap")
 dap.configurations.lua = { {
@@ -172,7 +172,7 @@ add({
 require("neotest").setup({
   adapters = { require("neotest-python")({ dap = { justMyCode = false }, pytest_discover_instances = false }) },
   -- Override some of the highlight groups that look bad with the light theme
-  -- TODO: Remove or uncomment: https://github.com/nvim-neotest/neotest/pull/553
+  -- TODO: Remove or uncomment depending on what happens with PR: https://github.com/nvim-neotest/neotest/pull/553
   -- highlights = {
   --   passed = "DiagnosticOk",
   --   running = "DiagnosticWarn",
@@ -185,7 +185,7 @@ require("neotest").setup({
 })
 -- }}}
 
--- {{{ Jupyter notebooks and REPL ==========================================================================================
+-- {{{ Jupyter notebooks and REPL ======================================================================================
 vim.cmd([[packadd jupytext.nvim]])
 -- add("GCBallesteros/jupytext.nvim")
 require("jupytext").setup({ style = "markdown", output_extension = "md", force_ft = "markdown" })
@@ -213,7 +213,7 @@ require("quarto").setup({
 })
 -- }}}
 
--- {{{ Markdown and notes ==================================================================================================
+-- {{{ Markdown and notes ==============================================================================================
 add({
   source = "iamcco/markdown-preview.nvim",
   hooks = {

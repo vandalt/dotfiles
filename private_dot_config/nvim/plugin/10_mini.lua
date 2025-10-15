@@ -1,7 +1,7 @@
 -- vim: foldmethod=marker
 local later = require("mini.deps").later
 
--- {{{ Misc useful plugins =====================================================
+-- {{{ Misc useful plugins =============================================================================================
 require("mini.surround").setup() -- Surround with sa/sd/sr
 require("mini.splitjoin").setup() -- gS to split and join
 later(function() require("mini.extra").setup() end)  -- Misc extra functionality
@@ -49,7 +49,7 @@ require("mini.pick").setup({
 vim.ui.select = ui_select_orig
 -- }}}
 
--- {{{ UI ======================================================================
+-- {{{ UI ==============================================================================================================
 require("mini.statusline").setup()
 
 -- Icons, with recommended tweaks
@@ -88,7 +88,7 @@ end)
 -- require("mini.notify").setup()
 -- }}}
 
--- {{{ Coding ==================================================================
+-- {{{ Coding ==========================================================================================================
 require("mini.diff").setup({ view = { style = "number" } }) -- Diff in sidebar
 
 -- Snippets
@@ -134,7 +134,7 @@ vim.lsp.config("*", {
 })
 -- }}}
 
--- {{{ mini.clue ===============================================================
+-- {{{ mini.clue =======================================================================================================
 local miniclue = require("mini.clue")
 miniclue.setup({
   triggers = {

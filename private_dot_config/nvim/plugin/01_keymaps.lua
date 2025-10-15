@@ -5,7 +5,7 @@ local map = function(mode, lhs, rhs, desc, opts)
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
--- {{{ Misc useful mappings ====================================================
+-- {{{ Misc useful mappings ============================================================================================
 -- mini.deps
 map("n", "<leader>mdu", "<Cmd>DepsUpdate<CR>", "MiniDeps Update")
 map("n", "<leader>mdc", "<Cmd>DepsClean<CR>", "MiniDeps Delete")
@@ -56,7 +56,7 @@ map("n", "<leader>rd", "<Cmd>ARsyncDown<CR>", "Rsync down from remote")
 map("n", "<leader>ai", function() require("sidekick.cli").toggle({ name = "copilot" }) end, "Sidekick")
 -- }}}
 
--- {{{ LSP-related =============================================================
+-- {{{ LSP-related =====================================================================================================
 map("n", "grm", "<Cmd>Mason<CR>", "Open Mason")
 map("", "grf", function() require("conform").format({ async = true }) end, "Format buffer or selection")
 
@@ -76,7 +76,7 @@ map(
 )
 -- }}}
 
--- {{{ Treesitter ==============================================================
+-- {{{ Treesitter ======================================================================================================
 -- Move around text object (selection is configured with mini.ai)
 local ts_map = function(lhs, move, query, desc)
   local modes = { "n", "x", "o" }
@@ -97,7 +97,7 @@ ts_map("[j", "goto_previous_start", { "@cell.outer", "@cell.comment" }, "previou
 -- stylua: ignore end
 -- }}}
 
--- {{{ mini plugins ============================================================
+-- {{{ mini plugins ====================================================================================================
 map("n", "<leader>ff", function() MiniPick.builtin.files() end, "Find file")
 map("n", "<leader>fb", function() MiniPick.builtin.buffers() end, "Find buffer")
 map("n", "<leader>fz", function() require("util").pick_chezmoi() end, "Find chezmoi file")
@@ -122,7 +122,7 @@ map("n", "<leader>sr", function() require("persistence").load() end, "Read sessi
 map("n", "<leader>ss", function() require("persistence").select() end, "Select session")
 -- }}}
 
--- {{{ Debug and test ==========================================================
+-- {{{ Debug and test ==================================================================================================
 -- Dap
 map("n", "<leader>db", function() require("dap").toggle_breakpoint() end, "Toggle breakpoint")
 map("n", "<leader>dc", function() require("dap").continue() end, "Debug")
@@ -149,7 +149,7 @@ map("n", "<leader>tp", function() require("neotest").output_panel.toggle() end, 
 map("n", "<leader>td", function() require("neotest").run.run({ strategy = "dap" }) end, "Debug Nearest test")
 -- }}}
 
--- {{{ REPL ====================================================================
+-- {{{ REPL ============================================================================================================
 local trim_spaces = false
 local use_bracketed_paste = true
 local tt_opts = { trim_spaces, { args = vim.v.count }, use_bracketed_paste }
@@ -190,7 +190,7 @@ map("n", "<leader>jn", "icodeblock<C-j>python<C-l>", "New cell", { remap = true 
 map("i", "<C-CR>", "codeblock<C-j>python<C-l>", "New cell", { remap = true })
 -- }}}
 
--- {{{ Notes and markdown ======================================================
+-- {{{ Notes and markdown ==============================================================================================
 -- Markdown preview
 map("n", "<leader>mp", "<Cmd>MarkdownPreviewToggle<CR>", "Toggle markdown preview")
 

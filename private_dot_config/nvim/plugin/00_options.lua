@@ -1,6 +1,6 @@
 -- vim: foldmethod=marker
 
--- {{{ Options
+-- {{{ Options =========================================================================================================
 local opt = vim.opt
 
 -- Keep this near the top
@@ -37,12 +37,13 @@ opt.splitbelow = true -- Split below...
 opt.splitright = true -- and to the right by default
 opt.title = true -- Set window title to filename
 opt.undofile = true -- Persistent undo
+opt.wrap = false -- Don't wrap text by default
 
 -- NOTE: This needs to be before hipattern and "git blame" autocmd for the highlight groups to stick
 vim.cmd("colorscheme default")
 -- }}}
 
--- {{{ Autocmds
+-- {{{ Autocmds ========================================================================================================
 -- NOTE: Some autocmds are also defined in 10_mini.lua and 12_plugins.lua
 -- when they are simple and related to specific plugins
 
