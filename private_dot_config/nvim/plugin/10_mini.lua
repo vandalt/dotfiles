@@ -1,7 +1,12 @@
+-- vim: foldmethod=marker
 local later = require("mini.deps").later
 
-require("mini.surround").setup()
+-- {{{ Misc useful plugins =====================================================
+require("mini.surround").setup() -- Surround with sa/sd/sr
+require("mini.splitjoin").setup() -- gS to split and join
+later(function() require("mini.extra").setup() end)  -- Misc extra functionality
 
+-- Autopair
 require("mini.pairs").setup({
   mappings = {
     ['"'] = { action = "closeopen", pair = '""', neigh_pattern = '[^\\"].', register = { cr = false } },
@@ -10,36 +15,26 @@ require("mini.pairs").setup({
   },
 })
 local map_tex = function() MiniPairs.map_buf(0, "i", "$", { action = "closeopen", pair = "$$" }) end
-vim.api.nvim_create_autocmd("FileType", { pattern = { "tex", "plaintex" }, callback = map_tex })
+vim.api.nvim_create_autocmd(
+  "FileType",
+  { pattern = { "tex", "plaintex" }, callback = map_tex, desc = "Map $ pair in tex" }
+)
 
-require("mini.icons").setup()
-later(MiniIcons.mock_nvim_web_devicons)
-later(MiniIcons.tweak_lsp_kind)
+-- Custom textobjects with "a" and "i"
+later(function()
+  local ai = require("mini.ai")
+  require("mini.ai").setup({
+    n_lines = 300,
+    custom_textobjects = {
+      j = require("util").combined_cell_spec,
+      o = ai.gen_spec.treesitter({ a = "@block.outer", i = "@block.inner" }),
+      f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
+      c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),
+      u = ai.gen_spec.function_call(),
+    },
+  })
+end)
 
-require("mini.statusline").setup()
-
--- TODO: On the fence, could also replace lsp progress
--- require("mini.notify").setup()
-
-require("mini.indentscope").setup({ draw = { animation = require("mini.indentscope").gen_animation.none()}})
-
--- gS to split and join
-require("mini.splitjoin").setup()
-
--- Load snippets from collection (e.g. friendly-snippets)
-local gen_loader = require("mini.snippets").gen_loader
-require("mini.snippets").setup({
-  snippets = { gen_loader.from_lang({ lang_patterns = { markdown_inline = { "markdown.json" } } }) },
-})
--- Without this "fake" LSP, mini.snippets won't show up in mini.completion
--- Only actual LSP snippets will and mini.snippets need to be manually expanded with "name<c-j>"
-later(require("mini.snippets").start_lsp_server)
-
--- Git commands and info for statusline
-require("mini.git").setup()
-
--- Diff in sidebar
-require("mini.diff").setup({ view = { style = "number" } })
 
 -- Picker
 -- For built-in pickers, configure the tool directly (example ripgrep config file for smart case)
@@ -52,7 +47,94 @@ require("mini.pick").setup({
   },
 })
 vim.ui.select = ui_select_orig
+-- }}}
 
+-- {{{ UI ======================================================================
+require("mini.statusline").setup()
+
+-- Icons, with recommended tweaks
+require("mini.icons").setup()
+later(MiniIcons.mock_nvim_web_devicons)
+later(MiniIcons.tweak_lsp_kind)
+
+-- Indent guides
+require("mini.indentscope").setup({
+  draw = { animation = require("mini.indentscope").gen_animation.none() },
+  options = { try_as_border = true },
+})
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "help" },
+  callback = function() vim.b.miniindentscope_disable = true end,
+  desc = "Disable indentscope in help",
+})
+
+-- Highlight stuff
+-- NOTE: uses notebook-navigator so need to run in later()
+later(function()
+  require("mini.hipatterns").setup({
+    highlighters = {
+      hex_color = require("mini.hipatterns").gen_highlighter.hex_color(),
+      fixme = { pattern = "FIXME", group = "MiniHipatternsFixme" },
+      bug = { pattern = "BUG", group = "MiniHipatternsFixme" },
+      hack = { pattern = "HACK", group = "MiniHipatternsHack" },
+      todo = { pattern = "TODO", group = "MiniHipatternsTodo" },
+      note = { pattern = "NOTE", group = "MiniHipatternsNote" },
+      cells = require("notebook-navigator").minihipatterns_spec,
+    },
+  })
+end)
+
+-- TODO: On the fence, could also replace lsp progress
+-- require("mini.notify").setup()
+-- }}}
+
+-- {{{ Coding ==================================================================
+require("mini.diff").setup({ view = { style = "number" } }) -- Diff in sidebar
+
+-- Snippets
+local gen_loader = require("mini.snippets").gen_loader -- Load snippets from collection (e.g. friendly-snippets)
+require("mini.snippets").setup({
+  snippets = { gen_loader.from_lang({ lang_patterns = { markdown_inline = { "markdown.json" } } }) },
+})
+-- Without this "fake" LSP, mini.snippets won't show up in mini.completion
+-- Only actual LSP snippets will and mini.snippets need to be manually expanded with "name<c-j>"
+later(require("mini.snippets").start_lsp_server)
+
+-- Git commands and info for statusline
+require("mini.git").setup()
+-- Define extra highlight groups once before the autocmd
+vim.api.nvim_set_hl(0, "GitBlameHashRoot", { link = "Tag" })
+vim.api.nvim_set_hl(0, "GitBlameHash", { link = "Identifier" })
+vim.api.nvim_set_hl(0, "GitBlameAuthor", { link = "String" })
+vim.api.nvim_set_hl(0, "GitBlameDate", { link = "Comment" })
+vim.api.nvim_create_autocmd("User", {
+  pattern = "MiniGitCommandSplit",
+  desc = "Autocmd to keep vertical git blame aligned with the buffer",
+  callback = require("util").git_blame_autocmd,
+})
+
+-- Completion for LSP and fallback (buffer text)
+-- For other things (paths), use default vim completion
+-- Stolen from https://github.com/echasnovski/nvim/blob/b098c1b83d1715b7e980d1588b1491fe7d0393a4/plugin/20_mini.lua#L219
+-- Make sure snippets show on top and disable text completion (use <C-x><C-n> for that)
+local process_items_opts = { kind_priority = { Text = -1, Snippet = 99 } }
+local process_items = function(items, base) return MiniCompletion.default_process_items(items, base, process_items_opts) end
+require("mini.completion").setup({
+  delay = { completion = 10 ^ 7 },
+  lsp_completion = { source_func = "omnifunc", auto_setup = false, process_items = process_items },
+})
+local on_attach = function(args) vim.bo[args.buf].omnifunc = "v:lua.MiniCompletion.completefunc_lsp" end
+vim.api.nvim_create_autocmd("LspAttach", { callback = on_attach })
+vim.lsp.config("*", {
+  capabilities = vim.tbl_deep_extend(
+    "force",
+    vim.lsp.protocol.make_client_capabilities(),
+    MiniCompletion.get_lsp_capabilities()
+  ),
+})
+-- }}}
+
+-- {{{ mini.clue ===============================================================
 local miniclue = require("mini.clue")
 miniclue.setup({
   triggers = {
@@ -115,54 +197,4 @@ miniclue.setup({
     { mode = "n", keys = "<leader>z", desc = "+zk" },
   },
 })
-
--- Completion for LSP and fallback (buffer text)
--- For other things (paths), use default vim completion
--- Stolen from https://github.com/echasnovski/nvim/blob/b098c1b83d1715b7e980d1588b1491fe7d0393a4/plugin/20_mini.lua#L219
--- Make sure snippets show on top and disable text completion (use <C-x><C-n> for that)
-local process_items_opts = { kind_priority = { Text = -1, Snippet = 99 } }
-local process_items = function(items, base) return MiniCompletion.default_process_items(items, base, process_items_opts) end
-require("mini.completion").setup({
-  delay = { completion = 10 ^ 7 },
-  lsp_completion = { source_func = "omnifunc", auto_setup = false, process_items = process_items },
-})
-local on_attach = function(args) vim.bo[args.buf].omnifunc = "v:lua.MiniCompletion.completefunc_lsp" end
-vim.api.nvim_create_autocmd("LspAttach", { callback = on_attach })
-vim.lsp.config("*", {
-  capabilities = vim.tbl_deep_extend(
-    "force",
-    vim.lsp.protocol.make_client_capabilities(),
-    MiniCompletion.get_lsp_capabilities()
-  ),
-})
-
--- Next two plugins use notebook-navigator so need to run later
-later(function()
-  -- Highlight stuff
-  require("mini.hipatterns").setup({
-    highlighters = {
-      hex_color = require('mini.hipatterns').gen_highlighter.hex_color(),
-      fixme = { pattern = "FIXME", group = "MiniHipatternsFixme" },
-      bug = { pattern = "BUG", group = "MiniHipatternsFixme" },
-      hack = { pattern = "HACK", group = "MiniHipatternsHack" },
-      todo = { pattern = "TODO", group = "MiniHipatternsTodo" },
-      note = { pattern = "NOTE", group = "MiniHipatternsNote" },
-      cells = require("notebook-navigator").minihipatterns_spec,
-    },
-  })
-
-  -- Custom textobjects with "a" and "i"
-  local ai = require("mini.ai")
-  require("mini.ai").setup({
-    n_lines = 300,
-    custom_textobjects = {
-      j = require("util").combined_cell_spec,
-      o = ai.gen_spec.treesitter({ a = "@block.outer", i = "@block.inner" }),
-      f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
-      c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),
-      u = ai.gen_spec.function_call(),
-    },
-  })
-end)
-
-later(function() require("mini.extra").setup() end)
+-- }}}

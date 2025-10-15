@@ -1,24 +1,30 @@
+-- vim: foldmethod=marker
 local map = function(mode, lhs, rhs, desc, opts)
   opts = opts or {}
   opts.desc = desc
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
--- Useful
+-- {{{ Misc useful mappings ====================================================
+-- mini.deps
+map("n", "<leader>mdu", "<Cmd>DepsUpdate<CR>", "MiniDeps Update")
+map("n", "<leader>mdc", "<Cmd>DepsClean<CR>", "MiniDeps Delete")
+
+-- Misc useful mappings
 map("n", "-", "<Cmd>Oil<CR>", "Open oil.nvim") -- See plugin config for other oil mappings
 map("n", "<Esc>", "<Cmd>:nohlsearch<CR>")
 map("t", "<Esc><Esc>", "<C-\\><C-n>", "Normal mode (terminal)")
-map("n", "<leader>mdu", "<Cmd>DepsUpdate<CR>", "MiniDeps Update")
-map("n", "<leader>mdc", "<Cmd>DepsClean<CR>", "MiniDeps Delete")
-map("n", "yp", function() require("util").yank_path() end, "Yank current path")
-map("n", "<leader>yp", function() require("util").yank_path("+") end, "Yank current to system clipboard")
-map({ "n", "x", "o" }, "<CR>", function() require("flash").jump() end, "Flash (jump)" )
+map({ "n", "x", "o" }, "<CR>", function() require("flash").jump() end, "Flash (jump)")
 
 -- Yank and put from system clipboard
 map({ "n", "v" }, "<leader>y", [["+y]], "Yank to system clipboard", { remap = true })
 map("n", "<leader>Y", [["+Y]], "Yank EOL to system clipboard", { remap = true })
 map({ "n", "v" }, "<leader>p", [["+p]], "Put from system clipboard after cursor", { remap = true })
 map({ "n", "v" }, "<leader>P", [["+P]], "Put from system clipboard before cursor", { remap = true })
+
+-- Yank and put current path
+map("n", "yp", function() require("util").yank_path() end, "Yank current path")
+map("n", "<leader>yp", function() require("util").yank_path("+") end, "Yank current to system clipboard")
 
 -- Navigate windows
 map("n", "<C-h>", "<C-w>h", "Go to window left")
@@ -38,12 +44,19 @@ map("v", "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", "
 map("n", "<leader>bd", function() require("mini.bufremove").delete() end, "Close buffer")
 map("n", "<leader>bD", "<Cmd>bdelete<CR>", "Close buffer and window")
 
--- Toggle things
--- mini.basics has some builtin but not for most plugins
+-- Toggle things (mini.basics has some builtin but not for most plugins)
 map("n", "<leader>up", function() vim.g.minipairs_disable = not vim.g.minipairs_disable end, "Toggle pairs")
 map("n", "<leader>uu", "<Cmd>Undotree<CR>", "Toggle undotree")
 
--- LSP-related
+-- rsync
+map("n", "<leader>ru", "<Cmd>ARsyncUp<CR>", "Rsync up to remote")
+map("n", "<leader>rd", "<Cmd>ARsyncDown<CR>", "Rsync down from remote")
+
+-- Copilot
+map("n", "<leader>ai", function() require("sidekick.cli").toggle({ name = "copilot" }) end, "Sidekick")
+-- }}}
+
+-- {{{ LSP-related =============================================================
 map("n", "grm", "<Cmd>Mason<CR>", "Open Mason")
 map("", "grf", function() require("conform").format({ async = true }) end, "Format buffer or selection")
 
@@ -61,8 +74,30 @@ map(
   function() require("neogen").generate({ annotation_convention = { python = "google_docstrins" } }) end,
   "Google docstrings"
 )
+-- }}}
 
--- Picker
+-- {{{ Treesitter ==============================================================
+-- Move around text object (selection is configured with mini.ai)
+local ts_map = function(lhs, move, query, desc)
+  local modes = { "n", "x", "o" }
+  map(modes, lhs, function() require("nvim-treesitter-textobjects.move")[move](query) end, desc)
+end
+-- stylua: ignore start
+-- TODO: Do a version where one mapping does all four of an object
+ts_map("]m", "goto_next_start", "@function.outer", "next method")
+ts_map("]M", "goto_next_end", "@function.outer", "next method end")
+ts_map("[m", "goto_previous_start", "@function.outer", "previous method")
+ts_map("[M", "goto_previous_end", "@function.outer", "previous method end")
+ts_map("]c", "goto_next_start", "@class.outer", "next class")
+ts_map("]C", "goto_next_end", "@class.outer", "next class end")
+ts_map("[c", "goto_previous_start", "@class.outer", "previous class")
+ts_map("[C", "goto_previous_end", "@class.outer", "previous class end")
+ts_map("]j", "goto_next_start", { "@cell.outer", "@cell.comment" }, "next cell")
+ts_map("[j", "goto_previous_start", { "@cell.outer", "@cell.comment" }, "previous cell")
+-- stylua: ignore end
+-- }}}
+
+-- {{{ mini plugins ============================================================
 map("n", "<leader>ff", function() MiniPick.builtin.files() end, "Find file")
 map("n", "<leader>fb", function() MiniPick.builtin.buffers() end, "Find buffer")
 map("n", "<leader>fz", function() require("util").pick_chezmoi() end, "Find chezmoi file")
@@ -85,10 +120,9 @@ map("n", "<leader>gb", "<Cmd>vertical Git blame -- %<CR>", "Git blame")
 map("n", "<leader>sd", function() require("persistence").stop() end, "Save session")
 map("n", "<leader>sr", function() require("persistence").load() end, "Read session")
 map("n", "<leader>ss", function() require("persistence").select() end, "Select session")
+-- }}}
 
--- Copilot
-map("n", "<leader>ai", "<Cmd>CopilotChatToggle<CR>", "Copilot chat")
-
+-- {{{ Debug and test ==========================================================
 -- Dap
 map("n", "<leader>db", function() require("dap").toggle_breakpoint() end, "Toggle breakpoint")
 map("n", "<leader>dc", function() require("dap").continue() end, "Debug")
@@ -113,8 +147,9 @@ map("n", "<leader>to", function() require("neotest").output.open({ enter = true,
 map("n", "<leader>tp", function() require("neotest").output_panel.toggle() end, "Toggle Output Panel (Neotest)")
 ---@diagnostic disable-next-line:missing-fields
 map("n", "<leader>td", function() require("neotest").run.run({ strategy = "dap" }) end, "Debug Nearest test")
+-- }}}
 
--- REPL
+-- {{{ REPL ====================================================================
 local trim_spaces = false
 local use_bracketed_paste = true
 local tt_opts = { trim_spaces, { args = vim.v.count }, use_bracketed_paste }
@@ -153,7 +188,9 @@ map("n", "<leader>jb", function() require("quarto.runner").run_below() end, "Run
 
 map("n", "<leader>jn", "icodeblock<C-j>python<C-l>", "New cell", { remap = true })
 map("i", "<C-CR>", "codeblock<C-j>python<C-l>", "New cell", { remap = true })
+-- }}}
 
+-- {{{ Notes and markdown ======================================================
 -- Markdown preview
 map("n", "<leader>mp", "<Cmd>MarkdownPreviewToggle<CR>", "Toggle markdown preview")
 
@@ -169,7 +206,4 @@ map("n", "<leader>zn", function() require("zk").new({ title = vim.fn.input("Titl
 map("x", "<leader>zn", ":'<,'>ZkNewFromTitleSelection { dir = 'zettel' }<CR>", "New note from title selection")
 map("x", "<leader>zc", ":'<,'>ZkNewFromContentSelection { title = vim.fn.input('Title: '), dir = 'zettel' }<CR>", "New note from content selection")
 -- stylua: ignore end
-
--- rsync
-map("n", "<leader>ru", "<Cmd>ARsyncUp<CR>", "Rsync up to remote")
-map("n", "<leader>rd", "<Cmd>ARsyncDown<CR>", "Rsync down from remote")
+-- }}}

@@ -1,6 +1,7 @@
+-- vim: foldmethod=marker
 local add, later = require("mini.deps").add, require("mini.deps").later
 
--- Misc useful plugins =================================================================================================
+-- {{{ Misc useful plugins =================================================================================================
 vim.cmd[[packadd nvim.undotree]]
 add("stevearc/oil.nvim")
 require("oil").setup({
@@ -22,11 +23,8 @@ require("toggleterm").setup({
   persist_mode = false,
 })
 
-add({
-  source = "CopilotC-Nvim/CopilotChat.nvim",
-  depends = { "nvim-lua/plenary.nvim", "zbirenbaum/copilot.lua" },
-})
-require("CopilotChat").setup({ headers = { user = "vandalt" }, auto_insert_mode = true })
+add("folke/sidekick.nvim")
+require("sidekick").setup()
 
 add("lukas-reineke/indent-blankline.nvim")
 -- Use mini.indentscope for the scope
@@ -59,8 +57,9 @@ add("alker0/chezmoi.vim")
 
 add("xvzc/chezmoi.nvim")
 require("chezmoi").setup({})
+-- }}}
 
--- LSP, snippets and linting and formatting ============================================================================
+-- {{{ LSP, snippets and linting and formatting ============================================================================
 add("mason-org/mason.nvim")
 require("mason").setup()
 
@@ -96,8 +95,60 @@ require("conform").setup({
   },
   default_format_opts = { lsp_format = "fallback" },
 })
+-- }}}
 
--- Debugging and testing ===============================================================================================
+-- {{{ Treesitter
+add({
+  source = "nvim-treesitter/nvim-treesitter",
+  checkout = "main",
+  monitor = "main",
+  hooks = {
+    post_checkout = function() vim.cmd("TSUpdate") end,
+  },
+})
+add({ source = "nvim-treesitter/nvim-treesitter-textobjects", checkout = "main", monitor = "main" })
+local parsers = {
+  "diff",
+  "lua",
+  "luadoc",
+  "markdown",
+  "markdown_inline",
+  "python",
+  "rst",
+  "toml",
+  "vim",
+  "vimdoc",
+  "yaml",
+}
+local filetype_seen = {}
+local all_filetypes = {}
+for _, parser in ipairs(parsers) do
+  local parser_fts = vim.treesitter.language.get_filetypes(parser)
+  for _, ft in ipairs(parser_fts) do
+    if not filetype_seen[ft] then
+      all_filetypes[#all_filetypes + 1] = ft
+      filetype_seen[ft] = true
+    end
+  end
+end
+
+require("nvim-treesitter").install(parsers)
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = all_filetypes,
+  callback = function()
+    vim.treesitter.start()
+    vim.wo.foldmethod = "expr"
+    vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  end,
+})
+
+require("nvim-treesitter-textobjects").setup({
+  select = { lookahead = false, lookbehind = false, include_surrounding_whitespace = false },
+})
+-- }}}
+
+-- {{{ Debugging and testing ===============================================================================================
 add({ source = "mfussenegger/nvim-dap", depends = { "jbyuki/one-small-step-for-vimkind" } })
 local dap = require("dap")
 dap.configurations.lua = { {
@@ -132,9 +183,9 @@ require("neotest").setup({
   --   watching = "DiagnosticWarn",
   -- }
 })
+-- }}}
 
---
--- Jupyter notebooks and REPL ==========================================================================================
+-- {{{ Jupyter notebooks and REPL ==========================================================================================
 vim.cmd([[packadd jupytext.nvim]])
 -- add("GCBallesteros/jupytext.nvim")
 require("jupytext").setup({ style = "markdown", output_extension = "md", force_ft = "markdown" })
@@ -160,8 +211,9 @@ require("quarto").setup({
     end,
   },
 })
+-- }}}
 
--- Markdown and notes ==================================================================================================
+-- {{{ Markdown and notes ==================================================================================================
 add({
   source = "iamcco/markdown-preview.nvim",
   hooks = {
@@ -184,3 +236,4 @@ require("img-clip").setup({
 add("3rd/image.nvim")
 ---@diagnostic disable-next-line: missing-fields
 require("image").setup({processor = "magick_cli"})
+-- }}}
