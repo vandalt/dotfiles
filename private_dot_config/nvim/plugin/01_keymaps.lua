@@ -54,6 +54,7 @@ map("n", "<leader>rd", "<Cmd>ARsyncDown<CR>", "Rsync down from remote")
 
 -- Copilot
 map("n", "<leader>ai", function() require("sidekick.cli").toggle({ name = "copilot" }) end, "Sidekick")
+map("n", "<leader>ap", function() require("sidekick.cli").prompt({ name = "copilot" }) end, "Sidekick prompt")
 -- }}}
 
 -- {{{ LSP-related =====================================================================================================
