@@ -14,7 +14,7 @@ map("n", "<leader>mdc", "<Cmd>DepsClean<CR>", "MiniDeps Delete")
 map("n", "-", "<Cmd>Oil<CR>", "Open oil.nvim") -- See plugin config for other oil mappings
 map("n", "<Esc>", "<Cmd>:nohlsearch<CR>")
 map("t", "<Esc><Esc>", "<C-\\><C-n>", "Normal mode (terminal)")
-map({ "n", "x", "o" }, "<CR>", function() require("flash").jump() end, "Flash (jump)")
+map({ "n", "x", "o" }, "sj", function() require("flash").jump() end, "Flash (jump)")
 
 -- Yank and put from system clipboard
 map({ "n", "v" }, "<leader>y", [["+y]], "Yank to system clipboard", { remap = true })
@@ -69,6 +69,11 @@ map("n", "<leader>rd", "<Cmd>ARsyncDown<CR>", "Rsync down from remote")
 -- Copilot
 map("n", "<leader>ai", function() require("sidekick.cli").toggle({ name = "copilot" }) end, "Sidekick")
 map("n", "<leader>ap", function() require("sidekick.cli").prompt({ name = "copilot" }) end, "Sidekick prompt")
+
+-- Sessions
+map("n", "<leader>sd", function() require("persistence").stop() end, "Save session")
+map("n", "<leader>sr", function() require("persistence").load() end, "Read session")
+map("n", "<leader>ss", function() require("persistence").select() end, "Select session")
 -- }}}
 
 -- {{{ LSP-related =====================================================================================================
@@ -129,10 +134,9 @@ map("n", "<leader>gs", function() require("util").pick_git_status() end, "Git st
 -- Git
 map("n", "<leader>gb", "<Cmd>vertical Git blame -- %<CR>", "Git blame")
 
--- Sessions
-map("n", "<leader>sd", function() require("persistence").stop() end, "Save session")
-map("n", "<leader>sr", function() require("persistence").load() end, "Read session")
-map("n", "<leader>ss", function() require("persistence").select() end, "Select session")
+-- Notifications
+map("n", "<leader>nc", function() MiniNotify.remove() end, "Clear notifications")
+map("n", "<leader>nh", function() MiniNotify.show_history() end, "Show notifications")
 -- }}}
 
 -- {{{ Debug and test ==================================================================================================

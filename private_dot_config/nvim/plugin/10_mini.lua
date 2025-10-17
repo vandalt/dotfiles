@@ -4,7 +4,7 @@ local later = require("mini.deps").later
 -- {{{ Misc useful plugins =============================================================================================
 require("mini.surround").setup() -- Surround with sa/sd/sr
 require("mini.splitjoin").setup() -- gS to split and join
-later(function() require("mini.extra").setup() end)  -- Misc extra functionality
+later(function() require("mini.extra").setup() end) -- Misc extra functionality
 
 -- Autopair
 require("mini.pairs").setup({
@@ -35,7 +35,6 @@ later(function()
   })
 end)
 
-
 -- Picker
 -- For built-in pickers, configure the tool directly (example ripgrep config file for smart case)
 -- The ui.select stuff before and after is to preserve default for now.
@@ -60,32 +59,39 @@ later(MiniIcons.tweak_lsp_kind)
 -- Indent guides
 require("mini.indentscope").setup({
   draw = { animation = require("mini.indentscope").gen_animation.none() },
-  options = { try_as_border = true },
+  options = {
+    try_as_border = true, -- Check if current line is border (e.g. function name)
+    border = "top", -- Don't mark empty lines at the end of a scope
+  },
 })
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "help" },
+  pattern = { "help", "oil_preview" },
   callback = function() vim.b.miniindentscope_disable = true end,
-  desc = "Disable indentscope in help",
+  desc = "Disable indentscope in some filetypes",
 })
 
 -- Highlight stuff
 -- NOTE: uses notebook-navigator so need to run in later()
-later(function()
-  require("mini.hipatterns").setup({
-    highlighters = {
-      hex_color = require("mini.hipatterns").gen_highlighter.hex_color(),
-      fixme = { pattern = "FIXME", group = "MiniHipatternsFixme" },
-      bug = { pattern = "BUG", group = "MiniHipatternsFixme" },
-      hack = { pattern = "HACK", group = "MiniHipatternsHack" },
-      todo = { pattern = "TODO", group = "MiniHipatternsTodo" },
-      note = { pattern = "NOTE", group = "MiniHipatternsNote" },
-      cells = require("notebook-navigator").minihipatterns_spec,
-    },
-  })
-end)
+later(
+  function()
+    require("mini.hipatterns").setup({
+      highlighters = {
+        hex_color = require("mini.hipatterns").gen_highlighter.hex_color(),
+        fixme = { pattern = "FIXME", group = "MiniHipatternsFixme" },
+        bug = { pattern = "BUG", group = "MiniHipatternsFixme" },
+        hack = { pattern = "HACK", group = "MiniHipatternsHack" },
+        todo = { pattern = "TODO", group = "MiniHipatternsTodo" },
+        note = { pattern = "NOTE", group = "MiniHipatternsNote" },
+        cells = require("notebook-navigator").minihipatterns_spec,
+      },
+    })
+  end
+)
 
--- TODO: On the fence, could also replace lsp progress
--- require("mini.notify").setup()
+require("mini.notify").setup({
+  -- lua_ls is spamming with lazydev so stick to fidget
+  lsp_progress = { enable = false },
+})
 -- }}}
 
 -- {{{ Coding ==========================================================================================================
@@ -189,6 +195,7 @@ miniclue.setup({
     { mode = "n", keys = "<leader>i", desc = "+image" },
     { mode = "n", keys = "<leader>j", desc = "+jupyter" },
     { mode = "n", keys = "<leader>m", desc = "+markdown/mini" },
+    { mode = "n", keys = "<leader>n", desc = "+notify" },
     { mode = "n", keys = "<leader>md", desc = "+mini.deps" },
     { mode = "n", keys = "<leader>r", desc = "+rsync/run" },
     { mode = "n", keys = "<leader>s", desc = "+search/session" },
