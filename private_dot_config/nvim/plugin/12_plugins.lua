@@ -233,7 +233,16 @@ add("HakonHarnes/img-clip.nvim")
 require("img-clip").setup({
   default = { prompt_for_file_name = false },
 })
-add("3rd/image.nvim")
----@diagnostic disable-next-line: missing-fields
-require("image").setup({processor = "magick_cli"})
+-- add("3rd/image.nvim")
+--@diagnostic disable-next-line: missing-fields
+-- require("image").setup({
+--   processor = "magick_cli",
+--   window_overleaf
+-- })
+add("folke/snacks.nvim")
+require("snacks").setup({
+  image = {
+    enabled = true,
+  }
+})
 -- }}}

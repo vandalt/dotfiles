@@ -46,6 +46,20 @@ map("n", "<leader>bD", "<Cmd>bdelete<CR>", "Close buffer and window")
 
 -- Toggle things (mini.basics has some builtin but not for most plugins)
 map("n", "<leader>up", function() vim.g.minipairs_disable = not vim.g.minipairs_disable end, "Toggle pairs")
+map(
+  "n",
+  "<leader>ui",
+  function() vim.g.miniindentscope_disable = not vim.g.miniindentscope_disable end,
+  "Toggle indent guides"
+)
+-- map("n", "<leader>ug", function()
+--   if require("image").is_enabled() then
+--     require("image").disable()
+--   else
+--     require("image").enable()
+--   end
+-- end, "Toggle images")
+map("n", "<leader>ug", function() require("util").toggle_snacks_image() end, "Toggle images")
 map("n", "<leader>uu", "<Cmd>Undotree<CR>", "Toggle undotree")
 
 -- rsync
