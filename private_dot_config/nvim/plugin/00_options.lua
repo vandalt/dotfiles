@@ -44,8 +44,7 @@ vim.cmd("colorscheme default")
 -- }}}
 
 -- {{{ Autocmds ========================================================================================================
--- NOTE: Some autocmds are also defined in 10_mini.lua and 12_plugins.lua
--- when they are simple and related to specific plugins
+-- NOTE: Some autocmds are also defined in 10_mini.lua and 12_plugins.lua when they are related to specific plugins
 
 vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
   pattern = "term://*",
@@ -68,3 +67,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight on yank",
 })
 -- }}}
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  desc = "Do not wrap markdown",
+  callback = function()
+    vim.opt_local.wrap = true
+  end
+})
