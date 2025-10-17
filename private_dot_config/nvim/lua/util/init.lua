@@ -3,6 +3,9 @@ M = {}
 -- Create a global 'send_motion' function that sends a motion to toggleterm
 -- The motion type should be compatible with operatorfunc and g@
 -- This wrapper is used to enable passing arguments to send_lines_to_terminal
+--- @param trim_spaces boolean
+--- @param cmd_data table<string, any>
+--- @param use_bracketed_paste boolean?
 local function create_send_motion(trim_spaces, cmd_data, use_bracketed_paste)
   _G.send_motion = function(motion_type)
     require("toggleterm").send_lines_to_terminal(motion_type, trim_spaces, cmd_data, use_bracketed_paste)
@@ -12,6 +15,9 @@ end
 -- To send motions to toggleterm, we need to create a function that can take a motion and set it to operatorfunc
 -- The function is then executed with 'g@'
 -- Ref: https://github.com/akinsho/toggleterm.nvim/issues/542
+--- @param trim_spaces boolean
+--- @param cmd_data table<string, any>
+--- @param use_bracketed_paste boolean?
 M.toggleterm_send_motion = function(trim_spaces, cmd_data, use_bracketed_paste)
   return function()
     -- Create the global "send_motion" function so it can be set
@@ -22,6 +28,8 @@ M.toggleterm_send_motion = function(trim_spaces, cmd_data, use_bracketed_paste)
   end
 end
 
+-- Get the start date for zk weekly note
+--- @param start_week_day string
 M.get_date_zw = function(start_week_day)
   start_week_day = start_week_day or "sunday"
   ---@diagnostic disable-next-line: param-type-mismatch
@@ -32,6 +40,11 @@ M.get_date_zw = function(start_week_day)
   end
 end
 
+-- mini.ai spec that handles python files and markdown notebooks
+-- notebook-navigator is used for the former and treesitter for the latter
+---@param ai_type string
+---@param id string
+---@param opts table<string,any>
 M.combined_cell_spec = function(ai_type, id, opts)
   if vim.bo.filetype == "python" then
     vim.notify("python")
@@ -41,6 +54,8 @@ M.combined_cell_spec = function(ai_type, id, opts)
   end
 end
 
+-- Function to pick chezmoi files with mini.pick
+---@param targets string|string[]
 M.pick_chezmoi = function(targets)
   local results = require("chezmoi.commands").list({
     targets = targets,
@@ -69,6 +84,8 @@ M.pick_chezmoi = function(targets)
   })
 end
 
+-- Yank the path of the current file to any register
+---@param register string
 M.yank_path = function(register)
   register = register or "@"
   local file_path = vim.fn.expand("%:~")
@@ -76,6 +93,7 @@ M.yank_path = function(register)
   vim.notify("Yanked file " .. file_path .. " to register '" .. register .. "'")
 end
 
+-- Git status picker with mini.pick
 M.pick_git_status = function()
   local _split_status_path = function(status) return string.match(status, "^%s*(%S+)%s+(%S+)$") end
   -- Convert str items to table with text and path fields.
@@ -101,7 +119,9 @@ M.pick_git_status = function()
   return MiniPick.builtin.cli(local_opts, { source = source })
 end
 
+-- Function used as callback for better git blame
 -- Ref: https://github.com/nvim-mini/mini.nvim/discussions/2029
+---@param au_data table<string,any>
 M.git_blame_autocmd = function(au_data)
   if au_data.data.git_subcommand ~= "blame" then
     return
