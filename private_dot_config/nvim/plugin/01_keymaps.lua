@@ -45,22 +45,22 @@ map("n", "<leader>bd", function() require("mini.bufremove").delete() end, "Close
 map("n", "<leader>bD", "<Cmd>bdelete<CR>", "Close buffer and window")
 
 -- Toggle things (mini.basics has some builtin but not for most plugins)
-map("n", "<leader>up", function() vim.g.minipairs_disable = not vim.g.minipairs_disable end, "Toggle pairs")
+map("n", "<leader>up", function() require("util").toggle("minipairs_disable", "mini.pairs") end, "Toggle pairs")
 map(
   "n",
   "<leader>ui",
-  function() vim.g.miniindentscope_disable = not vim.g.miniindentscope_disable end,
+  function() require("util").toggle("miniindentscope_disable", "mini.indentscope") end,
   "Toggle indent guides"
 )
--- map("n", "<leader>ug", function()
---   if require("image").is_enabled() then
---     require("image").disable()
---   else
---     require("image").enable()
---   end
--- end, "Toggle images")
-map("n", "<leader>ug", function() require("util").toggle_snacks_image() end, "Toggle images")
+map(
+  "n",
+  "<leader>ug",
+  function() require("util").toggle(require("util").toggle_snacks_image, "Snacks.image") end,
+  "Toggle images"
+)
 map("n", "<leader>uu", "<Cmd>Undotree<CR>", "Toggle undotree")
+
+map("n", "<leader>gg", function() Snacks.lazygit() end, "Open lazygit")
 
 -- rsync
 map("n", "<leader>ru", "<Cmd>ARsyncUp<CR>", "Rsync up to remote")
@@ -190,7 +190,7 @@ map(
 map(
   "n",
   "<leader>js",
-  require("util").toggleterm_send_motion(unpack(tt_opts)),
+  require("util").toggleterm_send_motion(tt_opts[1], tt_opts[2], tt_opts[3]),
   "Send motion to terminal",
   { expr = true }
 )

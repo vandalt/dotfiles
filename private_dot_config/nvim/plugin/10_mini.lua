@@ -65,7 +65,7 @@ require("mini.indentscope").setup({
   },
 })
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "help", "oil_preview" },
+  pattern = { "help", "oil_preview", "toggleterm", "sidekick_terminal" },
   callback = function() vim.b.miniindentscope_disable = true end,
   desc = "Disable indentscope in some filetypes",
 })

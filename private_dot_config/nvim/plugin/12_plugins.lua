@@ -2,7 +2,7 @@
 local add, later = require("mini.deps").add, require("mini.deps").later
 
 -- {{{ Misc useful plugins =============================================================================================
-vim.cmd[[packadd nvim.undotree]]
+vim.cmd([[packadd nvim.undotree]])
 add("stevearc/oil.nvim")
 require("oil").setup({
   keymaps = {
@@ -36,14 +36,12 @@ add({
 })
 add("justinmk/vim-gtfo")
 
-
 add("folke/flash.nvim")
-require("flash").setup( { modes = { char = { enabled = false } } })
+require("flash").setup({ modes = { char = { enabled = false } } })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "qf",
-  callback = function() vim.keymap.set('n', '<CR>', '<CR>', { buffer = true }) end,
+  callback = function() vim.keymap.set("n", "<CR>", "<CR>", { buffer = true }) end,
 })
-
 
 add("folke/persistence.nvim")
 require("persistence").setup()
@@ -64,7 +62,10 @@ add("mason-org/mason.nvim")
 require("mason").setup()
 
 add("folke/lazydev.nvim")
-require("lazydev").setup({ integrations = { cmp = false } })
+require("lazydev").setup({
+  integrations = { cmp = false },
+  library = { { path = "snacks.nvim", words = { "Snacks" } } },
+})
 
 add("j-hui/fidget.nvim")
 require("fidget").setup({})
@@ -108,7 +109,9 @@ add({
 })
 add({ source = "nvim-treesitter/nvim-treesitter-textobjects", checkout = "main", monitor = "main" })
 local parsers = {
+  "bibtex",
   "diff",
+  "latex",
   "lua",
   "luadoc",
   "markdown",
@@ -243,6 +246,6 @@ add("folke/snacks.nvim")
 require("snacks").setup({
   image = {
     enabled = true,
-  }
+  },
 })
 -- }}}

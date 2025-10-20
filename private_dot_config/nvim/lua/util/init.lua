@@ -29,7 +29,7 @@ M.toggleterm_send_motion = function(trim_spaces, cmd_data, use_bracketed_paste)
 end
 
 -- Get the start date for zk weekly note
---- @param start_week_day string
+--- @param start_week_day? string
 M.get_date_zw = function(start_week_day)
   start_week_day = start_week_day or "sunday"
   ---@diagnostic disable-next-line: param-type-mismatch
@@ -55,7 +55,7 @@ M.combined_cell_spec = function(ai_type, id, opts)
 end
 
 -- Function to pick chezmoi files with mini.pick
----@param targets string|string[]
+---@param targets? string|string[]
 M.pick_chezmoi = function(targets)
   local results = require("chezmoi.commands").list({
     targets = targets,
@@ -85,7 +85,7 @@ M.pick_chezmoi = function(targets)
 end
 
 -- Yank the path of the current file to any register
----@param register string
+---@param register? string
 M.yank_path = function(register)
   register = register or "@"
   local file_path = vim.fn.expand("%:~")
@@ -243,9 +243,33 @@ M.toggle_snacks_image = function()
   if snacks_disabled == nil then _G.snacks_disabled = false end
   if snacks_disabled then
     M.enable_snacks_image()
+    return true
   else
     M.disable_snacks_image()
+    return false
   end
+end
+
+-- Toggle an option or run a function to toggle something
+---@param opt string|function Option to toggle, can be a string from vim.g
+---or a function that toggles something. If a function, should return true when
+---the option has been enabled and false if it has been disabled. mini.nvim's 
+---mini*_disable options are recognized and the "Enable/disable" message is flipped.
+---@param name string Name of the option that will be toggled. Used in the notification
+M.toggle = function(opt, name)
+  local enabled
+  if vim.is_callable(opt) then
+    enabled = opt()
+  elseif type(opt) == "string" then
+    vim.g[opt] = not vim.g[opt]
+    if opt:match("^mini.*_disable$") then
+      enabled = not vim.g[opt]
+    else
+      enabled = vim.g[opt]
+    end
+  end
+  local action = enabled and "Enabled" or "Disabled"
+  vim.notify(action .. " " .. name)
 end
 
 return M
