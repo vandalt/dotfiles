@@ -55,6 +55,9 @@ add("alker0/chezmoi.vim")
 
 add("xvzc/chezmoi.nvim")
 require("chezmoi").setup({})
+
+add({ source = "myakove/f-string-toggle.nvim", checkout = "fix/replace-deprecated-ts-utils" })
+require("f-string-toggle").setup({ key_binding = false })
 -- }}}
 
 -- {{{ LSP, snippets and linting and formatting ========================================================================

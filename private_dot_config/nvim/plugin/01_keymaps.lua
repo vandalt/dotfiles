@@ -45,6 +45,7 @@ map("n", "<leader>bd", function() require("mini.bufremove").delete() end, "Close
 map("n", "<leader>bD", "<Cmd>bdelete<CR>", "Close buffer and window")
 
 -- Toggle things (mini.basics has some builtin but not for most plugins)
+map("n", "<leader>uf", function() require("f-string-toggle").toggle_fstring() end, "Toggle f-string")
 map("n", "<leader>up", function() require("util").toggle("minipairs_disable", "mini.pairs") end, "Toggle pairs")
 map(
   "n",

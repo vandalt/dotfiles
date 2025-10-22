@@ -47,7 +47,6 @@ end
 ---@param opts table<string,any>
 M.combined_cell_spec = function(ai_type, id, opts)
   if vim.bo.filetype == "python" then
-    vim.notify("python")
     return require("notebook-navigator").miniai_spec(ai_type)
   else
     return require("mini.ai").gen_spec.treesitter({ a = "@cell.outer", i = "@cell.inner" })(ai_type, id, opts)
@@ -90,7 +89,7 @@ M.yank_path = function(register)
   register = register or "@"
   local file_path = vim.fn.expand("%:~")
   vim.fn.setreg(register, file_path)
-  vim.notify("Yanked file " .. file_path .. " to register '" .. register .. "'")
+  vim.notify("Yanked path " .. file_path .. " to register '" .. register .. "'")
 end
 
 -- Git status picker with mini.pick
