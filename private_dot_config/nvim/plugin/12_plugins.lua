@@ -112,6 +112,8 @@ add({
 })
 add({ source = "nvim-treesitter/nvim-treesitter-textobjects", checkout = "main", monitor = "main" })
 local parsers = {
+  "c",
+  "cpp",
   "bibtex",
   "diff",
   "latex",
@@ -237,7 +239,8 @@ require("zk").setup({
 
 add("HakonHarnes/img-clip.nvim")
 require("img-clip").setup({
-  default = { prompt_for_file_name = false },
+  -- Drag and drop causes warning when pasting in cmd mode
+  default = { prompt_for_file_name = false, drag_and_drop = { enabled = false } },
 })
 -- add("3rd/image.nvim")
 --@diagnostic disable-next-line: missing-fields

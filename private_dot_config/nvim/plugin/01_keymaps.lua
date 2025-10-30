@@ -32,6 +32,12 @@ map("n", "<C-j>", "<C-w>j", "Go to window below")
 map("n", "<C-k>", "<C-w>k", "Go to window above")
 map("n", "<C-l>", "<C-w>l", "Go to window right")
 
+-- Resize windows
+map("n", "<C-Up>", "<C-w>+", "Increase window height")
+map("n", "<C-Down>", "<C-w>-", "Decrease window height")
+map("n", "<C-Left>", "<C-w>>", "Increase window width")
+map("n", "<C-Right>", "<C-w><", "Decrease window width")
+
 -- Move Lines, stolen from LazyVim
 map("n", "<A-j>", "<cmd>execute 'move .+' . v:count1<cr>==", "Move Down")
 map("n", "<A-k>", "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==", "Move Up")
@@ -44,57 +50,26 @@ map("v", "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", "
 map("n", "<leader>bd", function() require("mini.bufremove").delete() end, "Close buffer")
 map("n", "<leader>bD", "<Cmd>bdelete<CR>", "Close buffer and window")
 
--- Toggle things (mini.basics has some builtin but not for most plugins)
-map("n", "<leader>uf", function() require("f-string-toggle").toggle_fstring() end, "Toggle f-string")
-map("n", "<leader>up", function() require("util").toggle("minipairs_disable", "mini.pairs") end, "Toggle pairs")
-map(
-  "n",
-  "<leader>ui",
-  function() require("util").toggle("miniindentscope_disable", "mini.indentscope") end,
-  "Toggle indent guides"
-)
-map(
-  "n",
-  "<leader>ug",
-  function() require("util").toggle(require("util").toggle_snacks_image, "Snacks.image") end,
-  "Toggle images"
-)
-map("n", "<leader>uu", "<Cmd>Undotree<CR>", "Toggle undotree")
-
-map("n", "<leader>gg", function() Snacks.lazygit() end, "Open lazygit")
-
 -- rsync
 map("n", "<leader>ru", "<Cmd>ARsyncUp<CR>", "Rsync up to remote")
 map("n", "<leader>rd", "<Cmd>ARsyncDown<CR>", "Rsync down from remote")
-
--- Copilot
-map("n", "<leader>ai", function() require("sidekick.cli").toggle({ name = "copilot" }) end, "Sidekick")
-map("n", "<leader>ap", function() require("sidekick.cli").prompt({ name = "copilot" }) end, "Sidekick prompt")
 
 -- Sessions
 map("n", "<leader>sd", function() require("persistence").stop() end, "Save session")
 map("n", "<leader>sr", function() require("persistence").load() end, "Read session")
 map("n", "<leader>ss", function() require("persistence").select() end, "Select session")
--- }}}
 
--- {{{ LSP-related =====================================================================================================
-map("n", "grm", "<Cmd>Mason<CR>", "Open Mason")
-map("", "grf", function() require("conform").format({ async = true }) end, "Format buffer or selection")
-
--- Docstrings
-map("n", "grd", function() require("neogen").generate() end, "Generate docstrings")
-map(
-  "n",
-  "grp",
-  function() require("neogen").generate({ annotation_convention = { python = "numpydoc" } }) end,
-  "Numpy docstrings"
-)
-map(
-  "n",
-  "grg",
-  function() require("neogen").generate({ annotation_convention = { python = "google_docstrins" } }) end,
-  "Google docstrings"
-)
+-- Toggle things
+map("n", "<leader>uf", function() require("f-string-toggle").toggle_fstring() end, "Toggle f-string")
+map("n", "<leader>uu", "<Cmd>Undotree<CR>", "Toggle undotree")
+map("n", "<leader>us", function() require("util.toggle").toggle("spell") end, "Toggle spelling")
+map("n", "<leader>up", function() require("util.toggle").toggle("mini.pairs") end, "Toggle pairs")
+map("n", "<leader>ug", function()
+  -- Toggle indent-blankline with mini.indentscope
+  require("util.toggle").toggle("mini.indentscope")
+  vim.cmd("IBLToggle")
+end, "Toggle indent guides")
+map("n", "<leader>ui", function() require("util.toggle").toggle("Snacks.image") end, "Toggle images")
 -- }}}
 
 -- {{{ Treesitter ======================================================================================================
@@ -116,31 +91,46 @@ ts_map_all("c", "@class.outer", "method")
 ts_map_all("j", { "@cell.outer", "@cell.comment" }, "cell")
 -- }}}
 
--- {{{ mini plugins ====================================================================================================
-map("n", "<leader>ff", function() MiniPick.builtin.files() end, "Find file")
-map("n", "<leader>fb", function() MiniPick.builtin.buffers() end, "Find buffer")
-map("n", "<leader>fz", function() require("util").pick_chezmoi() end, "Find chezmoi file")
-map(
-  "n",
-  "<leader>fc",
-  function() require("util").pick_chezmoi(vim.fn.stdpath("config")) end,
-  "Find config file (chezmoi)"
-)
-map("n", "<leader>sg", function() MiniPick.builtin.grep_live() end, "Search grep")
-map("n", "<leader>sh", function() MiniPick.builtin.help() end, "Search help")
-map("n", "<leader>sk", function() MiniExtra.pickers.keymaps() end, "Search keymaps")
-map("n", "<leader>sm", function() MiniExtra.pickers.marks() end, "Search marks")
-map("n", "<leader>gs", function() require("util").pick_git_status() end, "Git status picker")
-
+-- {{{ Coding ======================================================================================================
 -- Git
 map("n", "<leader>gb", "<Cmd>vertical Git blame -- %<CR>", "Git blame")
+map("n", "<leader>gg", function() Snacks.lazygit() end, "Open lazygit")
+map("n", "<leader>gr", function() require("snacks").gitbrowse() end, "Open git remote")
 
--- Notifications
-map("n", "<leader>nc", function() MiniNotify.remove() end, "Clear notifications")
-map("n", "<leader>nh", function() MiniNotify.show_history() end, "Show notifications")
--- }}}
+-- Copilot
+map("n", "<leader>ai", function() require("sidekick.cli").toggle({ name = "copilot" }) end, "Sidekick")
+map("n", "<leader>ap", function() require("sidekick.cli").prompt({ name = "copilot" }) end, "Sidekick prompt")
 
--- {{{ Debug and test ==================================================================================================
+-- LSP
+-- Define lsp mappings only when lsp is attached
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("vandalt-lsp", {}),
+  callback = function(args)
+    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+    if client:supports_method("textDocument/definition") then
+      map("n", "gd", function() vim.lsp.buf.definition() end, "Go to definition (lsp)")
+    end
+  end,
+})
+map("n", "grm", "<Cmd>Mason<CR>", "Open Mason")
+map("n", "grm", "<Cmd>Mason<CR>", "Open Mason")
+map("", "grf", function() require("conform").format({ async = true }) end, "Format buffer or selection")
+
+-- Docstrings
+map("n", "grd", function() require("neogen").generate() end, "Generate docstrings")
+map(
+  "n",
+  "grp",
+  function() require("neogen").generate({ annotation_convention = { python = "numpydoc" } }) end,
+  "Numpy docstrings"
+)
+map(
+  "n",
+  "grg",
+  function() require("neogen").generate({ annotation_convention = { python = "google_docstrins" } }) end,
+  "Google docstrings"
+)
+
 -- Dap
 map("n", "<leader>db", function() require("dap").toggle_breakpoint() end, "Toggle breakpoint")
 map("n", "<leader>dc", function() require("dap").continue() end, "Debug")
@@ -165,6 +155,29 @@ map("n", "<leader>to", function() require("neotest").output.open({ enter = true,
 map("n", "<leader>tp", function() require("neotest").output_panel.toggle() end, "Toggle Output Panel (Neotest)")
 ---@diagnostic disable-next-line:missing-fields
 map("n", "<leader>td", function() require("neotest").run.run({ strategy = "dap" }) end, "Debug Nearest test")
+-- }}}
+
+-- {{{ mini plugins ====================================================================================================
+map("n", "<leader>ff", function() MiniPick.builtin.files() end, "Find file")
+map("n", "<leader>fb", function() MiniPick.builtin.buffers() end, "Find buffer")
+map("n", "<leader>fz", function() require("util.pick").pick_chezmoi() end, "Find chezmoi file")
+map("n", "<leader>fs", function() MiniExtra.pickers.lsp({ scope = "document_symbol" }) end, "Find lsp symbol")
+map(
+  "n",
+  "<leader>fc",
+  function() require("util.pick").pick_chezmoi(vim.fn.stdpath("config")) end,
+  "Find config file (chezmoi)"
+)
+map("n", "<leader>sg", function() MiniPick.builtin.grep_live() end, "Search grep")
+map("n", "<leader>sf", function() MiniExtra.pickers.buf_lines() end, "Search current file")
+map("n", "<leader>sh", function() MiniPick.builtin.help() end, "Search help")
+map("n", "<leader>sk", function() MiniExtra.pickers.keymaps() end, "Search keymaps")
+map("n", "<leader>sm", function() MiniExtra.pickers.marks() end, "Search marks")
+map("n", "<leader>gs", function() require("util").pick_git_status() end, "Git status picker")
+
+-- Notifications
+map("n", "<leader>nc", function() MiniNotify.remove() end, "Clear notifications")
+map("n", "<leader>nh", function() MiniNotify.show_history() end, "Show notifications")
 -- }}}
 
 -- {{{ REPL ============================================================================================================

@@ -66,7 +66,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function() vim.hl.on_yank() end,
   desc = "Highlight on yank",
 })
--- }}}
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",
@@ -75,3 +74,4 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.wrap = true
   end
 })
+-- }}}

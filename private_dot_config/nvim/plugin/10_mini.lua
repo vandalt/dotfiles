@@ -38,14 +38,15 @@ end)
 -- Picker
 -- For built-in pickers, configure the tool directly (example ripgrep config file for smart case)
 -- The ui.select stuff before and after is to preserve default for now.
-local ui_select_orig = vim.ui.select
+-- local ui_select_orig = vim.ui.select
 require("mini.pick").setup({
   mappings = {
     choose_alt = { char = "<C-y>", func = function() vim.api.nvim_input("<CR>") end },
     choose_marked_alt = { char = "<C-S-y>", func = function() vim.api.nvim_input("<M-CR>") end },
   },
 })
-vim.ui.select = ui_select_orig
+-- Customize ui_select to show item indices
+later(function() vim.ui.select = require("util").minipick_select_idx end)
 -- }}}
 
 -- {{{ UI ==============================================================================================================
@@ -71,22 +72,21 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Highlight stuff
--- NOTE: uses notebook-navigator so need to run in later()
-later(
-  function()
-    require("mini.hipatterns").setup({
-      highlighters = {
-        hex_color = require("mini.hipatterns").gen_highlighter.hex_color(),
-        fixme = { pattern = "FIXME", group = "MiniHipatternsFixme" },
-        bug = { pattern = "BUG", group = "MiniHipatternsFixme" },
-        hack = { pattern = "HACK", group = "MiniHipatternsHack" },
-        todo = { pattern = "TODO", group = "MiniHipatternsTodo" },
-        note = { pattern = "NOTE", group = "MiniHipatternsNote" },
-        cells = require("notebook-navigator").minihipatterns_spec,
-      },
-    })
-  end
-)
+-- (uses notebook-navigator so need to run in later())
+later(function()
+  local function word(mystr) return "%f[%w]()" .. mystr .. "()%f[%W]" end
+  require("mini.hipatterns").setup({
+    highlighters = {
+      hex_color = require("mini.hipatterns").gen_highlighter.hex_color(),
+      fixme = { pattern = word("FIXME"), group = "MiniHipatternsFixme" },
+      bug = { pattern = word("BUG"), group = "MiniHipatternsFixme" },
+      hack = { pattern = word("HACK"), group = "MiniHipatternsHack" },
+      todo = { pattern = word("TODO"), group = "MiniHipatternsTodo" },
+      note = { pattern = word("NOTE"), group = "MiniHipatternsNote" },
+      cells = require("notebook-navigator").minihipatterns_spec,
+    },
+  })
+end)
 
 require("mini.notify").setup({
   -- lua_ls is spamming with lazydev so stick to fidget
