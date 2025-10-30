@@ -1,13 +1,23 @@
-#theme = dark:tokyonight_moon,light:tokyonight-day
-theme = dark:NvimDark,light:NvimLight
+# vim: foldmethod=marker
+
+# Options {{{ ==================================================================
+# theme = dark:tokyonight_moon,light:tokyonight-day
+theme = dark:Nvim Dark,light:Nvim Light
 gtk-single-instance = true
+working-directory = home
+window-inherit-working-directory = false
 font-family = "JetBrainsMono Nerd Font"
 window-decoration = auto
 background-opacity = 1.0
 font-size = 10
 window-width = 90
+shell-integration-features = ssh-env
 window-height = 30
+# }}}
+
+# Keymaps {{{ ==================================================================
 keybind = ctrl+shift+plus=increase_font_size:1
 keybind = ctrl+shift+minus=decrease_font_size:1
 keybind = ctrl+equal=equalize_splits
 keybind = ctrl+enter=unbind
+# }}}
