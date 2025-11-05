@@ -3,14 +3,14 @@ mod/
 LICENSE
 README.md
 {{- if ne .chezmoi.hostname "yoga" }}
-dot_ads
-dot_msmtprc.tmpl
-dot_mbsyncrc.tmpl
-dot_newsboat/urls.tmpl
-dot_local/bin/executable_mutt_oauth2.py.tmpl
-private_dot_config/onedrive
-private_dot_config/hypr
-private_dot_config/neomutt
-private_dot_config/systemd
-dot_local/
+.ads
+.msmtprc
+.mbsyncrc
+.newsboat/urls
+.local/bin/executable_mutt_oauth2.py
+.config/onedrive
+.config/hypr
+.config/neomutt
+.config/systemd
+.local/
 {{- end }}
