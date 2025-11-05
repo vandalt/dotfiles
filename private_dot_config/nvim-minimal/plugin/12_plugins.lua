@@ -203,8 +203,8 @@ vim.cmd([[packadd NotebookNavigator.nvim]])
 -- add("GCBallesteros/NotebookNavigator.nvim")
 require("notebook-navigator").setup()
 
-vim.cmd([[packadd otter.nvim]])
--- add("jmbuhr/otter.nvim")
+-- vim.cmd([[packadd otter.nvim]])
+add("jmbuhr/otter.nvim")
 
 add("quarto-dev/quarto-nvim")
 require("quarto").setup({
