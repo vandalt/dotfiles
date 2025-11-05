@@ -53,7 +53,7 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
   bspc @ath    @sth    @dth    @fth    @gth    h    @jth    @kth    @lth    @colth    '    ret
   @sym @zth    @xth    c    @vth    b    n    @mth    ,    .    /    @sym
-  caps lmet esc           spc            @cw @sym lft up down rght
+  @cw lmet esc           spc            @cw @sym lft up down rght
 )
 
 ;; Add backspace to have a repeatable key
