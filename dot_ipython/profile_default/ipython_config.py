@@ -1,6 +1,6 @@
 import warnings
 
-c.TerminalInteractiveShell.editing_mode = 'vi'
+# c.TerminalInteractiveShell.editing_mode = 'vi'
 
 c.TerminalIPythonApp.log_level = "ERROR"
 try:

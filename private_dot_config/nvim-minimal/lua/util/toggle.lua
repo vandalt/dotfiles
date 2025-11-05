@@ -82,11 +82,8 @@ M.enable_snacks_image = function()
   _G.snacks_disabled = false
 end
 
-M.toggle_snacks_image = function()
-  if snacks_disabled == nil then
-    _G.snacks_disabled = false
-  end
-  if snacks_disabled then
+M.toggle_snacks_image = function(enabled)
+  if not enabled then
     M.enable_snacks_image()
     return true
   else

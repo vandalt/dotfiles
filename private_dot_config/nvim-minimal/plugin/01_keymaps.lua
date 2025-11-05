@@ -87,7 +87,7 @@ local ts_map_all = function(char, query, name)
   ts_map("[" .. char:upper(), "goto_previous_end", query, "previous " .. name .. " end")
 end
 ts_map_all("m", "@function.outer", "method")
-ts_map_all("c", "@class.outer", "method")
+ts_map_all("c", "@class.outer", "class")
 ts_map_all("j", { "@cell.outer", "@cell.comment" }, "cell")
 -- }}}
 

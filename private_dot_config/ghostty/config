@@ -1,8 +1,8 @@
 # vim: foldmethod=marker
 
 # Options {{{ ==================================================================
-# theme = dark:tokyonight_moon,light:tokyonight-day
-theme = dark:Nvim Dark,light:Nvim Light
+theme = dark:TokyoNight Moon,light:TokyoNight Day
+# theme = dark:Nvim Dark,light:Nvim Light
 gtk-single-instance = true
 working-directory = home
 window-inherit-working-directory = false
@@ -17,6 +17,7 @@ window-height = 30
 
 # Keymaps {{{ ==================================================================
 keybind = ctrl+shift+plus=increase_font_size:1
+keybind = ctrl+shift+s=toggle_tab_overview
 keybind = ctrl+shift+minus=decrease_font_size:1
 keybind = ctrl+equal=equalize_splits
 keybind = ctrl+enter=unbind
