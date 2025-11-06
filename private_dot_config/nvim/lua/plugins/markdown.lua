@@ -29,6 +29,12 @@ return {
     end,
   },
 
+  -- Rendering
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    opts = { code = { conceal_delimiters = false} },
+  },
+
   -- Paste images
   {
     "HakonHarnes/img-clip.nvim",

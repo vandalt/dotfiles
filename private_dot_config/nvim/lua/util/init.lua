@@ -2,6 +2,7 @@ M = {}
 
 -- Pick chezmoi files
 -- Copy of the lazyvim function with additional targets options
+-- TODO: Can this be made available through LazyVim directly?
 ---@param targets string|string[]?
 M.pick_chezmoi = function(targets)
   local results = require("chezmoi.commands").list({
