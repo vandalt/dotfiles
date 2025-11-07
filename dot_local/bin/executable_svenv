@@ -1,0 +1,4 @@
+module load python/3.13
+module load scipy-stack
+module load gcc opencv
+source venv/bin/activate
