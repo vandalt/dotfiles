@@ -55,6 +55,8 @@ source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
 {{ else if eq .chezmoi.osRelease.id "fedora" }}
 source /usr/share/fzf/shell/key-bindings.zsh
+{{ else if regexMatch "^narval.*[0-9]$" .chezmoi.hostname }}
+source /cvmfs/soft.computecanada.ca/gentoo/2023/x86-64-v3/usr/share/fzf/key-bindings.zsh
 {{ end }}
 
 if [ -x /usr/bin/dircolors ]; then

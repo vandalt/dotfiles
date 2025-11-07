@@ -2,7 +2,7 @@
 
 # vi (commented: emacs) mode
 # bindkey -e
-bindkey -v
+# bindkey -v
 
 # Function from https://github.com/kovidgoyal/kitty/issues/1113#issuecomment-855838056
 # Useful in emulators that don't scroll before clearing
@@ -15,20 +15,6 @@ scroll-and-clear-screen() {
 zle -N scroll-and-clear-screen
 # Keep a few emacs bindings
 # bindkey '^l' scroll-and-clear-screen
-bindkey '^l' clear-screen
-bindkey '^a' beginning-of-line
-bindkey '^e' end-of-line
-bindkey '^f' forward-char
-bindkey '^b' backward-char
-bindkey '^p' up-line-or-search
-bindkey '^n' down-line-or-search
-bindkey '^d' delete-char-or-list
-bindkey '^h' backward-delete-char
-bindkey '^[d' kill-word
-# The second ^ prevents escape from doing the alt command
-bindkey '^[^h' backward-kill-word
-bindkey '^[f' forward-word
-bindkey '^[^b' backward-word
 
 # create a zkbd compatible hash;
 # to add other keys to this hash, see: man 5 terminfo
