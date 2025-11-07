@@ -12,5 +12,8 @@ README.md
 .config/hypr
 .config/neomutt
 .config/systemd
-.local/
+.local/share
+.local/bin/sdn
+.local/bin/mutt_oauth2.py
+.local/bin/mailsync
 {{- end }}
