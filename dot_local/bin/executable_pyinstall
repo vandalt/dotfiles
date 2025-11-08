@@ -46,6 +46,18 @@ SKIP_DOWNLOAD=false
 DO_INSTALL=false
 while [[ $# -gt 0 ]]; do
   case $1 in
+    --help|-h)
+      echo "Usage: pyinstall [OPTIONS]"
+      echo ""
+      echo "Generate requirements files and optionally download/install Python packages."
+      echo ""
+      echo "Options:"
+      echo "  -h, --help         Show this help message and exit"
+      echo "  -f, --force        Overwrite existing .alliance directory if not empty"
+      echo "  --skip-download    Skip downloading missing wheels"
+      echo "  --install          Install the downloaded wheels"
+      exit 0
+      ;;
     --force|-f)
       FORCE=true
       shift
