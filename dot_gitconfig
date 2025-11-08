@@ -10,7 +10,7 @@
 	default = simple
 [core]
 	editor = nvim
-	excludesfile = /home/vandal/.gitignore
+	excludesfile = ~/.gitignore
 [pull]
 	rebase = true
 [alias]
