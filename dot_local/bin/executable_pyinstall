@@ -23,7 +23,16 @@ generate_requirements_files() {
   avail_wheels -r "$REQ_FILE" --format plain | awk 'NR > 1 {print $1}' > "$AVAIL_FILE"
 }
 
+check_requirements_files() {
+  if [ ! -f "$REQ_FILE" ] || [ ! -s "$REQ_FILE" ]; then
+    echo "Warning: Requirements files are missing or empty. Download/install may fail." >&2
+    return 1
+  fi
+  return 0
+}
+
 download_missing_wheels() {
+  check_requirements_files
   if [ -s "$MISSING_FILE" ]; then
     mkdir -p "$LOCAL_WHEELS_DIR"
     pip download --no-deps -r "$MISSING_FILE" -d "$LOCAL_WHEELS_DIR"
@@ -31,6 +40,7 @@ download_missing_wheels() {
 }
 
 install_wheels() {
+  check_requirements_files
   if [ -s "$AVAIL_FILE" ]; then
     pip install --no-index -r "$AVAIL_FILE"
   fi
@@ -79,12 +89,18 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Check if .alliance directory exists
+ALLIANCE_EXISTS=false
 if [ -e "$ALLIANCE_SUBDIR" ]; then
   # Check if it's non-empty
   if [ -n "$(ls -A "$ALLIANCE_SUBDIR" 2>/dev/null)" ]; then
+    ALLIANCE_EXISTS=true
     if [ "$FORCE" = false ]; then
-      echo "Error: $ALLIANCE_SUBDIR directory is not empty. Use --force to overwrite." >&2
-      exit 1
+      # If alliance exists and both download and install are skipped, show error
+      if [ "$SKIP_DOWNLOAD" = true ] && [ "$DO_INSTALL" = false ]; then
+        echo "Error: $ALLIANCE_SUBDIR directory exists and neither download nor install are enabled." >&2
+        echo "Use --force to re-generate the alliance subdirectory." >&2
+        exit 1
+      fi
     fi
   fi
 else
@@ -92,7 +108,10 @@ else
   mkdir "$ALLIANCE_SUBDIR"
 fi
 
-generate_requirements_files
+# Only generate requirements files if alliance doesn't exist or force is set
+if [ "$ALLIANCE_EXISTS" = false ] || [ "$FORCE" = true ]; then
+  generate_requirements_files
+fi
 
 if [ "$SKIP_DOWNLOAD" = false ]; then
   download_missing_wheels
