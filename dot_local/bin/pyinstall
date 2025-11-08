@@ -1,0 +1,91 @@
+#!/usr/bin/bash
+
+ALLIANCE_SUBDIR=".alliance"
+MISSING_FILE="$ALLIANCE_SUBDIR/missing_wheels.txt"
+AVAIL_FILE="$ALLIANCE_SUBDIR/available_wheels.txt"
+REQ_FILE="$ALLIANCE_SUBDIR/requirements.txt"
+LOCAL_WHEELS_DIR="$ALLIANCE_SUBDIR/local-wheels"
+
+generate_requirements_files() {
+  # Copy requirements or create one from pyproject.toml if none exist
+  if [ -f "requirements.txt" ]; then
+    cp requirements.txt "$REQ_FILE"
+  else
+    get_deps --output "$REQ_FILE"
+  fi
+
+  if [ ! -s "$REQ_FILE" ]; then
+    echo "Error: $REQ_FILE is empty or does not exist." >&2
+    exit 1
+  fi
+
+  avail_wheels --raw -r "$REQ_FILE" --not-available-only > "$MISSING_FILE"
+  avail_wheels -r "$REQ_FILE" --format plain | awk 'NR > 1 {print $1}' > "$AVAIL_FILE"
+}
+
+download_missing_wheels() {
+  if [ -s "$MISSING_FILE" ]; then
+    mkdir -p "$LOCAL_WHEELS_DIR"
+    pip download --no-deps -r "$MISSING_FILE" -d "$LOCAL_WHEELS_DIR"
+  fi
+}
+
+install_wheels() {
+  if [ -s "$AVAIL_FILE" ]; then
+    pip install --no-index -r "$AVAIL_FILE"
+  fi
+
+  if [ -s "$MISSING_FILE" ]; then
+    pip install "$LOCAL_WHEELS_DIR"/*
+  fi
+}
+
+# Parse command line arguments
+FORCE=false
+SKIP_DOWNLOAD=false
+DO_INSTALL=false
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --force|-f)
+      FORCE=true
+      shift
+      ;;
+    --skip-download)
+      SKIP_DOWNLOAD=true
+      shift
+      ;;
+    --install)
+      DO_INSTALL=true
+      shift
+      ;;
+    *)
+      echo "Unknown option: $1" >&2
+      echo "Usage: pyinstall [--force|-f] [--skip-download] [--install]" >&2
+      exit 1
+      ;;
+  esac
+done
+
+# Check if .alliance directory exists
+if [ -e "$ALLIANCE_SUBDIR" ]; then
+  # Check if it's non-empty
+  if [ -n "$(ls -A "$ALLIANCE_SUBDIR" 2>/dev/null)" ]; then
+    if [ "$FORCE" = false ]; then
+      echo "Error: $ALLIANCE_SUBDIR directory is not empty. Use --force to overwrite." >&2
+      exit 1
+    fi
+  fi
+else
+  # Create .alliance directory if it doesn't exist
+  mkdir "$ALLIANCE_SUBDIR"
+fi
+
+generate_requirements_files
+
+if [ "$SKIP_DOWNLOAD" = false ]; then
+  download_missing_wheels
+fi
+
+if [ "$DO_INSTALL" = true ]; then
+  install_wheels
+fi

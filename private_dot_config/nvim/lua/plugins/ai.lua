@@ -7,9 +7,9 @@ return {
       },
     },
     keys = {
-      { "<leader>ai", function() require("sidekick.cli").toggle() end, desc = "Sidekick Toggle CLI" },
+      { "<leader>aa", function() require("sidekick.cli").toggle() end, desc = "Sidekick Toggle CLI" },
       {
-        "<leader>aa",
+        "<leader>ai",
         function() require("sidekick.cli").toggle({ name = "copilot", focus = true }) end,
         desc = "Sidekick Toggle Copilot",
       },
