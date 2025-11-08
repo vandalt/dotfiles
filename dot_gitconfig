@@ -10,6 +10,7 @@
 	default = simple
 [core]
 	editor = nvim
+	excludesfile = /home/vandal/.gitignore
 [pull]
 	rebase = true
 [alias]
@@ -17,3 +18,8 @@
 [diff]
 	submodule = log
 	tool = nvimdiff
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
