@@ -277,6 +277,8 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 {{ else if eq .chezmoi.osRelease.id "fedora" }}
 # source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+{{ else if regexMatch "^narval.*[0-9]$" .chezmoi.hostname }}
+source ~/programs/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 {{ end }}
 
 compdef _gnu_generic snakemake

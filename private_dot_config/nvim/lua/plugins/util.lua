@@ -5,6 +5,7 @@ return {
   -- with snacks.terminal
   {
     "akinsho/toggleterm.nvim",
+    enabled = true,
     dev = true,
     opts = {
       size = function() return 0.30 * vim.o.lines end,

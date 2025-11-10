@@ -1,7 +1,7 @@
 # Adapted from https://wiki.archlinux.org/index.php/zsh#Key_bindings
 
 # vi (commented: emacs) mode
-# bindkey -e
+bindkey -e
 # bindkey -v
 
 # Function from https://github.com/kovidgoyal/kitty/issues/1113#issuecomment-855838056
