@@ -19,6 +19,17 @@ if ! [[ "$PATH" =~ "$HOME/go/bin" ]]
 then
   PATH="$HOME/go/bin:$PATH"
 fi
+{{ if regexMatch "^narval.*[0-9]$" .chezmoi.hostname }}
+if ! [[ "$PATH" =~ "$HOME/repos/alliance-helpers/bin" ]]
+then
+  PATH="$HOME/repos/alliance-helpers/bin:$PATH"
+fi
+{{ else }}
+if ! [[ "$PATH" =~ "$HOME/repos/astro/alliance-helpers/bin" ]]
+then
+  PATH="$HOME/repos/astro/alliance-helpers/bin:$PATH"
+fi
+{{ end }}
 if ! [[ "$PATH" =~ "$HOME/.local/share/nvim/distant.nvim/bin" ]]
 then
   PATH="$HOME/.local/share/nvim/distant.nvim/bin:$PATH"
