@@ -278,7 +278,7 @@ function csview {
 
 # NOTE: echo only if using starship
 # precmd() { precmd() { print -Pn "\e]0;%~\a" echo "" } }
-# precmd() { print -Pn "\e]0;%~\a"; echo "" }
+precmd() { print -Pn "\e]0;%~\a" }
 
 {{ if eq .chezmoi.osRelease.id "arch" }}
 # NOTE: These (or at least highlighting) must be at the end of ~/.zshrc
