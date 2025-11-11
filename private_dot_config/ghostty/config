@@ -3,6 +3,7 @@
 # Options {{{ ==================================================================
 # theme = dark:TokyoNight Moon,light:TokyoNight Day
 theme = TokyoNight Moon
+cursor-style = block
 # theme = dark:Nvim Dark,light:Nvim Light
 gtk-single-instance = true
 working-directory = home
@@ -12,7 +13,7 @@ window-decoration = auto
 background-opacity = 1.0
 font-size = 10
 window-width = 90
-shell-integration-features = ssh-env
+shell-integration-features = ssh-env, no-cursor
 window-height = 30
 # }}}
 

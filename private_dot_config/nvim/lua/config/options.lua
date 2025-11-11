@@ -13,3 +13,4 @@ end
 
 vim.opt.spelllang = { "fr", "en" }
 vim.opt.title = true
+vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:block,r-cr-o:block,t:block-blinkon500-blinkoff500-TermCursor"
