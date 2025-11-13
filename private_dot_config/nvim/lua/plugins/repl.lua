@@ -58,6 +58,7 @@ return {
     },
   },
 
+  -- mini.hipatterns for notebook-navigator
   {
     "nvim-mini/mini.hipatterns",
     opts = function(_, opts)

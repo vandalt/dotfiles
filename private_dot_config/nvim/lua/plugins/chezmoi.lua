@@ -1,6 +1,7 @@
 return {
   {
     "xvzc/chezmoi.nvim",
+    dev = true,
     keys = {
       { "<leader>sz", false },
       { "<leader>fz", require("util").pick_chezmoi, desc = "Chezmoi" },

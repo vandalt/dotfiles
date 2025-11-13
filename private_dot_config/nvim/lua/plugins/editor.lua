@@ -1,4 +1,6 @@
 return {
+
+  -- oil.nvim
   {
     "stevearc/oil.nvim",
     enabled = true,
@@ -19,6 +21,8 @@ return {
     },
     dependencies = { { "nvim-mini/mini.icons", opts = {} } },
   },
+
+  -- snacks explorer
   {
     "folke/snacks.nvim",
     opts = {
@@ -27,6 +31,8 @@ return {
       },
     },
   },
+
+  -- which-key
   {
     "folke/which-key.nvim",
     opts = {

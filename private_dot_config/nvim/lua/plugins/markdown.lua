@@ -46,6 +46,7 @@ return {
   -- Zk
   {
     "zk-org/zk-nvim",
+    dev = true,
     main = "zk",
     cmd = { "ZkNotes", "ZkNew", "ZkLinks", "ZkBacklincks" },
     opts = {

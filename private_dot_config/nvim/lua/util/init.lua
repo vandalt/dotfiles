@@ -1,5 +1,37 @@
 M = {}
 
+-- Get arguments for debugging
+-- Copied from lazyvim since I wanted file completion
+---@param config {type?:string, args?:string[]|fun():string[]?}
+M.get_args = function(config)
+  local args = type(config.args) == "function" and (config.args() or {}) or config.args or {} --[[@as string[] | string ]]
+  local args_str = type(args) == "table" and table.concat(args, " ") or args --[[@as string]]
+
+  config = vim.deepcopy(config)
+  ---@cast args string[]
+  config.args = function()
+    -- copilot did this bit
+    local co = coroutine.running()
+    vim.ui.input({
+      prompt = "Run with args: ",
+      default = args_str,
+      completion = "file",
+    }, function(input)
+      coroutine.resume(co, input)
+    end)
+    local new_args = coroutine.yield() --[[@as string]]
+    if not new_args then
+      return nil
+    end
+    if config.type and config.type == "java" then
+      ---@diagnostic disable-next-line: return-type-mismatch
+      return vim.fn.expand(new_args)
+    end
+    return require("dap.utils").splitstr(vim.fn.expand(new_args))
+  end
+  return config
+end
+
 -- Pick chezmoi files
 -- Copy of the lazyvim function with additional targets options
 -- TODO: Can this be made available through LazyVim directly?
