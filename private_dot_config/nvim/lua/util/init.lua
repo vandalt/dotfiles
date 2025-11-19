@@ -32,46 +32,6 @@ M.get_args = function(config)
   return config
 end
 
--- Pick chezmoi files
--- Copy of the lazyvim function with additional targets options
--- TODO: Can this be made available through LazyVim directly?
----@param targets string|string[]?
-M.pick_chezmoi = function(targets)
-  local results = require("chezmoi.commands").list({
-    ---@diagnostic disable-next-line: assign-type-mismatch
-    targets = targets,
-    args = {
-      "--path-style",
-      "absolute",
-      "--include",
-      "files",
-      "--exclude",
-      "externals",
-    },
-  })
-  local items = {}
-
-  for _, czFile in ipairs(results) do
-    table.insert(items, {
-      text = czFile,
-      file = czFile,
-    })
-  end
-
-  ---@type snacks.picker.Config
-  local opts = {
-    items = items,
-    confirm = function(picker, item)
-      picker:close()
-      require("chezmoi.commands").edit({
-        targets = { item.text },
-        args = { "--watch" },
-      })
-    end,
-  }
-  Snacks.picker.pick(opts)
-end
-
 -- Disable snacks.image. First finds all existing autocmds from snacks.image,
 -- then removes them and saves them to a global variable to re-enable later
 M.disable_snacks_image = function()
@@ -173,11 +133,11 @@ end
 --- @param trim_spaces boolean
 --- @param cmd_data table<string, any>
 --- @param use_bracketed_paste boolean?
-local function create_send_motion(trim_spaces, cmd_data, use_bracketed_paste)
-  _G.send_motion = function(motion_type)
-    require("toggleterm").send_lines_to_terminal(motion_type, trim_spaces, cmd_data, use_bracketed_paste)
-  end
-end
+-- local function create_send_motion(trim_spaces, cmd_data, use_bracketed_paste)
+--   _G.send_motion = function(motion_type)
+--     require("toggleterm").send_lines_to_terminal(motion_type, trim_spaces, cmd_data, use_bracketed_paste)
+--   end
+-- end
 
 -- To send motions to toggleterm, we need to create a function that can take a motion and set it to operatorfunc
 -- The function is then executed with 'g@'

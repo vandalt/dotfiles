@@ -53,7 +53,8 @@ add("folke/tokyonight.nvim")
 vim.g["chezmoi#use_tmp_buffer"] = 1
 add("alker0/chezmoi.vim")
 
-add("xvzc/chezmoi.nvim")
+-- add("xvzc/chezmoi.nvim")
+vim.cmd([[packadd chezmoi.nvim]])
 require("chezmoi").setup({})
 
 add({ source = "myakove/f-string-toggle.nvim", checkout = "fix/replace-deprecated-ts-utils" })

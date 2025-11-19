@@ -32,7 +32,7 @@ return {
   -- Rendering
   {
     "MeanderingProgrammer/render-markdown.nvim",
-    opts = { code = { conceal_delimiters = false} },
+    opts = { code = { conceal_delimiters = false } },
   },
 
   -- Paste images
@@ -76,6 +76,16 @@ return {
         "<leader>zw",
         function() require("zk").new({ dir = "weekly", date = get_date_zw(zk_start_week) }) end,
         desc = "Weekly log (zk)",
+      },
+    },
+  },
+
+  -- Disable marksman LSP: using zk
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        marksman = { enabled = false },
       },
     },
   },

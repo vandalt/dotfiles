@@ -29,6 +29,46 @@ return {
     end,
   },
 
+  {
+    "folke/snacks.nvim",
+    optional = true,
+    keys = {
+      {
+        "<leader>jl",
+        function() require("util.snacks_repl").send_lines() end,
+        desc = "Send current line to terminal",
+      },
+      {
+        "<leader>js",
+        function() require("util.snacks_repl").send_lines("visual", { bracketed = true }) end,
+        mode = "v",
+        desc = "Send selected line to terminal",
+      },
+      {
+        "<leader>js",
+        function() return require("util.snacks_repl").send_motion_operator() end,
+        desc = "Send motion to terminal",
+        expr = true,
+      },
+      -- TODO: Integrating the next two mappings in snacks_repl would be nicer
+      {
+        "<leader>jh",
+        function()
+          local count = vim.v.count1
+          vim.cmd("normal! m`")
+          vim.api.nvim_feedkeys(
+            count .. vim.api.nvim_replace_termcodes("<leader>jsij``", true, false, true),
+            "m",
+            false
+          )
+        end,
+        desc = "Run cell",
+        remap = true,
+      },
+      { "<leader>jj", "<leader>jsij]j", "Run cell and move", remap = true },
+    },
+  },
+
   -- Toggleterm (repl-related config)
   {
     "akinsho/toggleterm.nvim",
@@ -45,7 +85,7 @@ return {
         ---@diagnostic disable-next-line:param-type-mismatch
         function() require("toggleterm").send_lines_to_terminal("visual_selection", unpack(tt_opts)) end,
         mode = "v",
-        desc = "Send current line to terminal",
+        desc = "Send selected line to terminal",
       },
       {
         "<leader>js",
@@ -63,8 +103,7 @@ return {
     "nvim-mini/mini.hipatterns",
     opts = function(_, opts)
       local cell_opts = { cells = require("notebook-navigator").minihipatterns_spec }
-      opts.highlighters =
-        vim.tbl_extend("error", cell_opts, opts.highlighters)
+      opts.highlighters = vim.tbl_extend("error", cell_opts, opts.highlighters)
       return opts
     end,
   },

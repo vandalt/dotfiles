@@ -43,7 +43,7 @@ return {
     end,
   },
 
-  -- Snacks (dashboard)
+  -- Snacks dashboard
   {
     "folke/snacks.nvim",
     opts = function(_, opts)
@@ -55,23 +55,6 @@ return {
 ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
 ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝
 ]]
-      local chezmoi_nvim_entry = {
-        icon = " ",
-        key = "c",
-        desc = "Config",
-        action = function()
-          require("util").pick_chezmoi(vim.fn.stdpath("config"))
-        end,
-      }
-      local config_index
-      for i = #opts.dashboard.preset.keys, 1, -1 do
-        if opts.dashboard.preset.keys[i].key == "c" then
-          table.remove(opts.dashboard.preset.keys, i)
-          config_index = i
-          break
-        end
-      end
-      table.insert(opts.dashboard.preset.keys, config_index, chezmoi_nvim_entry)
     end,
   },
 }
