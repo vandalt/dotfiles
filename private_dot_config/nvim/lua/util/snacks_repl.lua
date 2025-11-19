@@ -100,10 +100,8 @@ M.send_lines = function(text_type, opts)
   vim.fn.chansend(job_id, start_seq .. text .. end_seq .. "\n")
 end
 
-M.send_lines_motion = function(opts)
-  opts = vim.tbl_extend("keep", opts, { count = vim.g.snacks_repl_count })
-  M.send_lines("motion", { bracketed = true })
-end
+---@diagnostic disable-next-line: unused-local
+M.send_lines_motion = function() M.send_lines("motion", { bracketed = true, count = vim.g.snacks_repl_count }) end
 
 M.send_motion_operator = function()
   vim.g.snacks_repl_count = vim.v.count1

@@ -1,7 +1,3 @@
-local trim_spaces = false
-local use_bracketed_paste = true
-local tt_opts = { trim_spaces, { args = vim.v.count }, use_bracketed_paste }
-
 -- mini.ai spec that handles python files and markdown notebooks
 -- notebook-navigator is used for the former and treesitter for the latter
 ---@param ai_type string
@@ -65,35 +61,6 @@ return {
         desc = "Run cell",
         remap = true,
       },
-      { "<leader>jj", "<leader>jsij]j", "Run cell and move", remap = true },
-    },
-  },
-
-  -- Toggleterm (repl-related config)
-  {
-    "akinsho/toggleterm.nvim",
-    optional = true,
-    keys = {
-      {
-        "<leader>jl",
-        ---@diagnostic disable-next-line:param-type-mismatch
-        function() require("toggleterm").send_lines_to_terminal("single_line", unpack(tt_opts)) end,
-        desc = "Send current line to terminal",
-      },
-      {
-        "<leader>js",
-        ---@diagnostic disable-next-line:param-type-mismatch
-        function() require("toggleterm").send_lines_to_terminal("visual_selection", unpack(tt_opts)) end,
-        mode = "v",
-        desc = "Send selected line to terminal",
-      },
-      {
-        "<leader>js",
-        require("util").toggleterm_send_motion(tt_opts[1], tt_opts[2], tt_opts[3]),
-        desc = "Send motion to terminal",
-        expr = true,
-      },
-      { "<leader>jh", "m`<leader>jsij``", "Run cell", remap = true },
       { "<leader>jj", "<leader>jsij]j", "Run cell and move", remap = true },
     },
   },
