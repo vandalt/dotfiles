@@ -89,6 +89,14 @@ M.send_lines = function(text_type, opts)
   elseif text_type == "visual" then
     local lines = get_visual_selection()
     text = table.concat(lines, "\n")
+    -- Exit visual mode if still in it
+    if vim.fn.mode():match("[vV\22]") then
+      vim.cmd("normal! \27") -- \27 is <Esc>
+    end
+    -- Add extra newline for multi-line visual selections in IPython
+    if #lines > 1 then
+      text = text .. "\n"
+    end
   else
     local lines = get_motion_selection()
     text = table.concat(lines, "\n")

@@ -16,9 +16,7 @@ M.get_args = function(config)
       prompt = "Run with args: ",
       default = args_str,
       completion = "file",
-    }, function(input)
-      coroutine.resume(co, input)
-    end)
+    }, function(input) coroutine.resume(co, input) end)
     local new_args = coroutine.yield() --[[@as string]]
     if not new_args then
       return nil
@@ -114,7 +112,6 @@ M.enable_snacks_image = function()
   _G.snacks_disabled = false
 end
 
--- TODO: Annotations for return?
 -- Toggle Snacks.image depending on its current state
 ---@param enabled boolean Current state of Snacks.image
 M.toggle_snacks_image = function(enabled)
@@ -124,6 +121,19 @@ M.toggle_snacks_image = function(enabled)
   else
     M.disable_snacks_image()
     return false
+  end
+end
+
+-- mini.ai spec that handles python files and markdown notebooks
+-- notebook-navigator is used for the former and treesitter for the latter
+---@param ai_type string
+---@param id string
+---@param opts table<string,any>
+M.combined_cell_spec = function(ai_type, id, opts)
+  if vim.bo.filetype == "python" then
+    return require("notebook-navigator").miniai_spec(ai_type)
+  else
+    return require("mini.ai").gen_spec.treesitter({ a = "@cell.outer", i = "@cell.inner" })(ai_type, id, opts)
   end
 end
 

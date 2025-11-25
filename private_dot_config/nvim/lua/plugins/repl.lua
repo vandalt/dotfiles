@@ -1,16 +1,3 @@
--- mini.ai spec that handles python files and markdown notebooks
--- notebook-navigator is used for the former and treesitter for the latter
----@param ai_type string
----@param id string
----@param opts table<string,any>
-local combined_cell_spec = function(ai_type, id, opts)
-  if vim.bo.filetype == "python" then
-    return require("notebook-navigator").miniai_spec(ai_type)
-  else
-    return require("mini.ai").gen_spec.treesitter({ a = "@cell.outer", i = "@cell.inner" })(ai_type, id, opts)
-  end
-end
-
 return {
 
   -- Notebook navigator for py cell objects and highlights
@@ -20,11 +7,12 @@ return {
   {
     "nvim-mini/mini.ai",
     opts = function(_, opts)
-      opts.custom_textobjects["j"] = combined_cell_spec
+      opts.custom_textobjects["j"] = require("util").combined_cell_spec
       return opts
     end,
   },
 
+  -- Snacks REPL mappings
   {
     "folke/snacks.nvim",
     optional = true,
@@ -46,7 +34,6 @@ return {
         desc = "Send motion to terminal",
         expr = true,
       },
-      -- TODO: Integrating the next two mappings in snacks_repl would be nicer
       {
         "<leader>jh",
         function()

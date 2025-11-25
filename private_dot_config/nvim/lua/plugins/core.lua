@@ -2,6 +2,8 @@ return {
   -- vim-gtfo
   "justinmk/vim-gtfo", -- Exit vim, keeping for gof, not using got
 
+   "tpope/vim-eunuch",
+
   -- lazy.nvim
   { "folke/lazy.nvim", version = false },
 

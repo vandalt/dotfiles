@@ -32,7 +32,10 @@ return {
   -- Rendering
   {
     "MeanderingProgrammer/render-markdown.nvim",
-    opts = { code = { conceal_delimiters = false } },
+    opts = {
+      code = { conceal_delimiters = false },
+      html = { comment = { conceal = false } },
+    },
   },
 
   -- Paste images

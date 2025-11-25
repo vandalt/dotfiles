@@ -26,6 +26,12 @@ return {
     end,
   },
 
+  -- mini.splitjoin
+  {
+    "nvim-mini/mini.splitjoin",
+    opts = {},
+  },
+
   -- Neogen
   {
     "danymat/neogen",
@@ -50,10 +56,14 @@ return {
   {
     "mfussenegger/nvim-dap",
     keys = {
-      { "<leader>da", function() require("dap").continue({ before = require("util").get_args }) end, desc = "Run with Args" },
+      {
+        "<leader>da",
+        function() require("dap").continue({ before = require("util").get_args }) end,
+        desc = "Run with Args",
+      },
       { "<leader>do", function() require("dap").step_over() end, desc = "Step Over" },
       { "<leader>dO", function() require("dap").step_out() end, desc = "Step Out" },
-    }
+    },
   },
 
   -- venv-selector.nvim
@@ -74,4 +84,17 @@ return {
       },
     },
   },
+
+  -- f-string-toggle.nvim
+  {
+    "roobert/f-string-toggle.nvim",
+    keys = {
+      { "<leader>fs", function() require("f-string-toggle").toggle_fstring() end, desc = "Toggle f-string" }
+    },
+    config = function()
+      require("f-string-toggle").setup({
+        key_binding = false,
+      })
+    end,
+  }
 }
