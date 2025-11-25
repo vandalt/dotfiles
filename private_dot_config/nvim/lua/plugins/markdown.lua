@@ -83,12 +83,14 @@ return {
     },
   },
 
-  -- Disable marksman LSP: using zk
+  -- Disable marksman LSP when in a zk workspace
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        marksman = { enabled = false },
+        marksman = {
+          enabled = vim.fn.finddir(".zk", ".;") == "",
+        },
       },
     },
   },
