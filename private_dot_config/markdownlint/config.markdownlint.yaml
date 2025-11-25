@@ -14,3 +14,5 @@ MD026:
   punctuation: ".,;:。，；："
 # MD036/no-emphasis-as-heading
 MD036: false
+# MD041:first-line-heading/first-line-h1
+MD041: false
