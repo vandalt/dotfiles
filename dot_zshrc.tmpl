@@ -150,7 +150,7 @@ export VECLIB_MAXIMUM_THREADS=1
 export NUMEXPR_NUM_THREADS=1
 export XLA_FLAGS="--xla_force_host_platform_device_count=8 --xla_cpu_multi_thread_eigen=false intra_op_parallelism_threads=1"
 {{ if regexMatch "^narval.*[0-9]$" .chezmoi.hostname }}
-export PACKAGE_DATA_DIR=$HOME/projects/def-rdoyon/vandalt/package-data
+export PACKAGE_DATA_DIR=$HOME/projects/def-rdoyon/shared/package-data
 {{ else }}
 export PACKAGE_DATA_DIR=$HOME/Documents/data/package-data
 {{ end }}
