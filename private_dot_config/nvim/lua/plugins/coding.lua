@@ -4,7 +4,7 @@ return {
   {
     "saghen/blink.cmp",
     opts = {
-      cmdline = {enabled = false},
+      cmdline = { enabled = false },
       completion = {
         list = { selection = { preselect = false, auto_insert = false } },
         ---@diagnostic disable-next-line: unused-local
