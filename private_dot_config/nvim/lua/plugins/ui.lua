@@ -11,9 +11,9 @@ return {
         },
         lualine_z = {
           { "location", padding = { left = 0, right = 0 } },
-        }
-      }
-    }
+        },
+      },
+    },
   },
 
   -- Snacks (ui opts)
@@ -32,12 +32,8 @@ return {
     opts = function(_, opts)
       Snacks.toggle({
         name = "Snacks.image",
-        get = function()
-          return not _G.snacks_disabled
-        end,
-        set = function(state)
-          require("util").toggle_snacks_image(not state)
-        end,
+        get = function() return not _G.snacks_disabled end,
+        set = function(state) require("util").toggle_snacks_image(not state) end,
       }):map("<leader>uM")
       return opts
     end,
@@ -47,6 +43,7 @@ return {
   {
     "folke/snacks.nvim",
     opts = function(_, opts)
+      opts.dashboard.enabled = false
       opts.dashboard.preset.header = [[
 ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
 ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║

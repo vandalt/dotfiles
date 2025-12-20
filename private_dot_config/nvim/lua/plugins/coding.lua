@@ -4,6 +4,15 @@ return {
   {
     "saghen/blink.cmp",
     opts = {
+      sources = {
+        providers = {
+          path = {
+            opts = {
+              get_cwd = function(_) return vim.fn.getcwd() end,
+            },
+          },
+        },
+      },
       cmdline = { enabled = false },
       completion = {
         list = { selection = { preselect = false, auto_insert = false } },
@@ -88,13 +97,55 @@ return {
   -- f-string-toggle.nvim
   {
     "roobert/f-string-toggle.nvim",
-    keys = {
-      { "<leader>fs", function() require("f-string-toggle").toggle_fstring() end, desc = "Toggle f-string" }
+    opts = {
+      key_binding = false,
+      filetypes = { "python", "markdown" },
     },
-    config = function()
-      require("f-string-toggle").setup({
-        key_binding = false,
-      })
-    end,
-  }
+    keys = {
+      { "<leader>fs", function() require("f-string-toggle").toggle_fstring() end, desc = "Toggle f-string" },
+    },
+  },
+
+  -- sidekick.nvim
+  {
+    "folke/sidekick.nvim",
+    opts = {
+      nes = {
+        enabled = false, -- Start disabled, toggle with uN
+      },
+    },
+    keys = {
+      { "<leader>aa", function() require("sidekick.cli").toggle() end, desc = "Sidekick Toggle CLI" },
+      {
+        "<leader>ai",
+        function() require("sidekick.cli").toggle({ name = "copilot", focus = true }) end,
+        desc = "Sidekick Toggle Copilot",
+      },
+    },
+  },
+
+  -- lsp
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      inlay_hints = { enabled = false }, -- toggleable with <leader>uh
+      servers = {
+        basedpyright = {
+          settings = {
+            basedpyright = {
+              -- disableTaggedHints = true,
+              analysis = {
+                -- Disable warnings that ruff already provides
+                diagnosticSeverityOverrides = {
+                  reportUnusedVariable = "none",
+                  reportUnusedImport = "none",
+                },
+                typeCheckingMode = "off",
+              },
+            },
+          },
+        },
+      },
+    },
+  },
 }

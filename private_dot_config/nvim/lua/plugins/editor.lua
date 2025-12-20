@@ -70,4 +70,33 @@ return {
       end,
     },
   },
+
+  -- vim-arsync
+  {
+    "KenN7/vim-arsync",
+    dependencies = {
+      "prabirshrestha/async.vim",
+    },
+    cmd = { "ARsyncUp", "ARsyncUpDelete", "ARsyncDown" },
+    keys = {
+      { "<leader>ru", "<cmd>ARsyncUp<CR>", desc = "Push with rsync" },
+      { "<leader>rU", "<cmd>ARsyncUpDelete<CR>", desc = "Push with rsync and delete files" },
+      { "<leader>rd", "<cmd>ARsyncDown<CR>", desc = "Pull with rsync" },
+    },
+  },
+
+  -- treesitter-textobjects
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    opts = {
+      move = {
+        keys = {
+          goto_next_start = { ["]j"] = { "@cell.outer", "@cell.comment" } },
+          goto_next_end = { ["]J"] = { "@cell.outer", "@cell.comment" } },
+          goto_previous_start = { ["[j"] = { "@cell.outer", "@cell.comment" } },
+          goto_previous_end = { ["[J"] = { "@cell.outer", "@cell.comment" } },
+        },
+      },
+    },
+  },
 }

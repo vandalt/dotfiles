@@ -33,7 +33,7 @@ return {
   {
     "MeanderingProgrammer/render-markdown.nvim",
     opts = {
-      code = { conceal_delimiters = false },
+      code = { enabled = true, conceal_delimiters = false, language = true, border = "thin" },
       html = { comment = { conceal = false } },
     },
   },
@@ -90,6 +90,34 @@ return {
       servers = {
         marksman = {
           enabled = vim.fn.finddir(".zk", ".;") == "",
+        },
+      },
+    },
+  },
+
+  -- vimtex
+  {
+    "lervag/vimtex",
+    init = function()
+      vim.g.vimtex_compiler_method = "tectonic"
+      vim.g.vimtex_view_general_viewer = "okular"
+      vim.g.vimtex_view_general_options = "--unique file:@pdf\\#src:@line@tex"
+    end,
+  },
+
+  { "barreiroleo/ltex-extra.nvim" },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        ltex_plus = {
+          ---@diagnostic disable-next-line: unused-local
+          on_attach = function(client, bufnr)
+            require("ltex_extra").setup({
+              load_langs = { "en-US", "fr" },
+              path = vim.fn.expand("~") .. "/.local/share/ltex",
+            })
+          end,
         },
       },
     },

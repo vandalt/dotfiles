@@ -24,7 +24,7 @@ return {
       },
       {
         "<leader>js",
-        function() require("util.snacks_repl").send_lines("visual", { bracketed = true }) end,
+        function() require("util.snacks_repl").send_lines("visual", { bracketed = false }) end,
         mode = "v",
         desc = "Send selected line to terminal",
       },
@@ -69,5 +69,32 @@ return {
     "GCBallesteros/jupytext.nvim",
     dev = true,
     opts = { style = "markdown", output_extension = "md", force_ft = "markdown" },
+  },
+
+  -- otter.nvim
+  {
+    "jmbuhr/otter.nvim",
+    opts = {},
+    keys = {
+      { "<leader>jo", function() require("otter").activate() end, desc = "Activate otter" },
+    },
+  },
+  {
+    "quarto-dev/quarto-nvim",
+    opts = {
+      lspFeatures = { enabled = true, chunks = "all" },
+      codeRunner = {
+        enabled = true,
+        default_method = function(cell, _)
+          local text_lines = require("quarto.tools").concat(cell.text)
+          require("util.snacks_repl").send(text_lines, { bracketed = true })
+        end,
+      },
+    },
+    keys = {
+      { "<leader>ja", function() require("quarto.runner").run_above() end, desc = "Run cell and above" },
+      { "<leader>jA", function() require("quarto.runner").run_all() end, desc = "Run all cells" },
+      { "<leader>jb", function() require("quarto.runner").run_below() end, desc = "Run cell and below" },
+    },
   },
 }

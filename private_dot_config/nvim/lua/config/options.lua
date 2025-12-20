@@ -13,4 +13,7 @@ end
 
 vim.opt.spelllang = { "fr", "en" }
 vim.opt.title = true
+
+vim.opt.shortmess:append({  I = false })
+
 vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:block,r-cr-o:block,t:block-blinkon500-blinkoff500-TermCursor"

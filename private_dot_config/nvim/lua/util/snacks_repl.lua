@@ -70,17 +70,33 @@ local function get_motion_selection()
   return extract_text(start_pos, end_pos, full_lines)
 end
 
-M.send_lines = function(text_type, opts)
+M.send = function(text, opts)
   opts = opts or {}
+
+  local start_seq = opts.bracketed and "\x1b[200~" or ""
+  local end_seq = opts.bracketed and "\x1b[201~" or ""
+  local send_text = start_seq .. text .. end_seq .. "\n"
 
   -- Get terminal using count (default to 1)
   local count = opts.count or vim.v.count1
-  local term = Snacks.terminal.get(nil, { count = count, create = false })
+  local create
+  if opts.create ~= nil then
+    create = opts.create
+  else
+    create = true
+  end
+  local term = Snacks.terminal.get(nil, { count = count, create = create })
   if not term then
     vim.notify("No terminal found for count " .. count, vim.log.levels.ERROR)
     return
   end
   local job_id = vim.b[term.buf].terminal_job_id
+
+  vim.fn.chansend(job_id, send_text)
+end
+
+M.send_lines = function(text_type, opts)
+  opts = opts or {}
 
   -- Get the text
   local text
@@ -102,10 +118,7 @@ M.send_lines = function(text_type, opts)
     text = table.concat(lines, "\n")
   end
 
-  local start_seq = opts.bracketed and "\x1b[200~" or ""
-  local end_seq = opts.bracketed and "\x1b[201~" or ""
-
-  vim.fn.chansend(job_id, start_seq .. text .. end_seq .. "\n")
+  M.send(text, opts)
 end
 
 ---@diagnostic disable-next-line: unused-local

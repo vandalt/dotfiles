@@ -69,7 +69,9 @@ M.disable_snacks_image = function()
   for group, _ in pairs(group_set) do
     vim.api.nvim_create_augroup(group, { clear = true })
   end
-  -- For toggle
+  -- Close hover if any
+	Snacks.image.doc.hover_close()
+  -- Keep track for toggle
   _G.snacks_disabled = true
 end
 
