@@ -22,6 +22,10 @@ window-height = 30
 keybind = ctrl+shift+plus=increase_font_size:1
 keybind = ctrl+shift+s=toggle_tab_overview
 keybind = ctrl+shift+minus=decrease_font_size:1
+keybind = ctrl+shift+h=goto_split:left
+keybind = ctrl+shift+l=goto_split:right
+keybind = ctrl+shift+k=goto_split:up
+keybind = ctrl+shift+j=goto_split:down
 keybind = ctrl+equal=equalize_splits
 keybind = ctrl+enter=unbind
 # }}}
