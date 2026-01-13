@@ -1,0 +1,4 @@
+default-resources:
+  slurm_account: def-rdoyon_cpu
+seconds-between-status-checks: 60
+max-status-checks-per-second: 0.01
