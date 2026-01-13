@@ -9,9 +9,21 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function()
     vim.opt_local.wrap = true
     -- Enable spell only for non-ltex languages
-    local ltex_langs = { "plaintex", "tex" }
+    local ltex_langs = { "plaintex", "tex", "markdown" }
     if not vim.tbl_contains(ltex_langs, vim.bo.filetype) then
       vim.opt_local.spell = true
     end
+  end,
+})
+
+-- Force snakemake files to use shiftwidth=4
+-- TODO: I feel like this could go in the snakemake vim plugin?
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup("snakemake_indent"),
+  pattern = "snakemake",
+  callback = function()
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.tabstop = 4
+    vim.opt_local.softtabstop = 4
   end,
 })

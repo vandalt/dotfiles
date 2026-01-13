@@ -111,6 +111,7 @@ return {
     opts = {
       servers = {
         ltex_plus = {
+          enabled = vim.fn.finddir(".zk", ".;") == "",
           ---@diagnostic disable-next-line: unused-local
           on_attach = function(client, bufnr)
             require("ltex_extra").setup({

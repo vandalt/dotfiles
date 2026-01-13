@@ -17,7 +17,7 @@ set mail_check = 5  # Interval to check for mail
 set mail_check_stats  # Update mail status
 set mail_check_stats_interval = 5  # Update mail status at this interval
 set wait_key = no  # Silently return after external commands
-set sidebar_visible = no
+set sidebar_visible = yes
 set sidebar_short_path = yes
 set ts_enabled = yes
 set move = no  # Handled by imap stuff
@@ -122,5 +122,5 @@ macro pager,attach 'V' "<pipe-entry>iconv -c --to-code=UTF8 > /tmp/mail.html<ent
 auto_view text/html
 
 # Jump to mailboxes/folders
-macro index \e1 "<change-folder> =udem/Inbox/<enter>"
-macro index \e2 "<change-folder> =personal/Inbox/<enter>"
+macro index \eu "<change-folder> =udem/Inbox/<enter>"
+macro index \ep "<change-folder> =personal/Inbox/<enter>"

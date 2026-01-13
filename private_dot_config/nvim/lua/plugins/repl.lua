@@ -1,7 +1,85 @@
 return {
 
+  -- hydra.nvim for NotebookNavigator dev
+  { "nvimtools/hydra.nvim" },
+
+  -- iron.nvim, to test NotebookNavigator
+  {
+    "Vigemus/iron.nvim",
+    enabled = false,
+    lazy = false,
+    config = function()
+      local view = require("iron.view")
+      local opts = {
+        config = {
+          repl_definition = {
+            python = {
+              command = { "ipython", "--no-autoindent" },
+              format = require("iron.fts.common").bracketed_paste_python,
+              block_dividers = { "# %%", "#%%" },
+            },
+          },
+          -- repl_open_cmd = require("iron.view").bottom(40),
+          repl_open_cmd = view.split.vertical.botright(50),
+        },
+      }
+      require("iron.core").setup(opts)
+    end,
+  },
+
+  -- Molten, to test NotebookNavigator
+  {
+    "benlubas/molten-nvim",
+    enabled = false,
+    build = ":UpdateRemotePlugins",
+  },
+
   -- Notebook navigator for py cell objects and highlights
-  { "GCBallesteros/NotebookNavigator.nvim", dev = true, opts = {} },
+  {
+    "GCBallesteros/NotebookNavigator.nvim",
+    dev = true,
+    opts = {
+      activate_hydra_keys = "<leader>jy",
+      hydra_config = { hint = { position = { "top" } } },
+      show_hydra_hint = true,
+      hydra_keys = {
+        comment = "g",
+      },
+      repl_provider = function(start_line, end_line, repl_args, cell_marker)
+        repl_args = repl_args or {}
+        if repl_args.bracketed == nil then
+          repl_args.bracketed = true
+        end
+        require("util.snacks_repl").notebook_navigator(start_line, end_line, repl_args, cell_marker)
+      end,
+    },
+    keys = {
+      {
+        "<leader>ja",
+        function() require("notebook-navigator").run_cells_above() end,
+        ft = "python",
+        desc = "Run cell and above",
+      },
+      {
+        "<leader>jA",
+        function() require("notebook-navigator").run_all_cells() end,
+        ft = "python",
+        desc = "Run all cells",
+      },
+      {
+        "<leader>jx",
+        function() require("notebook-navigator").run_cell() end,
+        ft = "python",
+        desc = "Run python cell with NN",
+      },
+      {
+        "<leader>jb",
+        function() require("notebook-navigator").run_cells_below() end,
+        ft = "python",
+        desc = "Run cell and below",
+      },
+    },
+  },
 
   -- mini.ai textojbects
   {

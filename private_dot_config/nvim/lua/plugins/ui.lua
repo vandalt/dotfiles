@@ -23,6 +23,11 @@ return {
       image = {
         enabled = true,
       },
+      styles = {
+        zen = {
+          backdrop = { transparent = false, blend = 40 },
+        }
+      }
     },
   },
 

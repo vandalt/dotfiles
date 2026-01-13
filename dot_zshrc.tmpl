@@ -15,6 +15,10 @@ if ! [[ "$PATH" =~ "$HOME/.cargo/bin" ]]
 then
   PATH="$HOME/.cargo/bin:$PATH"
 fi
+if ! [[ "$PATH" =~ "$HOME/.config/emacs/bin" ]]
+then
+  PATH="$HOME/.config/emacs/bin:$PATH"
+fi
 if ! [[ "$PATH" =~ "$HOME/go/bin" ]]
 then
   PATH="$HOME/go/bin:$PATH"

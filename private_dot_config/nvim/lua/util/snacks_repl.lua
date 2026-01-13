@@ -70,6 +70,14 @@ local function get_motion_selection()
   return extract_text(start_pos, end_pos, full_lines)
 end
 
+---@diagnostic disable-next-line: unused-local
+M.notebook_navigator = function(start_line, end_line, repl_args, cell_marker)
+  local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
+  local text = table.concat(lines, "\n")
+  M.send(text, repl_args)
+  return true
+end
+
 M.send = function(text, opts)
   opts = opts or {}
 

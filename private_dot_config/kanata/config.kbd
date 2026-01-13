@@ -29,20 +29,21 @@
 
 ;; NOTE: Tapping term is the number for each alias
 (defalias
+  nav (layer-toggle navigation)
   zth (tap-hold-release 135 135 z lctl)
   xth (tap-hold-release 135 135 x lsft)
-  vth (tap-hold-release 135 135 v ralt)
+  vth (tap-hold-release 135 135 v lmet)
   ath (tap-hold-release 135 135 a lsft)
   sth (tap-hold-release 135 135 s lalt)
   dth (tap-hold-release 135 135 d lctl)
-  fth (tap-hold-release 135 135 f lmet)
-  mth (tap-hold-release 135 135 m ralt)
+  fth (tap-hold-release 135 135 f @nav)
+  mth (tap-hold-release 135 135 m rmet)
   colth (tap-hold-release 135 135 ; rsft)
   lth (tap-hold-release 135 135 l lalt)
   kth (tap-hold-release 135 135 k rctl)
-  jth (tap-hold-release 135 135 j rmet)
-  sym (layer-toggle symbols)
-  gth (tap-hold-release 135 135 g @sym)
+  jth (tap-hold-release 135 135 j @nav)
+  gth (tap-hold-release 135 135 g ralt)
+  hth (tap-hold-release 135 135 h ralt)
   cw (caps-word 10000)
 )
 
@@ -51,17 +52,17 @@
   caps  f1   f2   f3  f4  f5  f6  f7  f8  f9  f10  f11  f12  prnt ins  del
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
-  bspc @ath    @sth    @dth    @fth    @gth    h    @jth    @kth    @lth    @colth    '    ret
-  @sym @zth    @xth    c    @vth    b    n    @mth    ,    .    /    @sym
-  @cw lmet esc           spc            @cw @sym lft up down rght
+  bspc @ath    @sth    @dth    @fth    @gth    @hth    @jth    @kth    @lth    @colth    '    ret
+  @nav @zth    @xth    c    @vth    b    n    @mth    ,    .    /    @nav
+  @cw lmet esc           spc            @cw rctrl lft up down rght
 )
 
 ;; Add backspace to have a repeatable key
-(deflayer symbols
+(deflayer navigation
   _    _    _    _   _   _    _   _   _   _    _    _   _   _  _   _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
-  bspc    _    _    _    _    _    lft  down up   rght _    _    _
+  bspc    _    _    _    _    _    lft  down up   rght del    _    _
   _    _    _    _    _    _    home pgdn pgup end  _    _
   _    _    _              _               _  _  _  _  _  _
 )
