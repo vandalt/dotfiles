@@ -1,3 +1,4 @@
+executor: slurm
 default-resources:
   slurm_account: def-rdoyon_cpu
 seconds-between-status-checks: 60
