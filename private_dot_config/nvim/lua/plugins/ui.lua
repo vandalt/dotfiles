@@ -16,6 +16,16 @@ return {
     },
   },
 
+  -- Noice
+  {
+    "folke/noice.nvim",
+    opts = {
+      cmdline = {
+        view = "cmdline",  -- "cmdline" for regular, "cmdline_popup" for palette
+      }
+    },
+  },
+
   -- Snacks (ui opts)
   {
     "folke/snacks.nvim",
@@ -26,8 +36,8 @@ return {
       styles = {
         zen = {
           backdrop = { transparent = false, blend = 40 },
-        }
-      }
+        },
+      },
     },
   },
 

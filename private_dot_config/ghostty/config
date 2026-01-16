@@ -1,11 +1,10 @@
 # vim: foldmethod=marker
 
 # Options {{{ ==================================================================
-theme = dark:TokyoNight Moon,light:TokyoNight Day
-# theme = TokyoNight Moon
-# theme = TokyoNight Day
-cursor-style = block
+# theme = dark:TokyoNight Moon,light:TokyoNight Day
 # theme = dark:Nvim Dark,light:Nvim Light
+theme = dark:kanagawa-dragon,light:kanagawa-lotus
+cursor-style = block
 gtk-single-instance = true
 working-directory = home
 window-inherit-working-directory = false
