@@ -63,7 +63,7 @@ set editor = "nvim"  # Use neovim
 set mime_type_query_command = "xdg-mime query filetype"  # Determine mime type of attachments
 set include  # Include copy of message in reply
 set attribution = "\nOn %d, %n wrote:\n"  # Pattern before message replied to
-set query_command = "echo %s | xargs khard email --parsable --"
+# set query_command = "echo %s | xargs khard email --parsable --"
 set query_format="%4c %t %-70.70a %-70.70n %?e?(%e)?"
 set forward_format = "Fwd: %s"
 
