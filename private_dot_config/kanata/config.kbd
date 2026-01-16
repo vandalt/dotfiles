@@ -30,6 +30,7 @@
 ;; NOTE: Tapping term is the number for each alias
 (defalias
   nav (layer-toggle navigation)
+  num (layer-toggle numpad)
   zth (tap-hold-release 135 135 z lctl)
   xth (tap-hold-release 135 135 x lsft)
   vth (tap-hold-release 135 135 v lmet)
@@ -41,7 +42,7 @@
   colth (tap-hold-release 135 135 ; rsft)
   lth (tap-hold-release 135 135 l lalt)
   kth (tap-hold-release 135 135 k rctl)
-  jth (tap-hold-release 135 135 j @nav)
+  jth (tap-hold-release 135 135 j @num)
   gth (tap-hold-release 135 135 g ralt)
   hth (tap-hold-release 135 135 h ralt)
   cw (caps-word 10000)
@@ -57,12 +58,20 @@
   @cw lmet esc           spc            @cw rctrl lft up down rght
 )
 
-;; Add backspace to have a repeatable key
 (deflayer navigation
   _    _    _    _   _   _    _   _   _   _    _    _   _   _  _   _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
-  bspc    _    _    _    _    _    lft  down up   rght del    _    _
+  _    _    _    _    _    _    lft  down up   rght del    _    _
   _    _    _    _    _    _    home pgdn pgup end  _    _
+  _    _    _              _               _  _  _  _  _  _
+)
+
+(deflayer numpad
+  _    _    _    _   _   _    _   _   _   _    _    _   _   _  _   _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    3    2    1    _    _    _    _    _    _    _    _    _
+  _    _    6    5    4    _    _    _    _    _    _    _    _
+  _    0    9    8    7    _    _    _    _    _  _    _
   _    _    _              _               _  _  _  _  _  _
 )
