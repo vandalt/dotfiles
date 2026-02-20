@@ -6,6 +6,7 @@ end
 
 -- Misc useful mappings ============================================================================================
 -- mini.deps
+-- TODO: Remove
 map("n", "<leader>mdu", "<Cmd>DepsUpdate<CR>", "MiniDeps Update")
 map("n", "<leader>mdc", "<Cmd>DepsClean<CR>", "MiniDeps Delete")
 

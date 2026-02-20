@@ -1,4 +1,4 @@
-local add, later = require("mini.deps").add, require("mini.deps").later
+local add = vim.pack.add
 
 -- Git plugins (diff, command and statusline) ======================================================================
 require("mini.diff").setup({ view = { style = "number" } }) -- Diff in sidebar
@@ -14,6 +14,142 @@ vim.api.nvim_create_autocmd("User", {
   pattern = "MiniGitCommandSplit",
   desc = "Autocmd to keep vertical git blame aligned with the buffer",
   callback = require("util").git_blame_autocmd,
+})
+
+-- mini.notify ==============================================================================================
+local predicate = function(notif)
+  local skip_clients = {lua_ls = true, basedpyright = true}
+  if not (notif.data.source == "lsp_progress" and skip_clients[notif.data.client_name]) then
+    return true
+  end
+  -- Filter out some LSP progress notifications from 'lua_ls' and basedpyright
+  if notif.data.client_name == "lua_ls" then
+    return notif.msg:find("Diagnosing") == nil and notif.msg:find("semantic tokens") == nil
+  else
+    return false
+  end
+end
+local custom_sort = function(notif_arr) return MiniNotify.default_sort(vim.tbl_filter(predicate, notif_arr)) end
+require("mini.notify").setup({ content = { sort = custom_sort } })
+
+-- Jupyter notebooks and REPL ======================================================================================
+vim.cmd([[packadd jupytext.nvim]])
+-- add("GCBallesteros/jupytext.nvim")
+require("jupytext").setup({ style = "markdown", output_extension = "md", force_ft = "markdown" })
+
+-- Jupyter notebooks
+vim.cmd([[packadd NotebookNavigator.nvim]])
+-- add("GCBallesteros/NotebookNavigator.nvim")
+-- TODO: Wrap in later like minimax
+require("notebook-navigator").setup()
+
+-- mini.hipatterns =================================================================================================
+-- Highlight stuff
+-- (uses notebook-navigator so need to run in later())
+local function word(mystr) return "%f[%w]()" .. mystr .. "()%f[%W]" end
+require("mini.hipatterns").setup({
+  highlighters = {
+    hex_color = require("mini.hipatterns").gen_highlighter.hex_color(),
+    fixme = { pattern = word("FIXME"), group = "MiniHipatternsFixme" },
+    bug = { pattern = word("BUG"), group = "MiniHipatternsFixme" },
+    hack = { pattern = word("HACK"), group = "MiniHipatternsHack" },
+    todo = { pattern = word("TODO"), group = "MiniHipatternsTodo" },
+    note = { pattern = word("NOTE"), group = "MiniHipatternsNote" },
+    cells = require("notebook-navigator").minihipatterns_spec,
+  },
+})
+
+-- UI plugins (statusline, icons, indent guides) ===================================================================
+require("mini.statusline").setup()
+
+-- Icons, with recommended tweaks
+require("mini.icons").setup()
+-- TODO: Update later and wrap these functions, see what updated minimax does
+-- MiniIcons.mock_nvim_web_devicons()
+-- MiniIcons.tweak_lsp_kinda()
+
+-- Static indent guides
+add({"https://github.com/lukas-reineke/indent-blankline.nvim"})
+require("ibl").setup({ scope = { enabled = false } })
+
+-- Indent scope highlight
+require("mini.indentscope").setup({
+  draw = { animation = require("mini.indentscope").gen_animation.none() },
+  options = {
+    try_as_border = true, -- Check if current line is border (e.g. function name)
+    border = "top", -- Don't mark empty lines at the end of a scope
+  },
+  symbol = "▎",
+})
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "help", "oil_preview", "toggleterm", "sidekick_terminal" },
+  callback = function() vim.b.miniindentscope_disable = true end,
+  desc = "Disable indentscope in some filetypes",
+})
+
+-- oil.nvim ========================================================================================================
+add({"https://github.com/stevearc/oil.nvim"})
+require("oil").setup({
+  keymaps = {
+    ["<C-h>"] = false,
+    ["<C-l>"] = false,
+    ["<C-a>"] = { "actions.select", opts = { horizontal = true } },
+  },
+})
+
+-- Toggleterm ======================================================================================================
+vim.cmd([[packadd toggleterm.nvim]])
+-- add("akinsho/toggleterm.nvim")
+require("toggleterm").setup({
+  size = function() return 0.30 * vim.o.lines end,
+  persist_size = false,
+  open_mapping = [[<C-/>]],
+  responsiveness = { horizontal_breakpoint = 200 },
+  shade_terminals = false,
+  persist_mode = false,
+})
+
+-- flash.nvim ======================================================================================================
+add({"https://github.com/folke/flash.nvim"})
+require("flash").setup({ modes = { char = { enabled = false } } })
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "qf",
+  callback = function() vim.keymap.set("n", "<CR>", "<CR>", { buffer = true }) end,
+})
+
+-- Markdown and notes ==============================================================================================
+add({{
+  src = "https://github.com/iamcco/markdown-preview.nvim",
+  -- TODO: Update this
+  -- hooks = {
+  --   post_install = function() vim.fn["mkdp#util#install"]() end,
+  --   post_checkout = function() vim.fn["mkdp#util#install"]() end,
+  -- },
+}})
+vim.g.mkdp_auto_close = false
+vim.g.mkdp_combine_preview = true
+
+add({"https://github.com/zk-org/zk-nvim"})
+require("zk").setup({
+  picker = "minipick",
+})
+
+add({"https://github.com/HakonHarnes/img-clip.nvim"})
+require("img-clip").setup({
+  -- Drag and drop causes warning when pasting in cmd mode
+  default = { prompt_for_file_name = false, drag_and_drop = { enabled = false } },
+})
+-- add("3rd/image.nvim")
+--@diagnostic disable-next-line: missing-fields
+-- require("image").setup({
+--   processor = "magick_cli",
+--   window_overleaf
+-- })
+add({"https://github.com/folke/snacks.nvim"})
+require("snacks").setup({
+  image = {
+    enabled = true,
+  },
 })
 
 -- mini.clue =======================================================================================================
@@ -78,123 +214,5 @@ miniclue.setup({
     { mode = "n", keys = "<leader>t", desc = "+tests" },
     { mode = "n", keys = "<leader>u", desc = "+toggle" },
     { mode = "n", keys = "<leader>z", desc = "+zk" },
-  },
-})
-
--- mini.notify+fidget ==============================================================================================
-require("mini.notify").setup({
-  -- lua_ls is spamming with lazydev so stick to fidget
-  -- TODO: Revisit this
-  -- lsp_progress = { enable = false },
-})
--- add("j-hui/fidget.nvim")
--- require("fidget").setup({})
-
--- mini.hipatterns =================================================================================================
--- Highlight stuff
--- (uses notebook-navigator so need to run in later())
-later(function()
-  local function word(mystr) return "%f[%w]()" .. mystr .. "()%f[%W]" end
-  require("mini.hipatterns").setup({
-    highlighters = {
-      hex_color = require("mini.hipatterns").gen_highlighter.hex_color(),
-      fixme = { pattern = word("FIXME"), group = "MiniHipatternsFixme" },
-      bug = { pattern = word("BUG"), group = "MiniHipatternsFixme" },
-      hack = { pattern = word("HACK"), group = "MiniHipatternsHack" },
-      todo = { pattern = word("TODO"), group = "MiniHipatternsTodo" },
-      note = { pattern = word("NOTE"), group = "MiniHipatternsNote" },
-      cells = require("notebook-navigator").minihipatterns_spec,
-    },
-  })
-end)
-
--- UI plugins (statusline, icons, indent guides) ===================================================================
-require("mini.statusline").setup()
-
--- Icons, with recommended tweaks
-require("mini.icons").setup()
-later(MiniIcons.mock_nvim_web_devicons)
-later(MiniIcons.tweak_lsp_kind)
-
--- Static indent guides
-add("lukas-reineke/indent-blankline.nvim")
-require("ibl").setup({ scope = { enabled = false } })
-
--- Indent scope highlight
-require("mini.indentscope").setup({
-  draw = { animation = require("mini.indentscope").gen_animation.none() },
-  options = {
-    try_as_border = true, -- Check if current line is border (e.g. function name)
-    border = "top", -- Don't mark empty lines at the end of a scope
-  },
-  symbol = "▎",
-})
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "help", "oil_preview", "toggleterm", "sidekick_terminal" },
-  callback = function() vim.b.miniindentscope_disable = true end,
-  desc = "Disable indentscope in some filetypes",
-})
-
--- oil.nvim ========================================================================================================
-add("stevearc/oil.nvim")
-require("oil").setup({
-  keymaps = {
-    ["<C-h>"] = false,
-    ["<C-l>"] = false,
-    ["<C-a>"] = { "actions.select", opts = { horizontal = true } },
-  },
-})
-
--- Toggleterm ======================================================================================================
-vim.cmd([[packadd toggleterm.nvim]])
--- add("akinsho/toggleterm.nvim")
-require("toggleterm").setup({
-  size = function() return 0.30 * vim.o.lines end,
-  persist_size = false,
-  open_mapping = [[<C-/>]],
-  responsiveness = { horizontal_breakpoint = 200 },
-  shade_terminals = false,
-  persist_mode = false,
-})
-
--- flash.nvim ======================================================================================================
-add("folke/flash.nvim")
-require("flash").setup({ modes = { char = { enabled = false } } })
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "qf",
-  callback = function() vim.keymap.set("n", "<CR>", "<CR>", { buffer = true }) end,
-})
-
--- Markdown and notes ==============================================================================================
-add({
-  source = "iamcco/markdown-preview.nvim",
-  hooks = {
-    post_install = later(function() vim.fn["mkdp#util#install"]() end),
-    post_checkout = function() vim.fn["mkdp#util#install"]() end,
-  },
-})
-vim.g.mkdp_auto_close = false
-vim.g.mkdp_combine_preview = true
-
-add("zk-org/zk-nvim")
-require("zk").setup({
-  picker = "minipick",
-})
-
-add("HakonHarnes/img-clip.nvim")
-require("img-clip").setup({
-  -- Drag and drop causes warning when pasting in cmd mode
-  default = { prompt_for_file_name = false, drag_and_drop = { enabled = false } },
-})
--- add("3rd/image.nvim")
---@diagnostic disable-next-line: missing-fields
--- require("image").setup({
---   processor = "magick_cli",
---   window_overleaf
--- })
-add("folke/snacks.nvim")
-require("snacks").setup({
-  image = {
-    enabled = true,
   },
 })

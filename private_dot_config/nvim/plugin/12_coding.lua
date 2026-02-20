@@ -1,11 +1,11 @@
-local add, later = require("mini.deps").add, require("mini.deps").later
+local add = vim.pack.add
 
 -- AI sidekick.nvim =========
-add("folke/sidekick.nvim")
+add({ "https://github.com/folke/sidekick.nvim" })
 require("sidekick").setup()
 
 -- f-string-toggle.nvim =================================
-add("roobert/f-string-toggle.nvim")
+add({ "https://github.com/roobert/f-string-toggle.nvim" })
 require("f-string-toggle").setup({ key_binding = false })
 
 -- Snippets ==========================================================================================================
@@ -15,7 +15,8 @@ require("mini.snippets").setup({
 })
 -- Without this "fake" LSP, mini.snippets won't show up in mini.completion
 -- Only actual LSP snippets will and mini.snippets need to be manually expanded with "name<c-j>"
-later(require("mini.snippets").start_lsp_server)
+-- TODO: Update with later, see minimax
+require("mini.snippets").start_lsp_server()
 
 -- Completion for LSP and fallback (buffer text) ===================================================================
 -- For other things (paths), use default vim completion
@@ -38,11 +39,10 @@ vim.lsp.config("*", {
 })
 
 -- LSP, snippets and linting and formatting ========================================================================
-add("mason-org/mason.nvim")
+add({ "https://github.com/mason-org/mason.nvim" })
 require("mason").setup()
 
-
-add("neovim/nvim-lspconfig")
+add({ "https://github.com/neovim/nvim-lspconfig" })
 
 vim.lsp.config("basedpyright", {
   settings = {
@@ -56,17 +56,17 @@ vim.lsp.config("basedpyright", {
 
 vim.lsp.enable({ "lua_ls", "basedpyright", "ruff" })
 
-add("folke/lazydev.nvim")
+add({ "https://github.com/folke/lazydev.nvim" })
 require("lazydev").setup()
 
-add("rafamadriz/friendly-snippets")
-add("danymat/neogen")
+add({ "https://github.com/rafamadriz/friendly-snippets" })
+add({ "https://github.com/danymat/neogen" })
 require("neogen").setup({
   snippet_engine = "mini",
   languages = { python = { template = { annotation_convention = "reST" } } },
 })
 
-add("stevearc/conform.nvim")
+add({ "https://github.com/stevearc/conform.nvim" })
 require("conform").setup({
   formatters_by_ft = {
     lua = { "stylua" },
@@ -76,14 +76,16 @@ require("conform").setup({
 
 -- Treesitter ======================================================================================================
 add({
-  source = "nvim-treesitter/nvim-treesitter",
-  checkout = "main",
-  monitor = "main",
-  hooks = {
-    post_checkout = function() vim.cmd("TSUpdate") end,
+  {
+    src = "https://github.com/nvim-treesitter/nvim-treesitter",
+    version = "main",
+    -- TODO: Update
+    -- hooks = {
+    --   post_checkout = function() vim.cmd("TSUpdate") end,
+    -- },
   },
 })
-add({ source = "nvim-treesitter/nvim-treesitter-textobjects", checkout = "main", monitor = "main" })
+add({ { src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", version = "main" } })
 local parsers = {
   "c",
   "cpp",
@@ -129,7 +131,8 @@ require("nvim-treesitter-textobjects").setup({
 })
 
 -- Debugging and testing ===========================================================================================
-add({ source = "mfussenegger/nvim-dap", depends = { "jbyuki/one-small-step-for-vimkind" } })
+-- TODO: best way to specify deps?
+add({ "https://github.com/mfussenegger/nvim-dap", "https://github.com/jbyuki/one-small-step-for-vimkind" })
 local dap = require("dap")
 dap.configurations.lua = { {
   type = "nlua",
@@ -140,13 +143,15 @@ dap.adapters.nlua = function(callback, config)
   callback({ type = "server", host = config.host or "127.0.0.1", port = config.port or 8086 })
 end
 
-add("mfussenegger/nvim-dap-python")
+add({ "https://github.com/mfussenegger/nvim-dap-python" })
 require("dap-python").setup(vim.env.MASON .. "/packages/debugpy/venv/bin/python")
 require("dap-python").test_runner = "pytest"
 
 add({
-  source = "nvim-neotest/neotest",
-  depends = { "nvim-lua/plenary.nvim", "nvim-neotest/nvim-nio", "nvim-neotest/neotest-python" },
+  "https://github.com/nvim-neotest/neotest",
+  "https://github.com/nvim-lua/plenary.nvim",
+  "https://github.com/nvim-neotest/nvim-nio",
+  "https://github.com/nvim-neotest/neotest-python",
 })
 ---@diagnostic disable-next-line: missing-fields
 require("neotest").setup({
@@ -164,20 +169,10 @@ require("neotest").setup({
   -- }
 })
 
--- Jupyter notebooks and REPL ======================================================================================
-vim.cmd([[packadd jupytext.nvim]])
--- add("GCBallesteros/jupytext.nvim")
-require("jupytext").setup({ style = "markdown", output_extension = "md", force_ft = "markdown" })
-
--- Jupyter notebooks
-vim.cmd([[packadd NotebookNavigator.nvim]])
--- add("GCBallesteros/NotebookNavigator.nvim")
-later(function() require("notebook-navigator").setup() end)
-
 -- vim.cmd([[packadd otter.nvim]])
-add("jmbuhr/otter.nvim")
+add({ "https://github.com/jmbuhr/otter.nvim" })
 
-add("quarto-dev/quarto-nvim")
+add({ "https://github.com/quarto-dev/quarto-nvim" })
 require("quarto").setup({
   lspFeatures = { enabled = true, chunks = "all" },
   codeRunner = {

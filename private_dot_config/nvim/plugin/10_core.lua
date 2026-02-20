@@ -1,7 +1,7 @@
-local add, later = require("mini.deps").add, require("mini.deps").later
+local add = vim.pack.add
 
 -- Colorscheme =================
-add("rebelot/kanagawa.nvim")
+add({"https://github.com/rebelot/kanagawa.nvim"})
 require("kanagawa").setup({
   background = {
     dark = "dragon",
@@ -14,8 +14,9 @@ vim.cmd("colorscheme kanagawa")
 vim.cmd([[packadd nvim.undotree]])
 require("mini.surround").setup() -- Surround with sa/sd/sr
 require("mini.splitjoin").setup() -- gS to split and join
-later(function() require("mini.extra").setup() end) -- Misc extra functionality
-add("justinmk/vim-gtfo")
+-- TODO: Wrap in later? See minimax
+require("mini.extra").setup() -- Misc extra functionality
+add({"https://github.com/justinmk/vim-gtfo"})
 
 -- Autopair ===============================================================================================
 require("mini.pairs").setup({
@@ -30,29 +31,26 @@ vim.api.nvim_create_autocmd(
   "FileType",
   { pattern = { "tex", "plaintex" }, callback = map_tex, desc = "Map $ pair in tex" }
 )
+vim.g.minipairs_disable = true
 
 
 -- mini.ai ==========================================================================
 -- Custom textobjects with "a" and "i"
-later(function()
-  local ai = require("mini.ai")
-  require("mini.ai").setup({
-    n_lines = 300,
-    custom_textobjects = {
-      j = require("util").combined_cell_spec,
-      o = ai.gen_spec.treesitter({ a = "@block.outer", i = "@block.inner" }),
-      f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
-      c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),
-      u = ai.gen_spec.function_call(),
-    },
-  })
-end)
+local ai = require("mini.ai")
+-- TODO: Later, see minimax
+require("mini.ai").setup({
+  n_lines = 300,
+  custom_textobjects = {
+    j = require("util").combined_cell_spec,
+    o = ai.gen_spec.treesitter({ a = "@block.outer", i = "@block.inner" }),
+    f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
+    c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),
+    u = ai.gen_spec.function_call(),
+  },
+})
 
 
 -- mini.pick ======================================================================================
--- For built-in pickers, configure the tool directly (example ripgrep config file for smart case)
--- The ui.select stuff before and after is to preserve default for now.
--- local ui_select_orig = vim.ui.select
 require("mini.pick").setup({
   mappings = {
     choose_alt = { char = "<C-y>", func = function() vim.api.nvim_input("<CR>") end },
@@ -60,4 +58,5 @@ require("mini.pick").setup({
   },
 })
 -- Customize ui_select to show item indices
-later(function() vim.ui.select = require("util").minipick_select_idx end)
+-- TODO: Later?
+vim.ui.select = require("util").minipick_select_idx
