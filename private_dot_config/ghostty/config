@@ -9,6 +9,7 @@ gtk-single-instance = true
 working-directory = home
 window-inherit-working-directory = false
 font-family = "JetBrainsMono Nerd Font"
+# font-family = "VictorMono Nerd Font"
 window-decoration = auto
 background-opacity = 1.0
 font-size = 10

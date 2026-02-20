@@ -63,6 +63,7 @@ source ~/.zsh/keybindings.zsh
 source ~/.zsh/git.zsh
 source ~/.zsh/python.zsh
 source ~/.zsh/onedrive.zsh
+source ~/.zsh/tokens.zsh
 
 # Must be after vi/emacs mode
 {{ if eq .chezmoi.osRelease.id "arch" }}
@@ -137,6 +138,8 @@ export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/ripgreprc"
 
 alias svenv='source svenv'
 alias pipin='pip install --no-index'
+alias syw='showyourwork'
+alias smk='snakemake'
 
 setopt +o nomatch
 alias tclean='rm *.aux *.fls *.fdb_latexmk *.log *.out *.vrb *.nav *.snm *.synctex.* *.toc *.bbl *.blg *.lof'
@@ -199,7 +202,7 @@ fi
 
 # CORRECT will correct commands, CORRECT_ALL will correct arguments
 setopt CORRECT_ALL
-export CORRECT_IGNORE_FILE="go|.config|.astropy|.snakemake|.ipython|.zshrc|.task"
+export CORRECT_IGNORE_FILE="go|.config|.astropy|.snakemake|.ipython|.zshrc|.task|test|tests"
 export CORRECT_IGNORE="make"
 
 

@@ -43,8 +43,8 @@
   lth (tap-hold-release 135 135 l lalt)
   kth (tap-hold-release 135 135 k rctl)
   jth (tap-hold-release 135 135 j @num)
-  gth (tap-hold-release 135 135 g ralt)
-  hth (tap-hold-release 135 135 h ralt)
+  bspcth (tap-hold-release 135 135 bspc ralt)
+  quoteth (tap-hold-release 135 135 ' ralt)
   cw (caps-word 10000)
 )
 
@@ -53,9 +53,9 @@
   caps  f1   f2   f3  f4  f5  f6  f7  f8  f9  f10  f11  f12  prnt ins  del
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
-  bspc @ath    @sth    @dth    @fth    @gth    @hth    @jth    @kth    @lth    @colth    '    ret
+  @bspcth @ath    @sth    @dth    @fth    g    h    @jth    @kth    @lth    @colth    @quoteth    ret
   @nav @zth    @xth    c    @vth    b    n    @mth    ,    .    /    @nav
-  @cw lmet esc           spc            @cw rctrl lft up down rght
+  @cw lmet esc           spc            rpt-any rctrl lft up down rght
 )
 
 (deflayer navigation
