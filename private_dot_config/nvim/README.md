@@ -4,7 +4,7 @@ My Neovim configuration.
 
 ## Structure
 
-- `init.lua` will install `mini.nvim` and setup `mini.deps`, which I use to manage my plugins.
+- `init.lua` will install `mini.nvim`
 - Files in the `plugin/` directory are loaded in alphanumerical order.
   - Files starting with `0*_` configure core features (including all mappings, even for plugins)
   - Files starting with `1*_` configure plugins

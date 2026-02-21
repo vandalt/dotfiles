@@ -5,10 +5,8 @@ local map = function(mode, lhs, rhs, desc, opts)
 end
 
 -- Misc useful mappings ============================================================================================
--- mini.deps
--- TODO: Remove
-map("n", "<leader>mdu", "<Cmd>DepsUpdate<CR>", "MiniDeps Update")
-map("n", "<leader>mdc", "<Cmd>DepsClean<CR>", "MiniDeps Delete")
+-- vim.pack update
+map("n", "<leader>vpu", vim.pack.update, "MiniDeps Update")
 
 -- Misc useful mappings
 map("n", "-", "<Cmd>Oil<CR>", "Open oil.nvim") -- See plugin config for other oil mappings
