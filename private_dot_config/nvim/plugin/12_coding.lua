@@ -1,4 +1,5 @@
 local add = vim.pack.add
+local later = Config.later
 
 -- AI sidekick.nvim =========
 add({ "https://github.com/folke/sidekick.nvim" })
@@ -15,8 +16,7 @@ require("mini.snippets").setup({
 })
 -- Without this "fake" LSP, mini.snippets won't show up in mini.completion
 -- Only actual LSP snippets will and mini.snippets need to be manually expanded with "name<c-j>"
--- TODO: Update with later, see minimax
-require("mini.snippets").start_lsp_server()
+later(require("mini.snippets").start_lsp_server)
 
 -- Completion for LSP and fallback (buffer text) ===================================================================
 -- For other things (paths), use default vim completion
@@ -75,17 +75,11 @@ require("conform").setup({
 })
 
 -- Treesitter ======================================================================================================
+Config.on_packchanged("nvim-treesitter", { "update" }, function() vim.cmd("TSUpdate") end, ":TSUpdate")
 add({
-  {
-    src = "https://github.com/nvim-treesitter/nvim-treesitter",
-    version = "main",
-    -- TODO: Update
-    -- hooks = {
-    --   post_checkout = function() vim.cmd("TSUpdate") end,
-    -- },
-  },
+  "https://github.com/nvim-treesitter/nvim-treesitter",
+  "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
 })
-add({ { src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", version = "main" } })
 local parsers = {
   "c",
   "cpp",
@@ -131,7 +125,6 @@ require("nvim-treesitter-textobjects").setup({
 })
 
 -- Debugging and testing ===========================================================================================
--- TODO: best way to specify deps?
 add({ "https://github.com/mfussenegger/nvim-dap", "https://github.com/jbyuki/one-small-step-for-vimkind" })
 local dap = require("dap")
 dap.configurations.lua = { {
@@ -157,7 +150,7 @@ add({
 require("neotest").setup({
   adapters = { require("neotest-python")({ dap = { justMyCode = false }, pytest_discover_instances = false }) },
   -- Override some of the highlight groups that look bad with the light theme
-  -- TODO: Remove or uncomment depending on what happens with PR: https://github.com/nvim-neotest/neotest/pull/553
+  -- Temporary fix for default colorscheme, see https://github.com/nvim-neotest/neotest/pull/553
   -- highlights = {
   --   passed = "DiagnosticOk",
   --   running = "DiagnosticWarn",
@@ -168,6 +161,16 @@ require("neotest").setup({
   --   watching = "DiagnosticWarn",
   -- }
 })
+
+-- Jupyter notebooks and REPL ======================================================================================
+vim.cmd([[packadd jupytext.nvim]])
+-- add("GCBallesteros/jupytext.nvim")
+require("jupytext").setup({ style = "markdown", output_extension = "md", force_ft = "markdown" })
+
+-- Jupyter notebooks
+vim.cmd([[packadd NotebookNavigator.nvim]])
+-- add("GCBallesteros/NotebookNavigator.nvim")
+require("notebook-navigator").setup()
 
 -- vim.cmd([[packadd otter.nvim]])
 add({ "https://github.com/jmbuhr/otter.nvim" })

@@ -1,7 +1,8 @@
 local add = vim.pack.add
+local later = Config.later
 
 -- Colorscheme =================
-add({"https://github.com/rebelot/kanagawa.nvim"})
+add({ "https://github.com/rebelot/kanagawa.nvim" })
 require("kanagawa").setup({
   background = {
     dark = "dragon",
@@ -14,9 +15,8 @@ vim.cmd("colorscheme kanagawa")
 vim.cmd([[packadd nvim.undotree]])
 require("mini.surround").setup() -- Surround with sa/sd/sr
 require("mini.splitjoin").setup() -- gS to split and join
--- TODO: Wrap in later? See minimax
-require("mini.extra").setup() -- Misc extra functionality
-add({"https://github.com/justinmk/vim-gtfo"})
+later(function() require("mini.extra").setup() end) -- Misc extra functionality
+add({ "https://github.com/justinmk/vim-gtfo" })
 
 -- Autopair ===============================================================================================
 require("mini.pairs").setup({
@@ -33,22 +33,21 @@ vim.api.nvim_create_autocmd(
 )
 vim.g.minipairs_disable = true
 
-
 -- mini.ai ==========================================================================
 -- Custom textobjects with "a" and "i"
-local ai = require("mini.ai")
--- TODO: Later, see minimax
-require("mini.ai").setup({
-  n_lines = 300,
-  custom_textobjects = {
-    j = require("util").combined_cell_spec,
-    o = ai.gen_spec.treesitter({ a = "@block.outer", i = "@block.inner" }),
-    f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
-    c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),
-    u = ai.gen_spec.function_call(),
-  },
-})
-
+later(function()
+  local ai = require("mini.ai")
+  require("mini.ai").setup({
+    n_lines = 300,
+    custom_textobjects = {
+      j = require("util").combined_cell_spec,
+      o = ai.gen_spec.treesitter({ a = "@block.outer", i = "@block.inner" }),
+      f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
+      c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),
+      u = ai.gen_spec.function_call(),
+    },
+  })
+end)
 
 -- mini.pick ======================================================================================
 require("mini.pick").setup({
@@ -58,5 +57,4 @@ require("mini.pick").setup({
   },
 })
 -- Customize ui_select to show item indices
--- TODO: Later?
-vim.ui.select = require("util").minipick_select_idx
+later(function() vim.ui.select = require("util").minipick_select_idx end)

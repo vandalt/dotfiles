@@ -1,4 +1,5 @@
 local add = vim.pack.add
+local later = Config.later
 
 -- Git plugins (diff, command and statusline) ======================================================================
 require("mini.diff").setup({ view = { style = "number" } }) -- Diff in sidebar
@@ -18,7 +19,7 @@ vim.api.nvim_create_autocmd("User", {
 
 -- mini.notify ==============================================================================================
 local predicate = function(notif)
-  local skip_clients = {lua_ls = true, basedpyright = true}
+  local skip_clients = { lua_ls = true, basedpyright = true }
   if not (notif.data.source == "lsp_progress" and skip_clients[notif.data.client_name]) then
     return true
   end
@@ -32,44 +33,34 @@ end
 local custom_sort = function(notif_arr) return MiniNotify.default_sort(vim.tbl_filter(predicate, notif_arr)) end
 require("mini.notify").setup({ content = { sort = custom_sort } })
 
--- Jupyter notebooks and REPL ======================================================================================
-vim.cmd([[packadd jupytext.nvim]])
--- add("GCBallesteros/jupytext.nvim")
-require("jupytext").setup({ style = "markdown", output_extension = "md", force_ft = "markdown" })
-
--- Jupyter notebooks
-vim.cmd([[packadd NotebookNavigator.nvim]])
--- add("GCBallesteros/NotebookNavigator.nvim")
--- TODO: Wrap in later like minimax
-require("notebook-navigator").setup()
-
 -- mini.hipatterns =================================================================================================
 -- Highlight stuff
 -- (uses notebook-navigator so need to run in later())
-local function word(mystr) return "%f[%w]()" .. mystr .. "()%f[%W]" end
-require("mini.hipatterns").setup({
-  highlighters = {
-    hex_color = require("mini.hipatterns").gen_highlighter.hex_color(),
-    fixme = { pattern = word("FIXME"), group = "MiniHipatternsFixme" },
-    bug = { pattern = word("BUG"), group = "MiniHipatternsFixme" },
-    hack = { pattern = word("HACK"), group = "MiniHipatternsHack" },
-    todo = { pattern = word("TODO"), group = "MiniHipatternsTodo" },
-    note = { pattern = word("NOTE"), group = "MiniHipatternsNote" },
-    cells = require("notebook-navigator").minihipatterns_spec,
-  },
-})
+later(function()
+  local function word(mystr) return "%f[%w]()" .. mystr .. "()%f[%W]" end
+  require("mini.hipatterns").setup({
+    highlighters = {
+      hex_color = require("mini.hipatterns").gen_highlighter.hex_color(),
+      fixme = { pattern = word("FIXME"), group = "MiniHipatternsFixme" },
+      bug = { pattern = word("BUG"), group = "MiniHipatternsFixme" },
+      hack = { pattern = word("HACK"), group = "MiniHipatternsHack" },
+      todo = { pattern = word("TODO"), group = "MiniHipatternsTodo" },
+      note = { pattern = word("NOTE"), group = "MiniHipatternsNote" },
+      cells = require("notebook-navigator").minihipatterns_spec,
+    },
+  })
+end)
 
 -- UI plugins (statusline, icons, indent guides) ===================================================================
 require("mini.statusline").setup()
 
 -- Icons, with recommended tweaks
 require("mini.icons").setup()
--- TODO: Update later and wrap these functions, see what updated minimax does
--- MiniIcons.mock_nvim_web_devicons()
--- MiniIcons.tweak_lsp_kinda()
+later(MiniIcons.mock_nvim_web_devicons)
+later(MiniIcons.tweak_lsp_kind)
 
 -- Static indent guides
-add({"https://github.com/lukas-reineke/indent-blankline.nvim"})
+add({ "https://github.com/lukas-reineke/indent-blankline.nvim" })
 require("ibl").setup({ scope = { enabled = false } })
 
 -- Indent scope highlight
@@ -88,7 +79,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- oil.nvim ========================================================================================================
-add({"https://github.com/stevearc/oil.nvim"})
+add({ "https://github.com/stevearc/oil.nvim" })
 require("oil").setup({
   keymaps = {
     ["<C-h>"] = false,
@@ -110,7 +101,7 @@ require("toggleterm").setup({
 })
 
 -- flash.nvim ======================================================================================================
-add({"https://github.com/folke/flash.nvim"})
+add({ "https://github.com/folke/flash.nvim" })
 require("flash").setup({ modes = { char = { enabled = false } } })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "qf",
@@ -118,23 +109,22 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Markdown and notes ==============================================================================================
-add({{
-  src = "https://github.com/iamcco/markdown-preview.nvim",
-  -- TODO: Update this
-  -- hooks = {
-  --   post_install = function() vim.fn["mkdp#util#install"]() end,
-  --   post_checkout = function() vim.fn["mkdp#util#install"]() end,
-  -- },
-}})
+Config.on_packchanged(
+  "markdown-preview",
+  { "install", "update" },
+  function() vim.fn["mkdp#util#install"]() end,
+  "install markdow-npreview"
+)
+add({ "https://github.com/iamcco/markdown-preview.nvim" })
 vim.g.mkdp_auto_close = false
 vim.g.mkdp_combine_preview = true
 
-add({"https://github.com/zk-org/zk-nvim"})
+add({ "https://github.com/zk-org/zk-nvim" })
 require("zk").setup({
   picker = "minipick",
 })
 
-add({"https://github.com/HakonHarnes/img-clip.nvim"})
+add({ "https://github.com/HakonHarnes/img-clip.nvim" })
 require("img-clip").setup({
   -- Drag and drop causes warning when pasting in cmd mode
   default = { prompt_for_file_name = false, drag_and_drop = { enabled = false } },
@@ -145,7 +135,7 @@ require("img-clip").setup({
 --   processor = "magick_cli",
 --   window_overleaf
 -- })
-add({"https://github.com/folke/snacks.nvim"})
+add({ "https://github.com/folke/snacks.nvim" })
 require("snacks").setup({
   image = {
     enabled = true,
