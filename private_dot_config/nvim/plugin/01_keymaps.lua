@@ -44,18 +44,21 @@ map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", "Move Up")
 map("v", "<A-j>", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", "Move Down")
 map("v", "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", "Move Up")
 
--- Buffers
+-- Buffers and tabs
 map("n", "<leader>bd", function() require("mini.bufremove").delete() end, "Close buffer")
 map("n", "<leader>bD", "<Cmd>bdelete<CR>", "Close buffer and window")
+map("n", "<leader><tab>]", "<cmd>tabnext<cr>", "Next Tab")
+map("n", "<leader><tab>d", "<cmd>tabclose<cr>", "Close Tab")
+map("n", "<leader><tab>[", "<cmd>tabprevious<cr>",  "Previous Tab" )
 
 -- rsync
 map("n", "<leader>ru", "<Cmd>ARsyncUp<CR>", "Rsync up to remote")
 map("n", "<leader>rd", "<Cmd>ARsyncDown<CR>", "Rsync down from remote")
 
 -- Sessions
-map("n", "<leader>sd", function() require("persistence").stop() end, "Save session")
-map("n", "<leader>sr", function() require("persistence").load() end, "Read session")
-map("n", "<leader>ss", function() require("persistence").select() end, "Select session")
+map("n", "<leader>qd", function() require("persistence").stop() end, "Don't save session")
+map("n", "<leader>qr", function() require("persistence").load() end, "Read session")
+map("n", "<leader>qs", function() require("persistence").select() end, "Select session")
 
 -- Toggle things
 map("n", "<leader>uf", function() require("f-string-toggle").toggle_fstring() end, "Toggle f-string")
@@ -95,7 +98,7 @@ map("n", "<leader>gr", function() require("snacks").gitbrowse() end, "Open git r
 
 -- Copilot
 map("n", "<leader>ai", function() require("sidekick.cli").toggle({ name = "copilot" }) end, "Sidekick")
-map("n", "<leader>ap", function() require("sidekick.cli").prompt({ name = "copilot" }) end, "Sidekick prompt")
+map("n", "<leader>ap", function() require("sidekick.cli").prompt() end, "Sidekick prompt")
 
 -- LSP
 -- Define lsp mappings only when lsp is attached
@@ -108,7 +111,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
   end,
 })
-map("n", "grm", "<Cmd>Mason<CR>", "Open Mason")
 map("n", "grm", "<Cmd>Mason<CR>", "Open Mason")
 map("", "grf", function() require("conform").format({ async = true }) end, "Format buffer or selection")
 
@@ -128,6 +130,8 @@ map(
 )
 
 -- Dap
+-- stylua: ignore
+map("n", "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, "Conditional breakpoint")
 map("n", "<leader>db", function() require("dap").toggle_breakpoint() end, "Toggle breakpoint")
 map("n", "<leader>dc", function() require("dap").continue() end, "Debug")
 map("n", "<leader>do", function() require("dap").step_over() end, "Step over")
@@ -152,7 +156,7 @@ map("n", "<leader>tp", function() require("neotest").output_panel.toggle() end, 
 ---@diagnostic disable-next-line:missing-fields
 map("n", "<leader>td", function() require("neotest").run.run({ strategy = "dap" }) end, "Debug Nearest test")
 
--- mini plugins ====================================================================================================
+-- Editor plugins ====================================================================================================
 map("n", "<leader>ff", function() MiniPick.builtin.files() end, "Find file")
 map("n", "<leader>fb", function() MiniPick.builtin.buffers() end, "Find buffer")
 map("n", "<leader>fz", function() require("util.pick").pick_chezmoi() end, "Find chezmoi file")

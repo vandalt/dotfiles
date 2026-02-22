@@ -39,13 +39,13 @@ opt.signcolumn = "yes" -- Avoids annoying flicker, always show signcolumn
 opt.smartcase = true -- ...Even better search
 opt.spelllang = { "fr", "en" } -- Franglais
 opt.splitbelow = true -- Split below...
-opt.splitright = true -- and to the right by default
+opt.splitright = true -- ...and to the right by default
 opt.title = true -- Set window title to filename
 opt.undofile = true -- Persistent undo
 opt.wrap = false -- Don't wrap text by default
 
 -- Autocmds ========================================================================================================
--- NOTE: Some autocmds are also defined in 10_mini.lua and 12_plugins.lua when they are related to specific plugins
+-- Some autocmds are also defined in plugin config when related to specific configs
 
 vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
   pattern = "term://*",

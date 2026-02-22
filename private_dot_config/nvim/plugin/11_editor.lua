@@ -100,14 +100,6 @@ require("toggleterm").setup({
   persist_mode = false,
 })
 
--- flash.nvim ======================================================================================================
-add({ "https://github.com/folke/flash.nvim" })
-require("flash").setup({ modes = { char = { enabled = false } } })
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "qf",
-  callback = function() vim.keymap.set("n", "<CR>", "<CR>", { buffer = true }) end,
-})
-
 -- Markdown and notes ==============================================================================================
 Config.on_packchanged(
   "markdown-preview",
@@ -129,12 +121,6 @@ require("img-clip").setup({
   -- Drag and drop causes warning when pasting in cmd mode
   default = { prompt_for_file_name = false, drag_and_drop = { enabled = false } },
 })
--- add("3rd/image.nvim")
---@diagnostic disable-next-line: missing-fields
--- require("image").setup({
---   processor = "magick_cli",
---   window_overleaf
--- })
 add({ "https://github.com/folke/snacks.nvim" })
 require("snacks").setup({
   image = {
@@ -142,9 +128,20 @@ require("snacks").setup({
   },
 })
 
+-- chezmoi plugins ================================================================================
+-- Needs to be a 'start' plugin, either add directly from init.lua or move to 'start' subdir with
+-- mv ~/.local/share/nvim/site/pack/deps/opt/chezmoi.vim/ ~/.local/share/nvim/site/pack/deps/start/
+vim.g["chezmoi#use_tmp_buffer"] = 1
+add({"https://github.com/alker0/chezmoi.vim"})
+
+-- add("xvzc/chezmoi.nvim")
+vim.cmd([[packadd chezmoi.nvim]])
+require("chezmoi").setup({})
+
 -- mini.clue =======================================================================================================
 local miniclue = require("mini.clue")
 miniclue.setup({
+  window = { delay = 300 },
   triggers = {
     -- Leader triggers
     { mode = "n", keys = "<Leader>" },

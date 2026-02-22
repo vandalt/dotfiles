@@ -1,7 +1,7 @@
 local add = vim.pack.add
 local later = Config.later
 
--- AI sidekick.nvim =========
+-- AI sidekick.nvim =============================
 add({ "https://github.com/folke/sidekick.nvim" })
 require("sidekick").setup()
 
@@ -17,6 +17,12 @@ require("mini.snippets").setup({
 -- Without this "fake" LSP, mini.snippets won't show up in mini.completion
 -- Only actual LSP snippets will and mini.snippets need to be manually expanded with "name<c-j>"
 later(require("mini.snippets").start_lsp_server)
+add({ "https://github.com/rafamadriz/friendly-snippets" })
+add({ "https://github.com/danymat/neogen" })
+require("neogen").setup({
+  snippet_engine = "mini",
+  languages = { python = { template = { annotation_convention = "reST" } } },
+})
 
 -- Completion for LSP and fallback (buffer text) ===================================================================
 -- For other things (paths), use default vim completion
@@ -58,13 +64,6 @@ vim.lsp.enable({ "lua_ls", "basedpyright", "ruff" })
 
 add({ "https://github.com/folke/lazydev.nvim" })
 require("lazydev").setup()
-
-add({ "https://github.com/rafamadriz/friendly-snippets" })
-add({ "https://github.com/danymat/neogen" })
-require("neogen").setup({
-  snippet_engine = "mini",
-  languages = { python = { template = { annotation_convention = "reST" } } },
-})
 
 add({ "https://github.com/stevearc/conform.nvim" })
 require("conform").setup({

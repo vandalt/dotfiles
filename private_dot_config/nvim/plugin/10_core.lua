@@ -18,6 +18,10 @@ require("mini.splitjoin").setup() -- gS to split and join
 later(function() require("mini.extra").setup() end) -- Misc extra functionality
 add({ "https://github.com/justinmk/vim-gtfo" })
 
+-- persistence.nvim (sessions) ===========
+add({"https://github.com/folke/persistence.nvim"})
+require("persistence").setup()
+
 -- Autopair ===============================================================================================
 require("mini.pairs").setup({
   mappings = {
