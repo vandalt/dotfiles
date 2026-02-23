@@ -49,7 +49,7 @@ map("n", "<leader>bd", function() require("mini.bufremove").delete() end, "Close
 map("n", "<leader>bD", "<Cmd>bdelete<CR>", "Close buffer and window")
 map("n", "<leader><tab>]", "<cmd>tabnext<cr>", "Next Tab")
 map("n", "<leader><tab>d", "<cmd>tabclose<cr>", "Close Tab")
-map("n", "<leader><tab>[", "<cmd>tabprevious<cr>",  "Previous Tab" )
+map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", "Previous Tab")
 
 -- rsync
 map("n", "<leader>ru", "<Cmd>ARsyncUp<CR>", "Rsync up to remote")
@@ -157,7 +157,13 @@ map("n", "<leader>tp", function() require("neotest").output_panel.toggle() end, 
 map("n", "<leader>td", function() require("neotest").run.run({ strategy = "dap" }) end, "Debug Nearest test")
 
 -- Editor plugins ====================================================================================================
-map("n", "<leader>ff", function() MiniPick.builtin.files() end, "Find file")
+map(
+  "n",
+  "<leader>ff",
+  function() MiniPick.builtin.files({}, { source = { cwd = require("util.root").get() } }) end,
+  "Find file"
+)
+map("n", "<leader>fF", function() MiniPick.builtin.files() end, "Find file")
 map("n", "<leader>fb", function() MiniPick.builtin.buffers() end, "Find buffer")
 map("n", "<leader>fz", function() require("util.pick").pick_chezmoi() end, "Find chezmoi file")
 map("n", "<leader>fs", function() MiniExtra.pickers.lsp({ scope = "document_symbol" }) end, "Find lsp symbol")
