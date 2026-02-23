@@ -161,9 +161,9 @@ map(
   "n",
   "<leader>ff",
   function() MiniPick.builtin.files({}, { source = { cwd = require("util.root").get() } }) end,
-  "Find file"
+  "Find file (root)"
 )
-map("n", "<leader>fF", function() MiniPick.builtin.files() end, "Find file")
+map("n", "<leader>fF", function() MiniPick.builtin.files() end, "Find file (cwd)")
 map("n", "<leader>fb", function() MiniPick.builtin.buffers() end, "Find buffer")
 map("n", "<leader>fz", function() require("util.pick").pick_chezmoi() end, "Find chezmoi file")
 map("n", "<leader>fs", function() MiniExtra.pickers.lsp({ scope = "document_symbol" }) end, "Find lsp symbol")
@@ -174,7 +174,13 @@ map(
   function() require("util.pick").pick_chezmoi(vim.fn.stdpath("config")) end,
   "Find config file (chezmoi)"
 )
-map("n", "<leader>sg", function() MiniPick.builtin.grep_live() end, "Search grep")
+map(
+  "n",
+  "<leader>sg",
+  function() MiniPick.builtin.grep_live({}, { source = { cwd = require("util.root").get() } }) end,
+  "Search grep (root)"
+)
+map("n", "<leader>sG", function() MiniPick.builtin.grep_live() end, "Search grep (cwd)")
 map("n", "<leader>sf", function() MiniExtra.pickers.buf_lines() end, "Search current file")
 map("n", "<leader>sh", function() MiniPick.builtin.help() end, "Search help")
 map("n", "<leader>sk", function() MiniExtra.pickers.keymaps() end, "Search keymaps")
