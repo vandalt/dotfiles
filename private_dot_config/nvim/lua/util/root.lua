@@ -1,6 +1,6 @@
 -- Slightly modified version of LazyVim's root module
 -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util/root.lua
-M = {}
+local M = {}
 
 function M.norm(path)
   if path:sub(1, 1) == "~" then

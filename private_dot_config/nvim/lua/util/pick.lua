@@ -1,4 +1,4 @@
-M = {}
+local M = {}
 
 -- Function to pick chezmoi files with mini.pick
 ---@param targets? string|string[]

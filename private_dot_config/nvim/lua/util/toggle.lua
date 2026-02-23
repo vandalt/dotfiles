@@ -1,4 +1,4 @@
-M = {}
+local M = {}
 
 -- Disable snacks.image. First finds all existing autocmds from snacks.image,
 -- then removes them and saves them to a global variable to re-enable later

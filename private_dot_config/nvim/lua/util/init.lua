@@ -1,4 +1,4 @@
-M = {}
+local M = {}
 
 -- Create a global 'send_motion' function that sends a motion to toggleterm
 -- The motion type should be compatible with operatorfunc and g@
