@@ -19,7 +19,7 @@ later(function() require("mini.extra").setup() end) -- Misc extra functionality
 add({ "https://github.com/justinmk/vim-gtfo" })
 
 -- persistence.nvim (sessions) ===========
-add({"https://github.com/folke/persistence.nvim"})
+add({ "https://github.com/folke/persistence.nvim" })
 require("persistence").setup()
 
 -- Autopair ===============================================================================================

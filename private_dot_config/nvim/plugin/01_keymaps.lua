@@ -186,7 +186,7 @@ map("n", "<leader>sf", function() MiniExtra.pickers.buf_lines() end, "Search cur
 map("n", "<leader>sh", function() MiniPick.builtin.help() end, "Search help")
 map("n", "<leader>sk", function() MiniExtra.pickers.keymaps() end, "Search keymaps")
 map("n", "<leader>sm", function() MiniExtra.pickers.marks() end, "Search marks")
-map("n", "<leader>gs", function() require("util").pick_git_status() end, "Git status picker")
+map("n", "<leader>gs", function() require("util.pick").pick_git_status() end, "Git status picker")
 
 -- Notifications
 map("n", "<leader>nc", function() MiniNotify.remove() end, "Clear notifications")
