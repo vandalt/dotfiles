@@ -91,3 +91,13 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   end,
   desc = "Use custom fold expression for nvim config files",
 })
+
+-- Force snakemake files to use shiftwidth=4
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "snakemake",
+  callback = function()
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.tabstop = 4
+    vim.opt_local.softtabstop = 4
+  end,
+})

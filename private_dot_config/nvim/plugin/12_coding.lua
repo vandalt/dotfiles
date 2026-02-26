@@ -12,7 +12,9 @@ require("f-string-toggle").setup({ key_binding = false })
 -- Snippets ==========================================================================================================
 local gen_loader = require("mini.snippets").gen_loader -- Load snippets from collection (e.g. friendly-snippets)
 require("mini.snippets").setup({
-  snippets = { gen_loader.from_lang({ lang_patterns = { markdown_inline = { "markdown.json" } } }) },
+  snippets = {
+    gen_loader.from_lang({ lang_patterns = { markdown_inline = { "markdown.json" }, snakemake = { "python/*.json" } } }),
+  },
 })
 -- Without this "fake" LSP, mini.snippets won't show up in mini.completion
 -- Only actual LSP snippets will and mini.snippets need to be manually expanded with "name<c-j>"
@@ -51,6 +53,7 @@ require("mason").setup()
 add({ "https://github.com/neovim/nvim-lspconfig" })
 
 vim.lsp.config("basedpyright", {
+  filetypes = { "python", "snakemake" },
   settings = {
     basedpyright = {
       analysis = {
@@ -62,6 +65,16 @@ vim.lsp.config("basedpyright", {
 
 vim.lsp.enable({ "lua_ls", "basedpyright", "ruff" })
 
+-- Disable basedpyright diagnostics for snakemake files
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client and client.name == "basedpyright" and vim.bo[args.buf].filetype == "snakemake" then
+      vim.diagnostic.enable(false, { bufnr = args.buf, ns_id = vim.lsp.diagnostic.get_namespace(client.id) })
+    end
+  end,
+})
+
 add({ "https://github.com/folke/lazydev.nvim" })
 require("lazydev").setup()
 
@@ -69,6 +82,7 @@ add({ "https://github.com/stevearc/conform.nvim" })
 require("conform").setup({
   formatters_by_ft = {
     lua = { "stylua" },
+    snakemake = { "snakefmt" },
   },
   default_format_opts = { lsp_format = "fallback" },
 })
@@ -95,6 +109,7 @@ local parsers = {
   "vim",
   "vimdoc",
   "yaml",
+  "snakemake",
 }
 local filetype_seen = {}
 local all_filetypes = {}
@@ -187,3 +202,7 @@ require("quarto").setup({
     end,
   },
 })
+
+-- Snakemake ==========================================================================================
+add({ "https://github.com/snakemake/snakemake" })
+vim.opt.rtp:append(vim.fn.stdpath("data") .. "/site/pack/core/opt/snakemake/misc/vim")
