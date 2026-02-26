@@ -154,6 +154,25 @@ add({ "https://github.com/mfussenegger/nvim-dap-python" })
 require("dap-python").setup(vim.env.MASON .. "/packages/debugpy/venv/bin/python")
 require("dap-python").test_runner = "pytest"
 
+add({ "https://github.com/igorlfs/nvim-dap-view" })
+require("dap-view").setup({
+  auto_toggle = true,
+  winbar = {
+    default_section = "repl",
+    base_sections = {
+      -- Use leader maps to avoid conflicts
+      breakpoints = { label = "Breakpoints", keymap = "<leader>B" },
+      scopes = { label = "Scopes", keymap = "<leader>S" },
+      exceptions = { label = "Exceptions", keymap = "<leader>E" },
+      watches = { label = "Watches", keymap = "<leader>W" },
+      threads = { label = "Threads", keymap = "<leader>T" },
+      repl = { label = "REPL", keymap = "<leader>R" },
+      sessions = { label = "Sessions", keymap = "<leader>K" },
+      console = { label = "Console", keymap = "<leader>C" },
+    },
+  },
+})
+
 add({
   "https://github.com/nvim-neotest/neotest",
   "https://github.com/nvim-lua/plenary.nvim",

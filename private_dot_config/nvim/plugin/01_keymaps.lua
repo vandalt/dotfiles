@@ -142,6 +142,7 @@ map("n", "<leader>dd", function() require("dap").down() end, "Go down the stack"
 map("n", "<leader>dC", function() require("dap").run_to_cursor() end, "Run to Cursor")
 map("n", "<leader>dt", function() require("dap").terminate() end, "Terminate")
 map("n", "<leader>dl", function() require("osv").launch({ port = 8086 }) end, "OSV server")
+map("n", "<leader>dv", "<Cmd>DapViewToggle<CR>", "Toggle dap-view")
 
 -- Neotest
 map("n", "<leader>tf", function() require("neotest").run.run(vim.fn.expand("%")) end, "Run File (Neotest)")
