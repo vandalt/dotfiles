@@ -13,7 +13,9 @@ require("f-string-toggle").setup({ key_binding = false })
 local gen_loader = require("mini.snippets").gen_loader -- Load snippets from collection (e.g. friendly-snippets)
 require("mini.snippets").setup({
   snippets = {
-    gen_loader.from_lang({ lang_patterns = { markdown_inline = { "markdown.json" }, snakemake = { "python/*.json" } } }),
+    gen_loader.from_lang({
+      lang_patterns = { markdown_inline = { "markdown.json" }, snakemake = { "python/*.json", "snakemake.json" } },
+    }),
   },
 })
 -- Without this "fake" LSP, mini.snippets won't show up in mini.completion
@@ -98,6 +100,7 @@ local parsers = {
   "cpp",
   "bibtex",
   "diff",
+  "json",
   "latex",
   "lua",
   "luadoc",
@@ -105,11 +108,11 @@ local parsers = {
   "markdown_inline",
   "python",
   "rst",
+  "snakemake",
   "toml",
   "vim",
   "vimdoc",
   "yaml",
-  "snakemake",
 }
 local filetype_seen = {}
 local all_filetypes = {}
