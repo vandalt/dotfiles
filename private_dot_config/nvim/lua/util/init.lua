@@ -83,16 +83,6 @@ M.git_blame_autocmd = function(au_data)
   vim.api.nvim_win_set_cursor(0, { vim.fn.line(".", win_src), 0 })
   vim.wo[win].scrollbind, vim.wo[win_src].scrollbind = true, true
   vim.wo[win].cursorbind, vim.wo[win_src].cursorbind = true, true
-  -- Vert width
-  if au_data.data.cmd_input.mods:match("vertical") then
-    local lines = vim.api.nvim_buf_get_lines(0, 1, -1, false)
-    local width = vim.iter(lines):fold(-1, function(acc, ln)
-      local stat = string.match(ln, "^%S+ %b()")
-      return math.max(acc, vim.fn.strwidth(stat))
-    end)
-    width = width + vim.fn.getwininfo(win)[1].textoff
-    vim.api.nvim_win_set_width(win, width)
-  end
 
   -- Highlight
   vim.fn.matchadd("GitBlameHashRoot", [[^^\w\+]])
