@@ -98,7 +98,8 @@ ts_map_all("j", { "@cell.outer", "@cell.comment" }, "cell")
 -- Coding ======================================================================================================
 -- Git
 map("n", "<leader>gb", "<Cmd>vertical Git blame -- %<CR>", "Git blame")
-map("n", "<leader>gg", function() Snacks.lazygit() end, "Open lazygit")
+map("n", "<leader>gg", function() Snacks.lazygit({ cwd = require("util.root").get() }) end, "Open lazygit (root)")
+map("n", "<leader>gG", function() Snacks.lazygit() end, "Open lazygit (cwd)")
 map("n", "<leader>gr", function() require("snacks").gitbrowse() end, "Open git remote")
 
 -- Copilot
