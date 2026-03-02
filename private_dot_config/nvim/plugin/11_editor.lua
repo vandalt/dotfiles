@@ -94,7 +94,7 @@ vim.cmd([[packadd toggleterm.nvim]])
 require("toggleterm").setup({
   size = function() return 0.30 * vim.o.lines end,
   persist_size = false,
-  open_mapping = [[<C-/>]],
+  open_mapping = nil,
   responsiveness = { horizontal_breakpoint = 200 },
   shade_terminals = false,
   persist_mode = false,

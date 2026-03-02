@@ -12,6 +12,10 @@ map("n", "<leader>vpu", vim.pack.update, "MiniDeps Update")
 map("n", "-", "<Cmd>Oil<CR>", "Open oil.nvim") -- See plugin config for other oil mappings
 map("n", "<Esc>", "<Cmd>:nohlsearch<CR>")
 map("t", "<Esc><Esc>", "<C-\\><C-n>", "Normal mode (terminal)")
+
+map("n", [[<C-/>]], '<Cmd>execute v:count . "ToggleTerm"<CR>', "Toggle Terminal", { silent = true })
+map("i", [[<C-/>]], "<Esc><Cmd>ToggleTerm<CR>", "Toggle Terminal", { silent = true })
+map("t", [[<C-/>]], "<Cmd>ToggleTerm<CR>", "Toggle Terminal", { silent = true })
 map({ "n", "x", "o" }, "sj", function() require("flash").jump() end, "Flash (jump)")
 
 -- Yank and put from system clipboard
