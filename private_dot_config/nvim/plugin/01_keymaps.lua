@@ -174,7 +174,9 @@ map(
   "Find file (root)"
 )
 map("n", "<leader>fF", function() MiniPick.builtin.files() end, "Find file (cwd)")
-map("n", "<leader>fb", function() MiniPick.builtin.buffers() end, "Find buffer")
+local wipeout_cur = function() vim.api.nvim_buf_delete(MiniPick.get_picker_matches().current.bufnr, {}) end
+local buffer_mappings = { wipeout = { char = "<C-d>", func = wipeout_cur } }
+map("n", "<leader>fb", function() MiniPick.builtin.buffers({}, { mappings = buffer_mappings }) end, "Find buffer")
 map("n", "<leader>fz", function() require("util.pick").pick_chezmoi() end, "Find chezmoi file")
 map("n", "<leader>fs", function() MiniExtra.pickers.lsp({ scope = "document_symbol" }) end, "Find lsp symbol")
 map("n", "<leader>fr", function() MiniExtra.pickers.lsp({ scope = "references" }) end, "Find lsp references")
