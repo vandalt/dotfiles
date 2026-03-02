@@ -104,7 +104,10 @@ map("n", "<leader>gr", function() require("snacks").gitbrowse() end, "Open git r
 
 -- Copilot
 map("n", "<leader>ai", function() require("sidekick.cli").toggle({ name = "copilot" }) end, "Sidekick")
-map("n", "<leader>ap", function() require("sidekick.cli").prompt() end, "Sidekick prompt")
+map("n", "<leader>ap", function()
+  require("sidekick.cli").show({ name = "copilot", focus = false })
+  require("sidekick.cli").prompt()
+end, "Sidekick prompt")
 
 -- LSP
 -- Define lsp mappings only when lsp is attached
@@ -131,7 +134,7 @@ map(
 map(
   "n",
   "grg",
-  function() require("neogen").generate({ annotation_convention = { python = "google_docstrins" } }) end,
+  function() require("neogen").generate({ annotation_convention = { python = "google_docstrings" } }) end,
   "Google docstrings"
 )
 
