@@ -112,4 +112,16 @@ M.minipick_select_idx = function(items, opts, on_choice)
   return MiniPick.ui_select(items, opts, on_choice)
 end
 
+M.buf_delete_others = function()
+  -- Part of the code copied from mini.pick's buffer picker
+  local buffers_output = vim.api.nvim_exec2("buffers", {output = true}).output
+  local cur_buf_id = vim.api.nvim_get_current_buf()
+  for _, l in ipairs(vim.split(buffers_output, '\n')) do
+    local buf_str = l:match('^%s*%d+')
+    local buf_id = tonumber(buf_str)
+    ---@diagnostic disable-next-line: param-type-mismatch
+    if buf_id ~= cur_buf_id then vim.api.nvim_buf_delete(buf_id, {})  end
+  end
+end
+
 return M

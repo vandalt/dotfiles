@@ -47,6 +47,7 @@ map("v", "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", "
 -- Buffers and tabs
 map("n", "<leader>bd", function() require("mini.bufremove").delete() end, "Close buffer")
 map("n", "<leader>bD", "<Cmd>bdelete<CR>", "Close buffer and window")
+map("n", "<leader>bo", function() require("util").buf_delete_others() end, "Close other buffers")
 map("n", "<leader><tab>]", "<cmd>tabnext<cr>", "Next Tab")
 map("n", "<leader><tab>d", "<cmd>tabclose<cr>", "Close Tab")
 map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", "Previous Tab")
