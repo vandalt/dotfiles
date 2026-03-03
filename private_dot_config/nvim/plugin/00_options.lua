@@ -84,7 +84,10 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Use custom fold expression for nvim config files
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = { os.getenv("HOME") .. "/.config/nvim/plugin/*.lua", os.getenv("HOME") .. "/.local/share/chezmoi/private_dot_config/nvim/plugin/*.lua" },
+  pattern = {
+    os.getenv("HOME") .. "/.config/nvim/plugin/*.lua",
+    os.getenv("HOME") .. "/.local/share/chezmoi/private_dot_config/nvim/plugin/*.lua",
+  },
   callback = function()
     vim.opt_local.foldmethod = "expr"
     vim.opt_local.foldexpr = "v:lua.require('util.folds').foldexpr()"
