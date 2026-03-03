@@ -6,7 +6,8 @@ end
 
 -- Misc useful mappings ============================================================================================
 -- vim.pack update
-map("n", "<leader>vpu", vim.pack.update, "MiniDeps Update")
+map("n", "<leader>vpu", vim.pack.update, "Update plugins")
+map("n", "<leader>vpl", function() vim.pack.update(nil, { offline = true }) end, "List plugins")
 
 -- Misc useful mappings
 map("n", "-", "<Cmd>Oil<CR>", "Open oil.nvim") -- See plugin config for other oil mappings
