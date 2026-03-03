@@ -78,7 +78,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 add({ "https://github.com/folke/lazydev.nvim" })
-require("lazydev").setup()
+require("lazydev").setup({
+  library = {
+    { path = "snacks.nvim", words = { "Snacks" } },
+  },
+})
 
 add({ "https://github.com/stevearc/conform.nvim" })
 require("conform").setup({
