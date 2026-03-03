@@ -2,6 +2,9 @@
 -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util/root.lua
 local M = {}
 
+-- Normalize a path by replacing ~ with the full home path,
+-- using forward slash as separator and removing trailing separators
+---@param path string
 function M.norm(path)
   if path:sub(1, 1) == "~" then
     local home = vim.uv.os_homedir()
@@ -16,10 +19,15 @@ end
 
 M.detectors = {}
 
+-- Detect root based on cwd
 function M.detectors.cwd() return { vim.uv.cwd() } end
 
+-- Path to the current buffer
+---@param buf integer
 function M.bufpath(buf) return M.realpath(vim.api.nvim_buf_get_name(assert(buf))) end
 
+-- Detect root based on LSP 
+---@param buf integer
 function M.detectors.lsp(buf)
   local bufpath = M.bufpath(buf)
   if not bufpath then
@@ -46,6 +54,7 @@ function M.detectors.lsp(buf)
   end, roots)
 end
 
+---@param buf integer
 ---@param patterns string[]|string
 function M.detectors.pattern(buf, patterns)
   patterns = type(patterns) == "string" and { patterns } or patterns

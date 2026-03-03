@@ -1,11 +1,14 @@
 M = {}
 
 -- Functions taken from MiniMax to load plugins early or later
-
 M.now = function(f) require("mini.misc").safely("now", f) end
 M.later = function(f) require("mini.misc").safely("later", f) end
 
--- Plugin hook
+-- Plugin hook to execute after install or update of a plugin
+---@param plugin_name string Name of the plugin
+---@param kinds table<string> Event kinds ("update" or "install") on which to run the hook
+---@param callback function Function ran by the hook for autocmd, should have no arguments
+---@param desc string Short description of the hook for autocmd
 M.on_packchanged = function(plugin_name, kinds, callback, desc)
   local f = function(ev)
     local name, kind = ev.data.spec.name, ev.data.kind

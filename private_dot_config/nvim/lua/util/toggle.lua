@@ -82,6 +82,9 @@ M.enable_snacks_image = function()
   _G.snacks_disabled = false
 end
 
+-- Toggle snacks.image display
+---@param enabled boolean Current state before calling the function
+---@return boolean
 M.toggle_snacks_image = function(enabled)
   if not enabled then
     M.enable_snacks_image()
@@ -92,13 +95,22 @@ M.toggle_snacks_image = function(enabled)
   end
 end
 
+-- Toggle a mini module using its vim.g.minimodule_disable option
+---@param module_name string Module name in lowercase without a dot, e.g. minipairs
+---@return boolean
 local toggle_mini = function(module_name)
   local disable_opt = string.gsub(module_name, "%.", "") .. "_disable"
   vim.g[disable_opt] = not vim.g[disable_opt]
   return not vim.g[disable_opt]
 end
 
+-- Find the type of toggle for a string. One of:
+-- - "mini" for strings starting with "mini"
+-- - "opt" if the string is in vim.opt
+-- - "var" if the string is in vim.g
+-- - nil otherwise
 ---@param mystr string
+---@return string|nil
 local find_str_type = function(mystr)
   if mystr:match("^mini.*$") then
     return "mini"
@@ -128,6 +140,7 @@ M.toggle = function(opt, name)
   local enabled
   if vim.is_callable(opt) then
     -- Either run the custom function or the one passed by caller
+    ---@diagnostic disable-next-line: missing-parameter
     enabled = opt()
     name = name or ""
   elseif type(opt) == "string" then

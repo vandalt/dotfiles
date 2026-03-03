@@ -3,12 +3,14 @@
 
 local M = {}
 
+-- foldexpr function for
+---@param lnum string|integer
 function M.foldexpr(lnum)
   lnum = lnum or vim.v.lnum
   local line = vim.fn.getline(lnum)
   local next_line = vim.fn.getline(lnum + 1)
 
-  -- Match lines like: -- something ====(4 or more equal signs)
+  -- Match lines like: -- something ==== (4 or more equal signs)
   if line:match("^%s*%-%-%s+.+====+%s*$") then
     return ">1"
   end
