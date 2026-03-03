@@ -1,5 +1,5 @@
 local add = vim.pack.add
-local later = Config.later
+local later = require("util.config").later
 
 -- Colorscheme =================
 add({ "https://github.com/rebelot/kanagawa.nvim" })

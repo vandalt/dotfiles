@@ -1,5 +1,5 @@
 local add = vim.pack.add
-local later = Config.later
+local later = require("util.config").later
 
 -- Git plugins (diff, command and statusline) ======================================================================
 require("mini.diff").setup({ view = { style = "number" } }) -- Diff in sidebar
@@ -101,7 +101,7 @@ require("toggleterm").setup({
 })
 
 -- Markdown and notes ==============================================================================================
-Config.on_packchanged(
+require("util.config").on_packchanged(
   "markdown-preview",
   { "install", "update" },
   function() vim.fn["mkdp#util#install"]() end,

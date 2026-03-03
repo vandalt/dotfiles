@@ -1,5 +1,5 @@
 local add = vim.pack.add
-local later = Config.later
+local later = require("util.config").later
 
 -- AI sidekick.nvim =============================
 add({ "https://github.com/folke/sidekick.nvim" })
@@ -90,7 +90,7 @@ require("conform").setup({
 })
 
 -- Treesitter ======================================================================================================
-Config.on_packchanged("nvim-treesitter", { "update" }, function() vim.cmd("TSUpdate") end, ":TSUpdate")
+require("util.config").on_packchanged("nvim-treesitter", { "update" }, function() vim.cmd("TSUpdate") end, ":TSUpdate")
 add({
   "https://github.com/nvim-treesitter/nvim-treesitter",
   "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
