@@ -1,8 +1,4 @@
-local map = function(mode, lhs, rhs, desc, opts)
-  opts = opts or {}
-  opts.desc = desc
-  vim.keymap.set(mode, lhs, rhs, opts)
-end
+local map = require("util.config").map
 
 -- Misc useful mappings ============================================================================================
 -- vim.pack update

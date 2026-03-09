@@ -1,5 +1,6 @@
 local add = vim.pack.add
 local later = require("util.config").later
+local map = require("util.config").map
 
 -- Git plugins (diff, command and statusline) ======================================================================
 require("mini.diff").setup({ view = { style = "number" } }) -- Diff in sidebar
@@ -115,6 +116,12 @@ add({ "https://github.com/zk-org/zk-nvim" })
 require("zk").setup({
   picker = "minipick",
 })
+add({ "https://github.com/jakewvincent/mkdnflow.nvim" })
+require('mkdnflow').setup({
+  mappings = {
+    MkdnNewListItem = { "i", "<CR>" },
+  },
+})
 
 add({ "https://github.com/HakonHarnes/img-clip.nvim" })
 require("img-clip").setup({
@@ -132,7 +139,7 @@ require("snacks").setup({
 -- Needs to be a 'start' plugin, either add directly from init.lua or move to 'start' subdir with
 -- mv ~/.local/share/nvim/site/pack/deps/opt/chezmoi.vim/ ~/.local/share/nvim/site/pack/deps/start/
 vim.g["chezmoi#use_tmp_buffer"] = 1
-add({"https://github.com/alker0/chezmoi.vim"})
+add({ "https://github.com/alker0/chezmoi.vim" })
 
 -- add("xvzc/chezmoi.nvim")
 vim.cmd([[packadd chezmoi.nvim]])

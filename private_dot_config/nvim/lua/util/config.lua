@@ -1,5 +1,12 @@
 M = {}
 
+
+M.map = function(mode, lhs, rhs, desc, opts)
+  opts = opts or {}
+  opts.desc = desc
+  vim.keymap.set(mode, lhs, rhs, opts)
+end
+
 -- Functions taken from MiniMax to load plugins early or later
 M.now = function(f) require("mini.misc").safely("now", f) end
 M.later = function(f) require("mini.misc").safely("later", f) end
