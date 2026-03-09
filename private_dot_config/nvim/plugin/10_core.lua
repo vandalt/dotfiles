@@ -50,6 +50,7 @@ later(function()
       f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
       c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),
       u = ai.gen_spec.function_call(),
+      h = ai.gen_spec.treesitter({ a = "@section.outer", i = "@section.inner" }),
     },
   })
 end)
