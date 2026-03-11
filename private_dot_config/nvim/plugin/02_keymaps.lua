@@ -250,9 +250,11 @@ map("n", "<leader>ip", "<Cmd>PasteImage<CR>", "Paste image")
 -- Zk notes
 -- stylua: ignore start
 map("n", "<leader>zo", function() require("zk").edit() end, "Open zk note")
+map("n", "<leader>zl", "<Cmd>ZkLinks<CR>", "Open zk links")
+map("n", "<leader>zb", "<Cmd>ZkBacklinks<CR>", "Open zk backlinks")
 map("n", "<leader>zw", function() require("zk").new({ dir = "weekly", date = require("util").get_date_zw() }) end, "Weekly note (zk)")
 map("n", "<leader>zd", function() require("zk").new({ dir = "daily" }) end, "Daily note (zk)")
 map("n", "<leader>zn", function() require("zk").new({ title = vim.fn.input("Title: "), dir = "zettel" }) end, "New Note (zk)")
-map("x", "<leader>zn", ":'<,'>ZkNewFromTitleSelection { dir = 'zettel' }<CR>", "New note from title selection")
+map("x", "<leader>zn", ":'<,'>ZkNewFromTitleSelection { dir = 'zettel' }<CR>", "New note from title selection", { silent = true })
 map("x", "<leader>zc", ":'<,'>ZkNewFromContentSelection { title = vim.fn.input('Title: '), dir = 'zettel' }<CR>", "New note from content selection")
 -- stylua: ignore end

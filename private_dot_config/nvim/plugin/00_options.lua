@@ -13,11 +13,13 @@ vim.g.no_python_maps = 1
 vim.g.netrw_banner = 0
 vim.g.netrw_list_hide = "\\(^\\|\\s\\s\\)\\zs\\.\\S\\+" -- Hide hidden files
 
--- Handle markdown style, tabs, etc. myself
+-- Handle markdown style, tabs, maps, etc. myself
 vim.g.markdown_recommended_style = 0
+vim.g.no_markdown_maps = true -- Does not remove treesitter mappings
 
 -- Disable autopairs by default
 vim.g.minipairs_disable = true
+
 
 -- Options =========================================================================================================
 local opt = vim.opt

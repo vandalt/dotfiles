@@ -116,10 +116,27 @@ add({ "https://github.com/zk-org/zk-nvim" })
 require("zk").setup({
   picker = "minipick",
 })
-add({ "https://github.com/jakewvincent/mkdnflow.nvim" })
-require('mkdnflow').setup({
-  mappings = {
-    MkdnNewListItem = { "i", "<CR>" },
+
+-- Mappings for this plugin are set in after/ftplugin/markdown.lua to override built-in
+-- add({ "https://github.com/jakewvincent/mkdnflow.nvim" })
+vim.cmd([[packadd mkdnflow.nvim]])
+require("mkdnflow").setup({
+  modules = {
+    bib = false,
+    buffers = false,
+    conceal = false,
+    cursor = true,
+    folds = false,
+    foldtext = false,
+    links = false,
+    lists = true,
+    maps = false,
+    paths = false,
+    tables = false,
+    templates = false,
+    to_do = true,
+    yaml = false,
+    cmp = false,
   },
 })
 
