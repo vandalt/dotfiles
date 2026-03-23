@@ -20,12 +20,15 @@ window-height = 30
 
 # Keymaps {{{ ==================================================================
 keybind = ctrl+shift+plus=increase_font_size:1
-keybind = ctrl+shift+s=toggle_tab_overview
+# keybind = ctrl+shift+s=toggle_tab_overview
 keybind = ctrl+shift+minus=decrease_font_size:1
 keybind = ctrl+shift+h=goto_split:left
 keybind = ctrl+shift+l=goto_split:right
 keybind = ctrl+shift+k=goto_split:up
 keybind = ctrl+shift+j=goto_split:down
 keybind = ctrl+equal=equalize_splits
+keybind = super+ctrl+shift+s=write_screen_file:copy,plain
+keybind = ctrl+shift+s=write_screen_file:paste,plain
+keybind = ctrl+alt+shift+s=write_screen_file:open,plain
 keybind = ctrl+enter=unbind
 # }}}
