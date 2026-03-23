@@ -55,6 +55,9 @@ end)
 -- UI plugins (statusline, icons, indent guides) ===================================================================
 require("mini.statusline").setup()
 
+add({ "https://github.com/nvim-treesitter/nvim-treesitter-context" })
+require("treesitter-context")
+
 -- Icons, with recommended tweaks
 require("mini.icons").setup()
 later(MiniIcons.mock_nvim_web_devicons)

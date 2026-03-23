@@ -6,9 +6,9 @@ add({ "https://github.com/folke/sidekick.nvim" })
 require("sidekick").setup({
   cli = {
     tools = {
-      -- TODO:Sidekick is broken with latest copilot...
       -- https://github.com/folke/sidekick.nvim/issues/258
-      copilot = { cmd = { "copilot", "--no-auto-update" } },
+      -- https://github.com/github/copilot-cli/issues/1992
+      copilot = { cmd = { "copilot", "--alt-screen" } },
     },
   },
 })
@@ -80,7 +80,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     if client and client.name == "basedpyright" and vim.bo[args.buf].filetype == "snakemake" then
-      vim.diagnostic.enable(false, { bufnr = args.buf, ns_id = vim.lsp.diagnostic.get_namespace(client.id) })
+      -- ns_id does not work for now so disable all for buffer
+      -- vim.diagnostic.enable(false, { bufnr = args.buf, ns_id = vim.lsp.diagnostic.get_namespace(client.id) })
+      vim.diagnostic.enable(false, { bufnr = args.buf })
     end
   end,
 })

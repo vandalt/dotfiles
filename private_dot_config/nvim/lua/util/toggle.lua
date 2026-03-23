@@ -86,6 +86,8 @@ end
 ---@param enabled boolean Current state before calling the function
 ---@return boolean
 M.toggle_snacks_image = function(enabled)
+  -- TODO: Buggy... See https://github.com/folke/snacks.nvim/issues/1739#issuecomment-4026344013
+  enabled = enabled or (image_autocmds == nil)
   if not enabled then
     M.enable_snacks_image()
     return true

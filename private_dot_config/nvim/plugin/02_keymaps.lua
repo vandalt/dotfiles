@@ -64,6 +64,8 @@ map("n", "<leader>qs", function() require("persistence").select() end, "Select s
 
 -- Toggle things
 map("n", "<leader>uf", function() require("f-string-toggle").toggle_fstring() end, "Toggle f-string")
+map("n", "<leader>uc", function() require("treesitter-context").toggle() end, "Toggle context")
+map("n", "<leader>ud", function() MiniDiff.toggle_overlay(0) end, "Toggle mini.diff overlay")
 map("n", "<leader>uu", "<Cmd>Undotree<CR>", "Toggle undotree")
 map("n", "<leader>us", function() require("util.toggle").toggle("spell") end, "Toggle spelling")
 map("n", "<leader>up", function() require("util.toggle").toggle("mini.pairs") end, "Toggle pairs")
