@@ -139,7 +139,7 @@ require("mkdnflow").setup({
     templates = false,
     to_do = true,
     yaml = false,
-    cmp = false,
+    completion = false,
   },
 })
 

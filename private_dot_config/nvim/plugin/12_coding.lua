@@ -3,15 +3,7 @@ local later = require("util.config").later
 
 -- AI sidekick.nvim =============================
 add({ "https://github.com/folke/sidekick.nvim" })
-require("sidekick").setup({
-  cli = {
-    tools = {
-      -- https://github.com/folke/sidekick.nvim/issues/258
-      -- https://github.com/github/copilot-cli/issues/1992
-      copilot = { cmd = { "copilot", "--alt-screen" } },
-    },
-  },
-})
+require("sidekick").setup()
 
 -- f-string-toggle.nvim =================================
 add({ "https://github.com/roobert/f-string-toggle.nvim" })

@@ -1,25 +1,12 @@
 -- Editor variables ================================================================================================
--- Keep this near the top
-vim.g.mapleader = " "
-
--- Dedicated venv for pynvim
-vim.g.python3_host_prog = os.getenv("HOME") .. "/repos/perso/pynvim/venv/bin/python"
-
--- Handled by treesitter
--- See https://github.com/neovim/neovim/blob/master/runtime/ftplugin/python.vim
-vim.g.no_python_maps = 1
-
--- Nicer netrw (when not using oil)
-vim.g.netrw_banner = 0
+vim.g.mapleader = " " -- Keep this near the top
+vim.g.python3_host_prog = os.getenv("HOME") .. "/repos/perso/pynvim/venv/bin/python" -- Dedicated venv for pynvim
+vim.g.no_python_maps = 1 -- Handled by treesitter, https://github.com/neovim/neovim/blob/master/runtime/ftplugin/python.vim
+vim.g.netrw_banner = 0 -- Nicer netrw (when not using oil)
 vim.g.netrw_list_hide = "\\(^\\|\\s\\s\\)\\zs\\.\\S\\+" -- Hide hidden files
-
--- Handle markdown style, tabs, maps, etc. myself
-vim.g.markdown_recommended_style = 0
+vim.g.markdown_recommended_style = 0 -- Handle markdown style, tabs, maps, etc. myself
 vim.g.no_markdown_maps = true -- Does not remove treesitter mappings
-
--- Disable autopairs by default
-vim.g.minipairs_disable = true
-
+vim.g.minipairs_disable = true -- Disable autopairs by default
 
 -- Options =========================================================================================================
 local opt = vim.opt

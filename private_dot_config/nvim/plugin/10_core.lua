@@ -19,6 +19,7 @@ later(function() require("mini.extra").setup() end) -- Misc extra functionality
 add({ "https://github.com/justinmk/vim-gtfo" })
 add({ "https://github.com/KenN7/vim-arsync", "https://github.com/prabirshrestha/async.vim" })
 add({ "https://github.com/tpope/vim-eunuch" })
+add({ "https://github.com/folke/flash.nvim" })
 
 -- persistence.nvim (sessions) ===========
 add({ "https://github.com/folke/persistence.nvim" })

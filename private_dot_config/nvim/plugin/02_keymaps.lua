@@ -9,11 +9,19 @@ map("n", "<leader>vpl", function() vim.pack.update(nil, { offline = true }) end,
 map("n", "-", "<Cmd>Oil<CR>", "Open oil.nvim") -- See plugin config for other oil mappings
 map("n", "<Esc>", "<Cmd>:nohlsearch<CR>")
 map("t", "<Esc><Esc>", "<C-\\><C-n>", "Normal mode (terminal)")
+map({ "n", "x", "o" }, "sj", function() require("flash").jump() end, "Flash (jump)")
 
+-- Terminal
 map("n", [[<C-/>]], '<Cmd>execute v:count . "ToggleTerm"<CR>', "Toggle Terminal", { silent = true })
 map("i", [[<C-/>]], "<Esc><Cmd>ToggleTerm<CR>", "Toggle Terminal", { silent = true })
 map("t", [[<C-/>]], "<Cmd>ToggleTerm<CR>", "Toggle Terminal", { silent = true })
-map({ "n", "x", "o" }, "sj", function() require("flash").jump() end, "Flash (jump)")
+map(
+  "n",
+  [[<C-S-/>]],
+  function() vim.cmd("ToggleTerm dir=" .. vim.fn.expand("%:p:h")) end,
+  "Toggle Terminal in current file dir",
+  { silent = true }
+)
 
 -- Yank and put from system clipboard
 map({ "n", "v" }, "<leader>y", [["+y]], "Yank to system clipboard", { remap = true })

@@ -1,5 +1,6 @@
 -- Autocmds ========================================================================================================
 -- Some autocmds are also defined in plugin config when related to specific configs
+
 vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
   pattern = "term://*",
   callback = function() vim.cmd("startinsert") end,
@@ -21,7 +22,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight on yank",
 })
 
--- Wrap prose languages and enable spell checking
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "text", "plaintex", "typst", "gitcommit", "markdown", "tex", "mail" },
   callback = function()
@@ -33,9 +33,9 @@ vim.api.nvim_create_autocmd("FileType", {
       vim.opt_local.spell = true
     end
   end,
+  desc = "Wrap prose languages and enable spell checking",
 })
 
--- Use custom fold expression for nvim config files
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = {
     os.getenv("HOME") .. "/.config/nvim/plugin/*.lua",
@@ -48,7 +48,6 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   desc = "Use custom fold expression for nvim config files",
 })
 
--- Force snakemake files to use shiftwidth=4
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "snakemake",
   callback = function()
@@ -56,4 +55,5 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.tabstop = 4
     vim.opt_local.softtabstop = 4
   end,
+  desc = "Force snakemake files to use shiftwidth=4",
 })
