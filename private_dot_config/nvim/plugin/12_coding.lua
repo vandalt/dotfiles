@@ -65,7 +65,11 @@ vim.lsp.config("basedpyright", {
   },
 })
 
-vim.lsp.enable({ "lua_ls", "basedpyright", "ruff" })
+vim.lsp.enable({
+  "lua_ls",
+  "basedpyright",
+  "ruff",
+})
 
 -- Disable basedpyright diagnostics for snakemake files
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -75,6 +79,19 @@ vim.api.nvim_create_autocmd("LspAttach", {
       -- ns_id does not work for now so disable all for buffer
       -- vim.diagnostic.enable(false, { bufnr = args.buf, ns_id = vim.lsp.diagnostic.get_namespace(client.id) })
       vim.diagnostic.enable(false, { bufnr = args.buf })
+    end
+  end,
+})
+
+-- Disable ruff in otter buffers to let pyright show hover
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    local bufname = vim.api.nvim_buf_get_name(args.buf)
+
+    -- Disable ruff for otter.nvim buffers
+    if client and client.name == "ruff" and bufname:match("%.otter%.py$") then
+      client:stop()
     end
   end,
 })
@@ -216,6 +233,9 @@ require("notebook-navigator").setup()
 
 -- vim.cmd([[packadd otter.nvim]])
 add({ "https://github.com/jmbuhr/otter.nvim" })
+require("otter").setup({
+  buffers = { write_to_disk = false },
+})
 
 add({ "https://github.com/quarto-dev/quarto-nvim" })
 require("quarto").setup({
