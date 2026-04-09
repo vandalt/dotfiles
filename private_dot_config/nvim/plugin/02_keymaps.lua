@@ -10,6 +10,7 @@ map("n", "-", "<Cmd>Oil<CR>", "Open oil.nvim") -- See plugin config for other oi
 map("n", "<Esc>", "<Cmd>:nohlsearch<CR>")
 map("t", "<Esc><Esc>", "<C-\\><C-n>", "Normal mode (terminal)")
 map({ "n", "x", "o" }, "sj", function() require("flash").jump() end, "Flash (jump)")
+map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", "Save File")
 
 -- Terminal
 map("n", [[<C-/>]], '<Cmd>execute v:count . "ToggleTerm"<CR>', "Toggle Terminal", { silent = true })
