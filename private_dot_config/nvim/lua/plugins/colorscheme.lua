@@ -1,4 +1,6 @@
 return {
+
+  -- kanagawa
   {
     "rebelot/kanagawa.nvim",
     opts = {
@@ -10,6 +12,8 @@ return {
       },
     },
   },
+
+  -- LazyVim (set colorscheme)
   {
     "LazyVim/LazyVim",
     opts = {

@@ -2,6 +2,8 @@ mod/
 .git
 LICENSE
 README.md
+lazy-lock.json
+lazyvim.json
 {{- if ne .chezmoi.hostname "yoga" }}
 .ads
 .msmtprc

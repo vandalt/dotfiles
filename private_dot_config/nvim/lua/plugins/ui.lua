@@ -1,4 +1,6 @@
 return {
+
+  -- lualine.nvim
   {
     "nvim-lualine/lualine.nvim",
     opts = {
@@ -15,6 +17,8 @@ return {
       },
     },
   },
+
+  -- snacks.nvim
   {
     "folke/snacks.nvim",
     opts = {
