@@ -22,6 +22,9 @@ return {
   {
     "folke/snacks.nvim",
     opts = {
+      dashboard = {
+        enabled = vim.g.vandalt_dashboard,
+      },
       styles = {
         zen = {
           backdrop = { transparent = false },
