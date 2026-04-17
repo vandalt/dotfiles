@@ -30,30 +30,55 @@ return {
     },
   },
 
+  {
+    "folke/snacks.nvim",
+    optional = true,
+    keys = function(_, keys)
+      if vim.g.vandalt_terminal ~= "snacks" then
+        return keys
+      end
+      return {
+        {
+          "<leader>jl",
+          function() require("util.snacks_repl").send_lines() end,
+          desc = "Send current line to terminal",
+        },
+        {
+          "<leader>js",
+          function() require("util.snacks_repl").send_lines("visual", { bracketed = true }) end,
+          mode = "v",
+          desc = "Send selected line to terminal",
+        },
+        {
+          "<leader>js",
+          function() return require("util.snacks_repl").send_motion_operator() end,
+          desc = "Send motion to terminal",
+          expr = true,
+        },
+        {
+          "<leader>jh",
+          function()
+            local count = vim.v.count1
+            vim.cmd("normal! m`")
+            vim.api.nvim_feedkeys(
+              count .. vim.api.nvim_replace_termcodes("<leader>jsij``", true, false, true),
+              "m",
+              false
+            )
+          end,
+          desc = "Run cell",
+          remap = true,
+        },
+        { "<leader>jj", "<leader>jsij]j", "Run cell and move", remap = true },
+      }
+    end,
+  },
+
   -- toggleterm.nvim
-  -- TODO: Switch to custom snacks_repl util module, keep both for some time
   {
     "akinsho/toggleterm.nvim",
-    dev = true,
-    opts = {
-      size = function() return 0.30 * vim.o.lines end,
-      persist_size = false,
-      open_mapping = nil,
-      responsiveness = { horizontal_breakpoint = 200 },
-      shade_terminals = false,
-      persist_mode = false,
-    },
+    optional = true,
     keys = {
-      { [[<C-/>]], '<Cmd>execute v:count . "ToggleTerm"<CR>', desc = "Toggle Terminal", silent = true },
-      { [[<C-/>]], "<Esc><Cmd>ToggleTerm<CR>", mode = "i", desc = "Toggle Terminal", silent = true },
-      { [[<C-/>]], "<Cmd>ToggleTerm<CR>", mode = "t", desc = "Toggle Terminal", silent = true },
-      {
-        [[<C-S-/>]],
-        function() vim.cmd("ToggleTerm dir=" .. vim.fn.expand("%:p:h")) end,
-        desc = "Toggle Terminal in current file dir",
-        silent = true,
-      },
-      { "<leader>rp", "<Cmd>TermExec cmd='python %'<CR>", desc = "Run Python script" },
       {
         "<leader>jl",
         ---@diagnostic disable-next-line:param-type-mismatch
