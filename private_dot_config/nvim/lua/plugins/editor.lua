@@ -7,6 +7,7 @@ return {
   },
 
   -- oil.nvim
+  -- TODO: Figure out why the git status does not work
   {
     "stevearc/oil.nvim",
     lazy = false,
@@ -14,6 +15,7 @@ return {
       win_options = {
         signcolumn = "yes:2", -- required for status
       },
+      skip_confirm_for_simple_edits = true,
       keymaps = {
         ["<C-h>"] = false,
         ["<C-l>"] = false,

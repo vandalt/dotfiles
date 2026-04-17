@@ -1,5 +1,15 @@
 return {
 
+  -- marksman (disable)
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        marksman = { enabled = false },
+      },
+    },
+  },
+
   -- zk-nvim
   {
     "zk-org/zk-nvim",

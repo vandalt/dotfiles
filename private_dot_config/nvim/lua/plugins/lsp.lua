@@ -1,10 +1,10 @@
--- TODO: Re-use lazyvim lsp variable
 return {
   {
     "neovim/nvim-lspconfig",
     opts = {
+      inlay_hints = { enabled = false },
       servers = {
-        basedpyright = {
+        [vim.g.lazyvim_python_lsp] = {
           filetypes = { "python", "snakemake" },
           settings = {
             basedpyright = {

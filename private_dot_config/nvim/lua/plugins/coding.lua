@@ -20,6 +20,18 @@ return {
     },
   },
 
+  -- mini.snippets
+  {
+    "nvim-mini/mini.snippets",
+    opts = function(_, opts)
+      opts.snippets = {
+        require("mini.snippets").gen_loader.from_lang({
+          lang_patterns = { markdown_inline = { "markdown.json" }, snakemake = { "python/*.json", "snakemake.json" } },
+        }),
+      }
+    end,
+  },
+
   -- mini.ai
   {
     "nvim-mini/mini.ai",
