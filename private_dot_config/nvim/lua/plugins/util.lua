@@ -22,8 +22,16 @@ return {
         desc = "Toggle Terminal in current file dir",
         silent = true,
       },
-      -- TODO: Add rp mapping for snacks.terminal
-      -- { "<leader>rp", "<Cmd>TermExec cmd='python %'<CR>", desc = "Run Python script" },
+      {
+        "<leader>rp",
+        function() require("util.snacks_repl").send_text("python " .. vim.fn.expand("%"), { bracketed = false }) end,
+        desc = "Run Python script",
+      },
+      {
+        "<leader>ri",
+        function() require("util.snacks_repl").send_text("%run " .. vim.fn.expand("%"), { bracketed = true }) end,
+        desc = "Run Python script",
+      },
     },
   },
 

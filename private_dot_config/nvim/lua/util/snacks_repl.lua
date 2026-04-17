@@ -76,9 +76,9 @@ local function get_motion_selection()
   return extract_text(start_pos, end_pos, full_lines)
 end
 
----@param text_type? '"line"'|'"visual"'|'"motion"'|string
+---@param text string
 ---@param opts? {count?: integer, bracketed?: boolean}
-M.send_lines = function(text_type, opts)
+M.send_text = function(text, opts)
   opts = opts or {}
 
   -- Get terminal using count (default to 1)
@@ -90,6 +90,15 @@ M.send_lines = function(text_type, opts)
   end
   local job_id = vim.b[term.buf].terminal_job_id
 
+  local start_seq = opts.bracketed and "\x1b[200~" or ""
+  local end_seq = opts.bracketed and "\x1b[201~" or ""
+
+  vim.fn.chansend(job_id, start_seq .. text .. end_seq .. "\n")
+end
+
+---@param text_type? '"line"'|'"visual"'|'"motion"'|string
+---@param opts? {count?: integer, bracketed?: boolean}
+M.send_lines = function(text_type, opts)
   -- Get the text
   local text
   if text_type == nil or text_type == "line" then
@@ -102,10 +111,7 @@ M.send_lines = function(text_type, opts)
     text = table.concat(lines, "\n")
   end
 
-  local start_seq = opts.bracketed and "\x1b[200~" or ""
-  local end_seq = opts.bracketed and "\x1b[201~" or ""
-
-  vim.fn.chansend(job_id, start_seq .. text .. end_seq .. "\n")
+  M.send_text(text, opts)
 end
 
 ---@param opts string
