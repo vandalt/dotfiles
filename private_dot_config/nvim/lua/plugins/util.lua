@@ -4,6 +4,7 @@ return {
   {
     "folke/snacks.nvim",
     opts = {
+      explorer = { enabled = false },
       terminal = {
         win = {
           keys = {
@@ -35,6 +36,7 @@ return {
     },
   },
 
+  -- toggleterm.nvim
   {
     "akinsho/toggleterm.nvim",
     enabled = vim.g.vandalt_terminal == "toggleterm",

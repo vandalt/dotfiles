@@ -7,7 +7,6 @@ return {
   },
 
   -- oil.nvim
-  -- TODO: Figure out why the git status does not work
   {
     "stevearc/oil.nvim",
     lazy = false,
@@ -25,5 +24,15 @@ return {
     keys = {
       { "-", "<Cmd>Oil<CR>", desc = "Open oil.nvim" },
     },
+  },
+
+  -- oil.git-status.nvim
+  -- requires an autocmd to work with Snacks.statuscolumn, see autocmds.lua
+  {
+    "refractalize/oil-git-status.nvim",
+    dependencies = {
+      "stevearc/oil.nvim",
+    },
+    opts = {},
   },
 }

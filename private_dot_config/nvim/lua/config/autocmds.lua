@@ -11,6 +11,13 @@ vim.api.nvim_create_autocmd("FileType", {
   desc = "Force snakemake files to use shiftwidth=4",
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "oil",
+  group = augroup("oil_statuscolumn"),
+  callback = function() vim.opt_local.statuscolumn = "" end,
+  desc = "Hide statuscolumn in oil buffers",
+})
+
 vim.api.nvim_create_autocmd("LspAttach", {
   group = augroup("disable_pyright_snakemake"),
   callback = function(args)
