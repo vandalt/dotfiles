@@ -37,7 +37,7 @@ return {
       if vim.g.vandalt_terminal ~= "snacks" then
         return keys
       end
-      return {
+      local mykeys = {
         {
           "<leader>jl",
           function() require("util.snacks_repl").send_lines() end,
@@ -71,6 +71,7 @@ return {
         },
         { "<leader>jj", "<leader>jsij]j", "Run cell and move", remap = true },
       }
+      return vim.list_extend(keys, mykeys)
     end,
   },
 
