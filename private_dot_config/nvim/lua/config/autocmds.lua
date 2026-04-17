@@ -3,11 +3,7 @@ local function augroup(name) return vim.api.nvim_create_augroup("vandalt_" .. na
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "snakemake",
   group = augroup("snakemake_indent"),
-  callback = function()
-    vim.opt_local.shiftwidth = 4
-    vim.opt_local.tabstop = 4
-    vim.opt_local.softtabstop = 4
-  end,
+  callback = function() vim.opt_local.shiftwidth = 4 vim.opt_local.tabstop = 4 vim.opt_local.softtabstop = 4 end,
   desc = "Force snakemake files to use shiftwidth=4",
 })
 

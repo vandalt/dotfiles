@@ -18,6 +18,7 @@ return {
   {
     "GCBallesteros/NotebookNavigator.nvim",
     dev = true,
+    ft = "python",
     opts = {},
   },
 

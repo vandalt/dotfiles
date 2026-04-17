@@ -4,6 +4,9 @@ return {
   {
     "nvim-mini/mini.splitjoin",
     opts = {},
+    keys = {
+      "gS",
+    }
   },
 
   -- oil.nvim
@@ -30,6 +33,7 @@ return {
   -- requires an autocmd to work with Snacks.statuscolumn, see autocmds.lua
   {
     "refractalize/oil-git-status.nvim",
+    ft = "oil",
     dependencies = {
       "stevearc/oil.nvim",
     },
