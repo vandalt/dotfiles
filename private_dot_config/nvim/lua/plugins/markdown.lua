@@ -45,7 +45,6 @@ return {
     },
     keys = {
       -- stylua: ignore start
-      { "<leader>z", desc = "+zk", mode = {"n", "x"}},
       {"<leader>zo", function() require("zk").edit() end, desc = "Open zk note"},
       {"<leader>zl", "<Cmd>ZkLinks<CR>", desc = "Open zk links"},
       {"<leader>zb", "<Cmd>ZkBacklinks<CR>", desc = "Open zk backlinks"},

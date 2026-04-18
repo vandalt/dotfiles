@@ -4,9 +4,7 @@ return {
   {
     "nvim-mini/mini.splitjoin",
     opts = {},
-    keys = {
-      "gS",
-    }
+    keys = { { "gS" } },
   },
 
   -- oil.nvim
@@ -38,5 +36,20 @@ return {
       "stevearc/oil.nvim",
     },
     opts = {},
+  },
+
+  -- which-key.nvim
+  {
+    "folke/which-key.nvim",
+    opts = {
+      spec = {
+        {
+          mode = { "n", "x" },
+          { "<leader>r", group = "+run", icon = { icon = "", hl = "" } },
+          { "<leader>z", group = "+zk", icon = { icon = "󰠮", hl = "" } },
+          { "<leader>j", desc = "+jupyter", icon = { icon = "", hl = "" } },
+        },
+      },
+    },
   },
 }
