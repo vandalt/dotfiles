@@ -7,6 +7,7 @@
   "chezmoi.nvim": { "branch": "main", "commit": "4167bbec76f693f481a5243f1be521ff0ccf1a6d" },
   "chezmoi.vim": { "branch": "main", "commit": "73b30df35c6b645ebd2e6a440eea8463ef3c3f47" },
   "conform.nvim": { "branch": "master", "commit": "086a40dc7ed8242c03be9f47fbcee68699cc2395" },
+  "f-string-toggle.nvim": { "branch": "main", "commit": "c1c77b4fce192e1615490d895863e2a0508d6021" },
   "flash.nvim": { "branch": "main", "commit": "fcea7ff883235d9024dc41e638f164a450c14ca2" },
   "friendly-snippets": { "branch": "main", "commit": "6cd7280adead7f586db6fccbd15d2cac7e2188b9" },
   "gitsigns.nvim": { "branch": "main", "commit": "8d82c240f190fc33723d48c308ccc1ed8baad69d" },

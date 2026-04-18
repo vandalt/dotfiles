@@ -20,6 +20,19 @@ return {
     },
   },
 
+  -- f-string-toggle.nvim
+  -- TODO: Make it work with markdown code blocks
+  {
+    "roobert/f-string-toggle.nvim",
+    opts = {
+      key_binding = false,
+      filetypes = { "python", "markdown", "snakemake" },
+    },
+    keys = {
+      { "<leader>fs", function() require("f-string-toggle").toggle_fstring() end, desc = "Toggle f-string" },
+    },
+  },
+
   -- mini.snippets
   {
     "nvim-mini/mini.snippets",
