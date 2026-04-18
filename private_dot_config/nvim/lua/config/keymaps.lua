@@ -10,6 +10,9 @@ map("n", "yp", function() require("util").yank_path("+") end, "Yank current path
 -- Terminal
 map("t", "<Esc><Esc>", "<C-\\><C-n>", "Normal mode (terminal)")
 
+-- Undotree
+map("n", "<leader>uu", "<Cmd>Undotree<CR>", "Toggle Undotree")
+
 -- Jupyter snippets
 map("n", "<leader>jn", "icodeblock<C-j>python<C-l>", "New cell", { remap = true })
 map("i", "<C-CR>", "codeblock<C-j>python<C-l>", "New cell", { remap = true })
