@@ -27,7 +27,7 @@ return {
     "jmbuhr/otter.nvim",
     opts = {},
     keys = {
-      { "<leader>jo", function() require("otter").activate() end, "Activate otter" },
+      { "<leader>jo", function() require("otter").activate() end, desc = "Activate otter" },
     },
   },
 
