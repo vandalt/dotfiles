@@ -10,6 +10,32 @@ return {
     },
   },
 
+  -- render-markdown.nvim
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    opts = {
+      code = {
+        enabled = true,
+        conceal_delimiters = true,
+        language = true,
+        border = "thick",
+      },
+    },
+  },
+
+  -- markdown-preview.nvim
+  {
+    "iamcco/markdown-preview.nvim",
+    keys = {
+      {
+        "<leader>mp",
+        ft = "markdown",
+        "<cmd>MarkdownPreviewToggle<cr>",
+        desc = "Markdown Preview",
+      },
+    },
+  },
+
   -- zk-nvim
   {
     "zk-org/zk-nvim",
@@ -32,7 +58,7 @@ return {
     },
   },
 
-  -- mknflow
+  -- mkdnflow
   {
     "jakewvincent/mkdnflow.nvim",
     opts = {

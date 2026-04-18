@@ -45,6 +45,27 @@ return {
     end,
   },
 
+  -- neogen (docstrings)
+  {
+    "danymat/neogen",
+    opts = {
+      languages = { python = { template = { annotation_convention = "reST" } } },
+    },
+    keys = {
+      { "<leader>cn", function() require("neogen").generate() end, desc = "Generate docstrings" },
+      {
+        "<leader>cp",
+        function() require("neogen").generate({ annotation_convention = { python = "numpydoc" } }) end,
+        desc = "Numpy docstrings",
+      },
+      {
+        "<leader>cg",
+        function() require("neogen").generate({ annotation_convention = { python = "google_docstrings" } }) end,
+        desc = "Google docstrings",
+      },
+    },
+  },
+
   -- snakemake
   {
     "snakemake/snakemake",
