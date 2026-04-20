@@ -10,6 +10,16 @@ return {
     },
   },
 
+  -- nvim-lint (markdownlint-cli2)
+  {
+    "mfussenegger/nvim-lint",
+    opts = function(_, opts)
+      local lint = require("lint")
+      lint.linters["markdownlint-cli2"].args = { "--config", "/home/vandal/.config/markdownlint/config.markdownlint.yaml", "-" }
+      return opts
+    end
+  },
+
   -- render-markdown.nvim
   {
     "MeanderingProgrammer/render-markdown.nvim",
