@@ -24,6 +24,7 @@ return {
   -- TODO: Make it work with markdown code blocks
   {
     "roobert/f-string-toggle.nvim",
+    dev = true,
     opts = {
       key_binding = false,
       filetypes = { "python", "markdown", "snakemake" },
