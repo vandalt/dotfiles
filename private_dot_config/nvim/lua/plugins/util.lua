@@ -18,8 +18,14 @@ return {
     },
     keys = {
       {
+        "<c-/>",
+        function() Snacks.terminal.toggle(nil, { cwd = LazyVim.root() }) end,
+        mode = { "n", "t" },
+        desc = "Toggle Terminal (Root Dir)",
+      },
+      {
         [[<C-S-/>]],
-        function() Snacks.terminal.focus(nil, { cwd = vim.fn.expand("%:p:h") }) end,
+        function() Snacks.terminal.toggle(nil, { cwd = vim.fn.expand("%:p:h") }) end,
         desc = "Toggle Terminal in current file dir",
         silent = true,
       },
