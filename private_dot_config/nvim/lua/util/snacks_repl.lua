@@ -101,14 +101,22 @@ end
 M.send_lines = function(text_type, opts)
   -- Get the text
   local text
+  local last_line
   if text_type == nil or text_type == "line" then
     text = vim.api.nvim_get_current_line()
+    last_line = text:match("([^\n]*)$")
   elseif text_type == "visual" then
     local lines = get_visual_selection()
     text = table.concat(lines, "\n")
+    last_line = lines[#lines]
   else
     local lines = get_motion_selection()
     text = table.concat(lines, "\n")
+    last_line = lines[#lines]
+  end
+
+  if last_line:match("^[ \t]+") then
+    text = text .. "\n"
   end
 
   M.send_text(text, opts)
