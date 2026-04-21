@@ -1,5 +1,18 @@
 return {
 
+  -- vim-gtfo
+  { "justinmk/vim-gtfo" },
+
+  -- vim-arsync
+  {
+    "kenn7/vim-arsync",
+    dependencies = { "prabirshrestha/async.vim" },
+    keys = {
+      { "<leader>ru", "<Cmd>ARsyncUp<CR>", desc = "Rsync up to remote" },
+      { "<leader>rd", "<Cmd>ARsyncDown<CR>", desc = "Rsync down from remote" },
+    },
+  },
+
   -- mini.splitjoin
   {
     "nvim-mini/mini.splitjoin",
@@ -45,7 +58,7 @@ return {
       spec = {
         {
           mode = { "n", "x" },
-          { "<leader>r", group = "+run", icon = { icon = "", hl = "" } },
+          { "<leader>r", group = "+run/rsync", icon = { icon = "", hl = "" } },
           { "<leader>z", group = "+zk", icon = { icon = "󰠮", hl = "" } },
           { "<leader>j", desc = "+jupyter", icon = { icon = "", hl = "" } },
         },
