@@ -114,8 +114,7 @@ return {
         enabled = true,
         default_method = function(cell, _)
           local text_lines = require("quarto.tools").concat(cell.text)
-          local id = 1
-          require("toggleterm").exec(text_lines, id, nil, nil, nil, nil, nil, nil, use_bracketed_paste)
+          require("util.snacks_repl").send_text(text_lines, { bracketed = use_bracketed_paste })
         end,
       },
     },
