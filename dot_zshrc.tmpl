@@ -23,7 +23,7 @@ if ! [[ "$PATH" =~ "$HOME/go/bin" ]]
 then
   PATH="$HOME/go/bin:$PATH"
 fi
-{{ if regexMatch "^narval.*[0-9]$" .chezmoi.hostname }}
+{{ if regexMatch "^(narval|rorqual|fir).*[0-9]$" .chezmoi.hostname }}
 if ! [[ "$PATH" =~ "$HOME/repos/alliance-helpers/bin" ]]
 then
   PATH="$HOME/repos/alliance-helpers/bin:$PATH"
@@ -71,7 +71,7 @@ source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
 {{ else if eq .chezmoi.osRelease.id "fedora" }}
 source /usr/share/fzf/shell/key-bindings.zsh
-{{ else if regexMatch "^narval.*[0-9]$" .chezmoi.hostname }}
+{{ else if regexMatch "^(narval|rorqual|fir).*[0-9]$" .chezmoi.hostname }}
 source /cvmfs/soft.computecanada.ca/gentoo/2023/x86-64-v3/usr/share/fzf/key-bindings.zsh
 {{ end }}
 
@@ -156,7 +156,7 @@ export MKL_NUM_THREADS=1
 export VECLIB_MAXIMUM_THREADS=1
 export NUMEXPR_NUM_THREADS=1
 export XLA_FLAGS="--xla_force_host_platform_device_count=8 --xla_cpu_multi_thread_eigen=false intra_op_parallelism_threads=1"
-{{ if regexMatch "^narval.*[0-9]$" .chezmoi.hostname }}
+{{ if regexMatch "^(narval|rorqual|fir).*[0-9]$" .chezmoi.hostname }}
 export PACKAGE_DATA_DIR=$HOME/projects/def-rdoyon/shared/package-data
 {{ else }}
 export PACKAGE_DATA_DIR=$HOME/Documents/data/package-data
@@ -303,7 +303,7 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 {{ else if eq .chezmoi.osRelease.id "fedora" }}
 # source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-{{ else if regexMatch "^narval.*[0-9]$" .chezmoi.hostname }}
+{{ else if regexMatch "^(narval|rorqual|fir).*[0-9]$" .chezmoi.hostname }}
 source ~/programs/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 {{ end }}
 
