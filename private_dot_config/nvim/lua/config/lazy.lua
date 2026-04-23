@@ -32,7 +32,7 @@ require("lazy").setup({
   },
 ---@diagnostic disable-next-line: assign-type-mismatch
   dev = { path = "~/repos/nvim-local/opt" },
-  install = { colorscheme = { "kanagawa", "habamax" } },
+  install = { colorscheme = { "tokyonight", "habamax" } },
   checker = {
     enabled = true, -- check for plugin updates periodically
     notify = false, -- notify on update

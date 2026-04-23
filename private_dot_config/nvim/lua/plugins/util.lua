@@ -5,6 +5,7 @@ return {
     "folke/snacks.nvim",
     opts = {
       explorer = { enabled = false },
+      image = { enabled = true },
       terminal = {
         win = {
           keys = {
@@ -40,6 +41,16 @@ return {
         desc = "Run Python script",
       },
     },
+  },
+
+  {
+    "nvim-mini/mini.hipatterns",
+    opts = function(_, opts)
+      local myopts = {
+        highlighters = { cells = require("notebook-navigator").minihipatterns_spec },
+      }
+      return vim.tbl_deep_extend("force", opts, myopts)
+    end,
   },
 
   -- toggleterm.nvim

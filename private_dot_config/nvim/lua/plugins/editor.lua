@@ -13,6 +13,17 @@ return {
     },
   },
 
+  {
+    "HakonHarnes/img-clip.nvim",
+    event = "VeryLazy",
+    opts = {
+      default = { prompt_for_file_name = false, drag_and_drop = { enabled = false } },
+    },
+    keys = {
+      { "<leader>p", "<Cmd>PasteImage<CR>", desc = "Paste image from system clipboard" },
+    },
+  },
+
   -- mini.splitjoin
   {
     "nvim-mini/mini.splitjoin",
