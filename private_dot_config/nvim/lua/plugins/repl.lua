@@ -131,9 +131,9 @@ return {
     opts = {
       move = {
         keys = {
-          goto_next_start = { ["]j"] = "@cell.inner" },
+          goto_next_start = { ["]j"] = { "@cell.inner", "@cell.comment" } },
           goto_next_end = { ["]J"] = "@cell.outer" },
-          goto_previous_start = { ["[j"] = "@cell.inner" },
+          goto_previous_start = { ["[j"] = { "@cell.inner", "@cell.comment" } },
           goto_previous_end = { ["[J"] = "@cell.outer" },
         },
       },
