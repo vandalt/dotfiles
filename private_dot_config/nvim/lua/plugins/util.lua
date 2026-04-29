@@ -36,6 +36,16 @@ return {
         desc = "Run Python script",
       },
       {
+        "<leader>rt",
+        function() require("util.snacks_repl").send_text("python -m pytest", { bracketed = false }) end,
+        desc = "Run pytest ",
+      },
+      {
+        "<leader>rT",
+        function() require("util.snacks_repl").send_text("python -m pytest " .. vim.fn.expand("%"), { bracketed = false }) end,
+        desc = "Run pytest for current file",
+      },
+      {
         "<leader>ri",
         function() require("util.snacks_repl").send_text("%run " .. vim.fn.expand("%"), { bracketed = true }) end,
         desc = "Run Python script",
