@@ -21,7 +21,6 @@ return {
   },
 
   -- f-string-toggle.nvim
-  -- TODO: Make it work with markdown code blocks
   {
     "roobert/f-string-toggle.nvim",
     dev = true,

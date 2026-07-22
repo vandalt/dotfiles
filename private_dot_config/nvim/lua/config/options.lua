@@ -6,7 +6,7 @@ vim.g.lazyvim_python_lsp = "basedpyright"
 vim.g.sidekick_nes = false
 
 vim.g.vandalt_terminal = "snacks"
-vim.g.vandalt_dashboard = true
+vim.g.vandalt_dashboard = false
 
 -- Options
 local opt = vim.opt

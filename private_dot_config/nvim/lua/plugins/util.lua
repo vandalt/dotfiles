@@ -53,6 +53,7 @@ return {
     },
   },
 
+  -- mini.hipatterns
   {
     "nvim-mini/mini.hipatterns",
     opts = function(_, opts)
@@ -107,6 +108,8 @@ return {
       },
     },
   },
+
+  -- snacks.nvim (chezmoi in dashboard)
   {
     "folke/snacks.nvim",
     optional = true,

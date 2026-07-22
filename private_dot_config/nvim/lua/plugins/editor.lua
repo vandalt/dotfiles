@@ -1,6 +1,6 @@
 return {
 
-  -- vim-gtfo
+  -- vim-gtfo (gof)
   { "justinmk/vim-gtfo" },
 
   -- vim-arsync
@@ -13,6 +13,7 @@ return {
     },
   },
 
+  -- img-clip.nvim
   {
     "HakonHarnes/img-clip.nvim",
     event = "VeryLazy",

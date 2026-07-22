@@ -4,6 +4,9 @@ local map = function(mode, lhs, rhs, desc, opts)
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
+-- LazyExtras
+map("n", "<leader>X", "<Cmd>LazyExtras<CR>", "LazyExtras")
+
 -- Yank and put current path
 map("n", "yp", function() require("util").yank_path("+") end, "Yank current path")
 

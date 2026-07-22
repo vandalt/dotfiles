@@ -13,6 +13,7 @@ return {
     },
   },
 
+  -- tokyonight
   {
     "folke/tokyonight.nvim",
     opts = { style = "moon" },
@@ -22,7 +23,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "tokyonight",
+      colorscheme = "kanagawa",
     },
   },
 }
