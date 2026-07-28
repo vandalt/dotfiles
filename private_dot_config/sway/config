@@ -10,7 +10,7 @@ set $down j
 set $up k
 set $right l
 # Applications
-set $term kitty
+set $term ghostty
 # set $menu wmenu-run
 # set $menu wofi --show drun
 # set $runmenu wofi --show run
