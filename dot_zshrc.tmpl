@@ -5,7 +5,12 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+{{ if eq .chezmoi.osRelease.id "arch" }}
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+{{ else if eq .chezmoi.osRelease.id "fedora" }}
 source $HOME/programs/powerlevel10k/powerlevel10k.zsh-theme
+{{ end }}
+
 
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
 then
@@ -60,9 +65,10 @@ autoload -Uz compinit
 compinit
 
 source ~/.zsh/keybindings.zsh
-source ~/.zsh/git.zsh
+# source ~/.zsh/git.zsh
 source ~/.zsh/python.zsh
 source ~/.zsh/onedrive.zsh
+# TODO: Add back
 source ~/.zsh/tokens.zsh
 
 # Must be after vi/emacs mode
@@ -86,32 +92,13 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # Utils
-alias l='ls'
-alias sl='ls'
-alias ll='ls -l'
-alias lla='ls -la'
-alias la='ls -a'
-alias lsd='ls -d'
-alias lt='ls -lt'
-alias ltr='ls -ltr'
 alias treei='tree --gitignore -I venv -I *.pyc'
-alias rmr='rm -rI'
-alias dh='du -sch *'
-alias dhsh='du -sch * | sort -h'
-alias dha='du -d 1 -h .'
 alias untar='tar -xvf'
 alias guntar='tar -xzvf'
 alias buntar='tar -xjvf'
 alias open='xdg-open'
 alias ...="cd ../.."
 alias gof="open ."
-
-# Mutt
-alias mutt='neomutt'
-alias muttr='neomutt -R'
-
-# Tw
-alias t='task'
 
 # Editor
 export EDITOR='nvim'
@@ -120,19 +107,6 @@ export EDITOR='nvim'
 # NOTE: No "toggle" for mako modes yet (https://github.com/emersion/mako/pull/382)
 alias dnd='makoctl mode -s dnd'
 alias dndoff='makoctl mode -s default'
-
-# TUI things
-alias pmix='pulsemixer'
-alias blue='bluetuith'
-
-alias cz='chezmoi'
-
-# Alternative nvim configurations
-alias lvim="NVIM_APPNAME=nvim-lazyvim nvim"
-alias ovim="NVIM_APPNAME=nvim-lazy nvim"
-alias kvim="NVIM_APPNAME=nvim-kickstart nvim"
-alias mmvim="NVIM_APPNAME=nvim-minimax nvim"
-alias mvim="NVIM_APPNAME=nvim-minimal nvim"
 
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/ripgreprc"
 
@@ -201,7 +175,7 @@ if [ $TERM = "alacritty" ]; then
 fi
 
 # CORRECT will correct commands, CORRECT_ALL will correct arguments
-setopt CORRECT_ALL
+setopt CORRECT
 export CORRECT_IGNORE_FILE="go|.config|.astropy|.snakemake|.ipython|.zshrc|.task|test|tests|Documents"
 export CORRECT_IGNORE="make"
 
@@ -297,7 +271,8 @@ precmd() { print -Pn "\e]0;%~\a" }
 
 {{ if eq .chezmoi.osRelease.id "arch" }}
 # NOTE: These (or at least highlighting) must be at the end of ~/.zshrc
-source /usr/share/doc/pkgfile/command-not-found.zsh
+# TODO: Only do the command-not-found if it exists
+# source /usr/share/doc/pkgfile/command-not-found.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 {{ else if eq .chezmoi.osRelease.id "fedora" }}
@@ -309,36 +284,30 @@ source ~/programs/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 compdef _gnu_generic snakemake
 
-{{ if eq .chezmoi.osRelease.id "arch" }}
-source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
-{{ else if eq .chezmoi.osRelease.id "fedora" }}
-source ~/programs/powerlevel10k/powerlevel10k.zsh-theme
-{{ end }}
-
+{{ if eq .chezmoi.osRelease.id "fedora" }}
 # Source rustup installation
 [[ ! -f $HOME/.cargo/env ]] || source $HOME/.cargo/env
+{{ end }}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# # >>> conda initialize >>>
-# # !! Contents within this block are managed by 'conda init' !!
-# __conda_setup="$('/home/vandal/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-#     if [ -f "/home/vandal/miniforge3/etc/profile.d/conda.sh" ]; then
-#         . "/home/vandal/miniforge3/etc/profile.d/conda.sh"
-#     else
-#         export PATH="/home/vandal/miniforge3/bin:$PATH"
-#     fi
-# fi
-# unset __conda_setup
-#
-# if [ -f "/home/vandal/miniforge3/etc/profile.d/mamba.sh" ]; then
-#     . "/home/vandal/miniforge3/etc/profile.d/mamba.sh"
-# fi
-# # <<< conda initialize <<<
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/vandal/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/vandal/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "/home/vandal/miniforge3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/vandal/miniforge3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
 
 # >>> mamba initialize >>>
 # !! Contents within this block are managed by 'mamba shell init' !!
@@ -352,5 +321,3 @@ else
 fi
 unset __mamba_setup
 # <<< mamba initialize <<<
-
-export PATH="/home/vandal/.pixi/bin:$PATH"
