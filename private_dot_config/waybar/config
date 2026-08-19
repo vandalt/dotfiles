@@ -7,12 +7,12 @@
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
-        "hyprland/workspaces",
-        "hyprland/submap",
+        "sway/workspaces",
+        "sway/mode",
         "custom/media"
     ],
     "modules-center": [
-        "hyprland/window"
+        "sway/window"
     ],
     "modules-right": [
         "idle_inhibitor",
@@ -24,7 +24,7 @@
         "temperature",
         "backlight",
         // "keyboard-state",
-        "custom/kmonad",
+        "custom/kanata",
         "battery",
         "battery#bat2",
         "clock",
@@ -180,7 +180,7 @@
             "phone": "",
             "portable": "",
             "car": "",
-            "default": ["", "", ""]
+            "default": ["  ", "  ", "  "]
         },
         "on-click": "pavucontrol"
     },
@@ -196,6 +196,12 @@
         "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     },
+    "custom/kanata": {
+        "return-type": "json",
+        "exec": "$HOME/.local/bin/kanata-toggle status",
+        "on-click": "$HOME/.local/bin/kanata-toggle toggle",
+        "interval": 1
+    },
     "custom/power": {
         "format" : "⏻ ",
 		"tooltip": false,
@@ -205,7 +211,7 @@
 			"shutdown": "shutdown now",
 			"reboot": "reboot",
 			"suspend": "systemctl suspend",
-			"log-out": "hyprctl dispatch exit"
+			"log-out": "swaymsg exit"
 		}
     }
 }

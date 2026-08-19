@@ -10,7 +10,7 @@ set $down j
 set $up k
 set $right l
 # Applications
-set $term ghostty
+set $term kitty
 # set $menu wmenu-run
 # set $menu wofi --show drun
 # set $runmenu wofi --show run
@@ -18,22 +18,28 @@ set $menu rofi -show drun -theme solarized -show-icons
 set $runmenu rofi -show run -theme solarized -show-icons
 set $browser firefox
 set $files ~/.local/bin/rofi-files
+set $fileman thunar
 
 ### Output configuration
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 # Things other than background are configured by kanshi (~/.config/kanshi/config)
 #
-output * bg /usr/share/backgrounds/f42/default/f42-01-night.jxl fill
+output * bg /home/vandal/Pictures/wallpapers/aurores/forest.jpg fill
 
 output eDP-1 resolution 3840x2160 scale 2 position 0,0
+
+# https://github.com/swaywm/sway/wiki#clamshell-mode
+bindswitch --reload --locked lid:on output eDP-1 disable
+bindswitch --reload --locked lid:off output eDP-1 enable
 
 # Startup applications
 exec wl-paste -t text --watch clipman store
 exec ~/.local/bin/rot8
 # exec safeeyes
 exec_always pkill kanshi || kanshi
-
+exec udiskie
+exec /usr/lib/geoclue-2.0/demos/agent
 
 ### Idle configuration
 #
@@ -65,11 +71,13 @@ input "type:keyboard" {
 #
 # Wrap focus
 focus_wrapping no
-default_border pixel
+default_border pixel 3
 smart_borders no_gaps
 smart_gaps no
 gaps inner 10
 gaps outer 0
+# High-contrast orange is distinguishable from the blue wallpaper and Kanagawa themes.
+client.focused #2aa198 #2aa198 #000000 #2aa198 #2aa198
 
 ### Key bindings
 #
@@ -90,6 +98,7 @@ gaps outer 0
 
     # Search for files
     bindsym $mod+f exec $files
+    bindsym $mod+t exec $fileman
 
     # Search clipboard
     bindsym $mod+Shift+v exec clipman pick --tool rofi
@@ -108,7 +117,11 @@ gaps outer 0
     bindsym $mod+Shift+c reload
 
     # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+    # bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+    bindsym $mod+Shift+e exec rofi -show p -modi p:rofi-power-menu
+
+    # Toggle kanata for qmk-like keyboard mappings
+    bindsym $mod+q exec ~/.local/bin/kanata-toggle toggle
 #
 # Moving around:
 #
@@ -251,11 +264,14 @@ bindsym $mod+r mode "resize"
     bindsym --locked XF86AudioPlay exec playerctl play-pause
     bindsym --locked XF86AudioPrev exec playerctl previous
     # Special key to take a screenshot with grim
-    bindsym Print exec grimshot savecopy area
-    bindsym Shift+Print exec grimshot savecopy output
+    bindsym Print exec sh -c 'GRIMSHOT_FILENAME_FORMAT="$(date "+Screenshot-%Y-%m-%dT%H-%M-%S")" exec grimshot savecopy area'
+    bindsym Shift+Print exec sh -c 'GRIMSHOT_FILENAME_FORMAT="$(date "+Screenshot-%Y-%m-%dT%H-%M-%S")" exec grimshot savecopy output'
+    bindsym $mod+Shift+p exec grimpicker -c -n
     # Dismiss notifications
     bindsym $mod+m exec makoctl dismiss
     bindsym $mod+Shift+m exec makoctl dismiss --all
+    bindsym $mod+Shift+r exec makoctl restore
+    bindsym $mod+Shift+n exec notify-send "Toggling Do Not Disturb" && sleep 1 && makoctl mode -t dnd && notify-send "Modes:\n $(makoctl mode)"
     # Switch light/dark mode
     bindsym $mod+Shift+t exec darkman toggle
 
@@ -264,15 +280,18 @@ assign [app_id="com.slack.Slack"] workspace 9
 assign [app_id="com.discordapp.Discord"] workspace 9
 assign [app_id="spotify"] workspace 10
 
+for_window [class="Slack" title="Slack | *"] focus
 for_window [app_id="org.pulseaudio.pavucontrol"] floating enable
 for_window [app_id="blueman-manager"] floating enable
 for_window [app_id="org.gnome.clocks"] floating enable
 # for_window [app_id="firefox" title="Extension.*"] floating enable
 for_window [app_id="firefox" title="Extension.*"] floating enable
+for_window [app_id="Zotero" title="Zotero Settings"] floating enable
 for_window [app_id="python3|Matplotlib" title="^(Figure .*)$"] floating enable
 for_window [class="python3|Matplotlib" title="^(Figure .*)$"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [window_role="dialog"] floating enable
+for_window [app_id="zoom" title="Zoom Workplace"] floating enable
 
 #
 # Status Bar:
@@ -285,3 +304,5 @@ bar {
 include /etc/sway/config.d/*
 
 exec systemctl --user restart darkman.service
+
+exec gnome-keyring-daemon --start --components=secrets

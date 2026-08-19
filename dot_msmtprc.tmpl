@@ -17,4 +17,5 @@ host           smtp.office365.com
 port           587
 from           thomasvandal@hotmail.com
 user           thomasvandal@hotmail.com
-passwordeval "rbw get yoga.hotmail"
+auth xoauth2
+passwordeval "/home/vandal/.local/bin/mutt_oauth2.py {{ (bitwarden "item" "personal.oauth2.tokens").login.password }}"

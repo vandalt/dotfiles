@@ -1,0 +1,85 @@
+/*
+ * Retro terminal tabs for Ghostty's GTK/libadwaita tab bar.
+ * Restart Ghostty after editing this file.
+ */
+
+tabbar {
+  background-color: #181616;
+  border: 0;
+  border-radius: 0;
+}
+
+tabbar .box {
+  padding: 0;
+}
+
+/* Remove libadwaita's padding around the tab strip's action containers. */
+tabbar .start-action,
+tabbar .end-action {
+  padding: 0;
+}
+
+tabbar tabbox {
+  margin: 0;
+  padding: 4px 0;
+  min-height: 28px;
+  background-color: #181616;
+  border: 0;
+  border-radius: 0;
+  font-family: "JetBrainsMono Nerd Font", monospace;
+}
+
+tabbar tabbox tab {
+  margin: 0 3px 0 0;
+  padding: 3px 10px;
+  min-height: 22px;
+  color: #c8c093;
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* libadwaita applies the tab focus ring to this wrapper. */
+tabbar tabbox > tabboxchild,
+tabbar tabbox > tabboxchild:focus-within,
+tabbar tabbox > tabboxchild > tab,
+tabbar tabbox > tabboxchild > tab:hover,
+tabbar tabbox > tabboxchild > tab:active,
+tabbar tabbox > tabboxchild > tab:selected {
+  border-radius: 0;
+}
+
+tabbar tabbox tab,
+tabbar tabbox tab > *,
+tabbar tabbox tab:selected,
+tabbar tabbox tab:selected > * {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+tabbar tabbox tab:hover {
+  background-color: #282727;
+  color: #e6c384;
+}
+
+tabbar tabbox tab:selected {
+  color: #1f1f28;
+  background-color: #e6c384;
+  border: 0;
+  border-radius: 0;
+  font-weight: bold;
+}
+
+tabbar tabbox tab label {
+  font-size: 11px;
+}
+
+tabbar tabbox tab button {
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  opacity: 0;
+}

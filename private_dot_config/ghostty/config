@@ -1,17 +1,19 @@
 # vim: foldmethod=marker
 
 # Options {{{ ==================================================================
-# theme = dark:TokyoNight Moon,light:TokyoNight Day
+theme = dark:TokyoNight Moon,light:TokyoNight Day
 # theme = dark:Nvim Dark,light:Nvim Light
-theme = dark:kanagawa-dragon,light:kanagawa-lotus
+# theme = dark:kanagawa-dragon,light:kanagawa-lotus
 cursor-style = block
 gtk-single-instance = true
+gtk-wide-tabs = true
 working-directory = home
 window-inherit-working-directory = false
 font-family = "JetBrainsMono Nerd Font"
 # font-family = "VictorMono Nerd Font"
 window-decoration = auto
-background-opacity = 1.0
+# background-opacity = 0.95
+gtk-custom-css = ~/.config/ghostty/retro-tabs.css
 font-size = 10
 window-width = 90
 shell-integration-features = ssh-env, no-cursor

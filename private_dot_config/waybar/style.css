@@ -40,7 +40,7 @@ button:hover {
     background: rgba(0, 0, 0, 0.2);
 }
 
-#workspaces button.active {
+#workspaces button.focused {
     background-color: #64727D;
     box-shadow: inset 0 -3px #ffffff;
 }
@@ -70,6 +70,7 @@ button:hover {
 #idle_inhibitor,
 #scratchpad,
 #power-profiles-daemon,
+#custom-kanata,
 #mpd {
     padding: 0 10px;
     color: #ffffff;
@@ -126,6 +127,14 @@ button:hover {
 
 #power-profiles-daemon.power-saver {
     color: #2ecc71;
+}
+
+#custom-kanata.enabled {
+    color: #26A65B;
+}
+
+#custom-kanata.disabled {
+    color: #64727d;
 }
 
 label:focus {

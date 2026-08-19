@@ -19,3 +19,6 @@ lazyvim.json
 .local/bin/mutt_oauth2.py
 .local/bin/mailsync
 {{- end }}
+{{- if ne .chezmoi.osRelease.id "arch" }}
+.config/spotify-flags.conf
+{{- end }}

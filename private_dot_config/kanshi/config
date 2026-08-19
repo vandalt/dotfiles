@@ -9,6 +9,6 @@ profile {
 }
 
 profile {
-  output eDP-1 resolution 3840x2160 scale 2 position 0,0
+  output eDP-1 resolution 3840x2160 scale 2 position 0,558
   output "BNQ BenQ GW2780 ET54M0172904U" resolution 1920x1080 scale 1.0 position 1920,0
 }

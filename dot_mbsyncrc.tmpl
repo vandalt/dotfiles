@@ -14,10 +14,9 @@ IMAPAccount personal
 # Login info
 Host outlook.office365.com
 User thomasvandal@hotmail.com
-AuthMechs LOGIN
-PassCmd "rbw get yoga.hotmail"
-# Use SSL
-SSLType IMAPS
+AuthMechs XOAUTH2
+PassCmd "/home/vandal/.local/bin/mutt_oauth2.py {{ (bitwarden "item" "personal.oauth2.tokens").login.password }}"
+TLSType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 # Remote IMAP
@@ -44,8 +43,7 @@ Host outlook.office365.com
 User thomas.vandal@umontreal.ca
 AuthMechs XOAUTH2
 PassCmd "/home/vandal/.local/bin/mutt_oauth2.py {{ (bitwarden "item" "udem.oauth2.tokens").login.password }}"
-# Use SSL
-SSLType IMAPS
+TLSType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 # Remote IMAP

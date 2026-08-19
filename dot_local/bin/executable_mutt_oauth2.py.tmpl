@@ -74,8 +74,24 @@ registrations = {
         'scope': ('offline_access https://outlook.office.com/IMAP.AccessAsUser.All '
                   'https://outlook.office.com/POP.AccessAsUser.All '
                   'https://outlook.office.com/SMTP.Send'),
-        'client_id': '{{ (bitwarden "item" "mutt_oauth2").login.username  }}',
-        'client_secret': '{{ (bitwarden "item" "mutt_oauth2").login.password  }}',
+        'client_id': '{{ (bitwarden "item" "mutt_oauth2_work").login.username  }}',
+        'client_secret': '{{ (bitwarden "item" "mutt_oauth2_work").login.password  }}',
+    },
+    'hotmail': {
+        'authorize_endpoint': 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
+        'devicecode_endpoint': 'https://login.microsoftonline.com/common/oauth2/v2.0/devicecode',
+        'token_endpoint': 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+        'redirect_uri': 'https://login.microsoftonline.com/common/oauth2/nativeclient',
+        'tenant': 'common',
+        'imap_endpoint': 'outlook.office365.com',
+        'pop_endpoint': 'outlook.office365.com',
+        'smtp_endpoint': 'smtp.office365.com',
+        'sasl_method': 'XOAUTH2',
+        'scope': ('offline_access https://outlook.office.com/IMAP.AccessAsUser.All '
+                  'https://outlook.office.com/POP.AccessAsUser.All '
+                  'https://outlook.office.com/SMTP.Send'),
+        'client_id': '{{ (bitwarden "item" "mutt_oauth2_perso").login.username  }}',
+        'client_secret': '',
     },
 }
 

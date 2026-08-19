@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+state_dir="${XDG_STATE_HOME:-"$HOME/.local/state"}/kanata-toggle"
+lock_file="$state_dir/kanata.lock"
+log_file="$state_dir/kanata.log"
+config_file="${XDG_CONFIG_HOME:-"$HOME/.config"}/kanata/config.kbd"
+
+umask 077
+mkdir -p "$state_dir"
+exec 9>"$lock_file"
+flock -x 9
+
+kanata_pids() {
+    pgrep -x kanata || true
+}
+
+status() {
+    if pgrep -x kanata >/dev/null; then
+        printf '%s\n' '{"text":"","tooltip":"Kanata: enabled\nClick to disable","class":"enabled"}'
+    else
+        printf '%s\n' '{"text":"","tooltip":"Kanata: disabled\nClick to enable","class":"disabled"}'
+    fi
+}
+
+toggle() {
+    local -a pids
+    mapfile -t pids < <(kanata_pids)
+    if ((${#pids[@]})); then
+        kill "${pids[@]}"
+        return
+    fi
+
+    command -v kanata >/dev/null
+    [[ -r "$config_file" ]]
+
+    kanata --cfg "$config_file" >>"$log_file" 2>&1 9>&- &
+}
+
+case "${1:-status}" in
+    status)
+        status
+        ;;
+    toggle)
+        toggle
+        ;;
+    *)
+        printf 'Usage: %s [status|toggle]\n' "${0##*/}" >&2
+        exit 64
+        ;;
+esac
