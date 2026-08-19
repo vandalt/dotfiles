@@ -36,6 +36,13 @@ return {
         desc = "Run Python script",
       },
       {
+        "<leader>rP",
+        function()
+          require("util.snacks_repl").prompt_and_send_text("python " .. vim.fn.expand("%"), { bracketed = false })
+        end,
+        desc = "Run Python script with arguments",
+      },
+      {
         "<leader>rt",
         function() require("util.snacks_repl").send_text("python -m pytest", { bracketed = false }) end,
         desc = "Run pytest ",
@@ -48,7 +55,26 @@ return {
       {
         "<leader>ri",
         function() require("util.snacks_repl").send_text("%run " .. vim.fn.expand("%"), { bracketed = true }) end,
-        desc = "Run Python script",
+        desc = "Run Python script in IPython",
+      },
+      {
+        "<leader>rI",
+        function()
+          require("util.snacks_repl").prompt_and_send_text("%run " .. vim.fn.expand("%"), { bracketed = true })
+        end,
+        desc = "Run Python script in IPython with arguments",
+      },
+      {
+        "<leader>rv",
+        function() require("util.snacks_repl").send_text("uv run " .. vim.fn.expand("%"), { bracketed = false }) end,
+        desc = "Run Python script with uv",
+      },
+      {
+        "<leader>rV",
+        function()
+          require("util.snacks_repl").prompt_and_send_text("uv run " .. vim.fn.expand("%"), { bracketed = false })
+        end,
+        desc = "Run Python script with uv arguments",
       },
     },
   },
@@ -131,4 +157,7 @@ return {
       table.insert(opts.dashboard.preset.keys, config_index, chezmoi_entry)
     end,
   },
+
+  -- vim-eunuch
+  "tpope/vim-eunuch",
 }

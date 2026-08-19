@@ -1,5 +1,12 @@
 return {
 
+  -- flash.nvim
+  -- TODO: Switch back when https://github.com/folke/flash.nvim/pull/492 gets merged
+  {
+    -- "folke/flash.nvim",
+    "onion108/flash.nvim",
+  },
+
   -- vim-gtfo (gof)
   { "justinmk/vim-gtfo" },
 

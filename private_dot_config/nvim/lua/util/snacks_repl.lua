@@ -96,6 +96,18 @@ M.send_text = function(text, opts)
   vim.fn.chansend(job_id, start_seq .. text .. end_seq .. "\n")
 end
 
+---@param text string
+---@param opts? {count?: integer, bracketed?: boolean}
+M.prompt_and_send_text = function(text, opts)
+  vim.ui.input({ prompt = "CLI arguments: " }, function(args)
+    if args == nil then
+      return
+    end
+
+    M.send_text(text .. (args ~= "" and " " .. args or ""), opts)
+  end)
+end
+
 ---@param text_type? '"line"'|'"visual"'|'"motion"'|string
 ---@param opts? {count?: integer, bracketed?: boolean}
 M.send_lines = function(text_type, opts)
