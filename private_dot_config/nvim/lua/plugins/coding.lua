@@ -4,24 +4,11 @@ return {
   {
     "nvim-mini/mini.pairs",
     opts = {
+      mappings = {
+        ['"'] = { action = "closeopen", pair = '""', neigh_pattern = [=[^[^%w\]]=], register = { cr = false } },
+        ["'"] = { action = "closeopen", pair = "''", neigh_pattern = [=[^[^%w\]]=], register = { cr = false } },
+      },
     },
-    config = function(_, opts)
-      LazyVim.mini.pairs(opts)
-
-      local pairs = require("mini.pairs")
-      local open = pairs.open
-      pairs.open = function(pair, neigh_pattern)
-        local opening = pair:sub(1, 1)
-        local cursor = vim.api.nvim_win_get_cursor(0)
-        local previous = vim.api.nvim_get_current_line():sub(cursor[2], cursor[2])
-
-        if (opening == "'" or opening == '"') and previous:match("%w") then
-          return opening
-        end
-
-        return open(pair, neigh_pattern)
-      end
-    end,
   },
 
   -- conform.nvim
