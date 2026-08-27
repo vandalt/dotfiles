@@ -2,13 +2,18 @@ return {
   -- sidekick.nvim
   {
     "folke/sidekick.nvim",
-    opts = {},
+    opts = {
+      cli = {
+        mux = {
+          enabled = false,
+          backend = "tmux",
+        },
+      },
+    },
     keys = {
       {
         "<leader>aa",
-        function()
-          require("sidekick.cli").toggle({ name = "copilot" })
-        end,
+        function() require("sidekick.cli").toggle({ name = "copilot" }) end,
         desc = "Sidekick Toggle CLI",
       },
       {
