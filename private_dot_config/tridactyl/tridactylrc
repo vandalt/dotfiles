@@ -1,7 +1,8 @@
 bind J tabnext
 bind K tabprev
 bind O fillcmdline tabopen
-bind t current_url open
+bind t tabnew
+bind D tabdetach
 bind W hint -w
 bind S pin
 

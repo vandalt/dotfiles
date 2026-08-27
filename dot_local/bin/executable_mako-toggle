@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if makoctl mode | grep -qx dnd; then
+  notify-send "Disabling Do Not Disturb"
+else
+  notify-send "Enabling Do Not Disturb"
+fi
+
+makoctl mode -t dnd

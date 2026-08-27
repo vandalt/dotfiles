@@ -10,7 +10,7 @@ set $down j
 set $up k
 set $right l
 # Applications
-set $term kitty
+set $term ghostty
 # set $menu wmenu-run
 # set $menu wofi --show drun
 # set $runmenu wofi --show run
@@ -271,7 +271,7 @@ bindsym $mod+r mode "resize"
     bindsym $mod+m exec makoctl dismiss
     bindsym $mod+Shift+m exec makoctl dismiss --all
     bindsym $mod+Shift+r exec makoctl restore
-    bindsym $mod+Shift+n exec notify-send "Toggling Do Not Disturb" && sleep 1 && makoctl mode -t dnd && notify-send "Modes:\n $(makoctl mode)"
+    bindsym $mod+Shift+n exec ~/.local/bin/mako-toggle
     # Switch light/dark mode
     bindsym $mod+Shift+t exec darkman toggle
 
@@ -286,12 +286,14 @@ for_window [app_id="blueman-manager"] floating enable
 for_window [app_id="org.gnome.clocks"] floating enable
 # for_window [app_id="firefox" title="Extension.*"] floating enable
 for_window [app_id="firefox" title="Extension.*"] floating enable
+for_window [app_id="firefox" title="Picture-inPicture"] floating enable
 for_window [app_id="Zotero" title="Zotero Settings"] floating enable
 for_window [app_id="python3|Matplotlib" title="^(Figure .*)$"] floating enable
 for_window [class="python3|Matplotlib" title="^(Figure .*)$"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [window_role="dialog"] floating enable
 for_window [app_id="zoom" title="Zoom Workplace"] floating enable
+for_window [app_id="zoom" title="annotate_toolbar"] floating enable
 
 #
 # Status Bar:
