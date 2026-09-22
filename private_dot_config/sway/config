@@ -10,7 +10,7 @@ set $down j
 set $up k
 set $right l
 # Applications
-set $term ghostty
+set $term kitty
 # set $menu wmenu-run
 # set $menu wofi --show drun
 # set $runmenu wofi --show run
@@ -293,7 +293,7 @@ for_window [class="python3|Matplotlib" title="^(Figure .*)$"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [window_role="dialog"] floating enable
 for_window [app_id="zoom" title="Zoom Workplace"] floating enable
-for_window [app_id="zoom" title="annotate_toolbar"] floating enable
+for_window [title="annotate_toolbar"] floating enable
 
 #
 # Status Bar:
