@@ -4,7 +4,7 @@
 # theme = dark:TokyoNight Moon,light:TokyoNight Day
 # theme = dark:Nvim Dark,light:Nvim Light
 theme = dark:kanagawa-dragon,light:kanagawa-lotus
-cursor-style = block
+# cursor-style = block
 gtk-single-instance = true
 gtk-wide-tabs = true
 working-directory = home
@@ -16,7 +16,7 @@ window-decoration = auto
 gtk-custom-css = ~/.config/ghostty/retro-tabs.css
 font-size = 10
 window-width = 90
-shell-integration-features = ssh-env, no-cursor
+shell-integration-features = ssh-env
 window-height = 30
 # }}}
 
