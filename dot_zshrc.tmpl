@@ -102,6 +102,7 @@ alias gof="open ."
 
 # Editor
 export EDITOR='nvim'
+alias lvim='NVIM_APPNAME=nvim-lazy nvim'
 
 # Notifications in sway
 # NOTE: No "toggle" for mako modes yet (https://github.com/emersion/mako/pull/382)
@@ -182,12 +183,6 @@ export CORRECT_IGNORE="make"
 
 # Go to notes and open nvim
 export ZK_NOTEBOOK_DIR="/home/vandal/notes"
-function znv() {
-  if [[ $(basename "$(pwd)") != "notes" ]]; then
-    z $ZK_NOTEBOOK_DIR
-  fi
-  nvim
-}
 
 JWST_TOKEN_FILE=~/.local/share/mast/latest_token.txt
 if [[ -f "$JWST_TOKEN_FILE" ]]; then
