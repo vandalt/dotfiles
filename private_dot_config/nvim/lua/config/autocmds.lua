@@ -12,6 +12,13 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
+  pattern = "python",
+  callback = function()
+    vim.opt_local.smartindent = false
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
   pattern = "oil",
   group = augroup("oil_statuscolumn"),
   callback = function() vim.opt_local.statuscolumn = "" end,
@@ -23,8 +30,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     if client and client.name == "basedpyright" and vim.bo[args.buf].filetype == "snakemake" then
-      -- ns_id does not work for now so disable all for buffer
-      -- vim.diagnostic.enable(false, { bufnr = args.buf, ns_id = vim.lsp.diagnostic.get_namespace(client.id) })
       vim.diagnostic.enable(false, { bufnr = args.buf })
     end
   end,

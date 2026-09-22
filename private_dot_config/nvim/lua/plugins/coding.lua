@@ -7,6 +7,17 @@ return {
       mappings = {
         ['"'] = { action = "closeopen", pair = '""', neigh_pattern = [=[^[^%w\]]=], register = { cr = false } },
         ["'"] = { action = "closeopen", pair = "''", neigh_pattern = [=[^[^%w\]]=], register = { cr = false } },
+        ['`'] = { action = "closeopen", pair = '``', neigh_pattern = [=[^[^%w\]]=], register = { cr = false } },
+      },
+    },
+  },
+
+  -- nvim-lint
+  {
+    "mfussenegger/nvim-lint",
+    opts = {
+      linters_by_ft = {
+        snakemake = { "snakemake" },
       },
     },
   },
@@ -16,7 +27,13 @@ return {
     "stevearc/conform.nvim",
     opts = function(_, opts)
       opts.formatters_by_ft.fish = {}
-      return opts
+      local my_opts = {
+        formatters_by_ft = {
+          snakemake = { "snakefmt" },
+        },
+      }
+      local new_opts = vim.tbl_deep_extend("force", opts, my_opts)
+      return new_opts
     end,
   },
 

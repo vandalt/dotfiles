@@ -11,7 +11,7 @@ return {
           },
         },
         [vim.g.lazyvim_python_lsp] = {
-          filetypes = { "python", "snakemake" },
+          -- filetypes = { "python", "snakemake" },
           settings = {
             basedpyright = {
               analysis = {
