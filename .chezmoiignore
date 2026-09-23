@@ -4,6 +4,7 @@ LICENSE
 README.md
 lazy-lock.json
 lazyvim.json
+nvim-pack-lock.json
 {{- if ne .chezmoi.hostname "yoga" }}
 .ads
 .msmtprc

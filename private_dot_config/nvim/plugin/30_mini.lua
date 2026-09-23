@@ -364,7 +364,7 @@ later(function() require("mini.bufremove").setup() end)
 -- - `:h MiniClue.set_mapping_desc()` - change mapping description not from config
 later(function()
   local miniclue = require("mini.clue")
-  -- stylua: ignore
+-- TODO: decide if re-ignore stylua for function call
   miniclue.setup({
     -- Define which clues to show. By default shows only clues for custom mappings
     -- (uses `desc` field from the mapping; takes precedence over custom clue).

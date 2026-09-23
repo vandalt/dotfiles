@@ -12,6 +12,9 @@
 local add = vim.pack.add
 local now, now_if_args, later = Config.now, Config.now_if_args, Config.later
 
+-- Utility plugins ============================================================
+add({ "https://github.com/nvim-lua/plenary.nvim" })
+
 -- Tree-sitter ================================================================
 
 -- Tree-sitter is a tool for fast incremental parsing. It converts text into
@@ -103,9 +106,9 @@ now_if_args(function()
   -- the rules provided by 'nvim-lspconfig'.
   -- Use `:h vim.lsp.config()` or 'after/lsp/' directory to configure servers.
   -- Uncomment and tweak the following `vim.lsp.enable()` call to enable servers.
-  -- vim.lsp.enable({
-  --   -- For example, if `lua-language-server` is installed, use `'lua_ls'` entry
-  -- })
+  vim.lsp.enable({
+    "lua_ls",
+  })
 end)
 
 -- Formatting =================================================================
@@ -154,14 +157,13 @@ end)
 
 now_if_args(function()
   add({ "https://github.com/xvzc/chezmoi.nvim" })
-  -- TODO: Deps
-  add({ "https://github.com/nvim-lua/plenary.nvim" })
   require("chezmoi").setup({})
-  -- TODO Move this autocmd or use config{ "BufRead", "BufNewFile" }?
-  vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = { vim.env.HOME .. "/.local/share/chezmoi/*" },
-    callback = function() vim.schedule(require("chezmoi.commands.__edit").watch) end,
-  })
+  Config.new_autocmd(
+    { "BufRead", "BufNewFile" },
+    { vim.env.HOME .. "/.local/share/chezmoi/*" },
+    function() vim.schedule(require("chezmoi.commands.__edit").watch) end,
+    "Open with chezmoi"
+  )
 end)
 
 -- Honorable mentions =========================================================
