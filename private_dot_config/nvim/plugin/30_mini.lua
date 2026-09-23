@@ -364,7 +364,7 @@ later(function() require("mini.bufremove").setup() end)
 -- - `:h MiniClue.set_mapping_desc()` - change mapping description not from config
 later(function()
   local miniclue = require("mini.clue")
--- TODO: decide if re-ignore stylua for function call
+  -- TODO: decide if re-ignore stylua for function call
   miniclue.setup({
     -- Define which clues to show. By default shows only clues for custom mappings
     -- (uses `desc` field from the mapping; takes precedence over custom clue).
@@ -387,19 +387,19 @@ later(function()
     },
     -- Explicitly opt-in for set of common keys to trigger clue window
     triggers = {
-      { mode = { 'n', 'x' }, keys = '<Leader>' }, -- Leader triggers
-      { mode =   'n',        keys = '\\' },       -- mini.basics
-      { mode = { 'n', 'x' }, keys = '[' },        -- mini.bracketed
-      { mode = { 'n', 'x' }, keys = ']' },
-      { mode =   'i',        keys = '<C-x>' },    -- Built-in completion
-      { mode = { 'n', 'x' }, keys = 'g' },        -- `g` key
-      { mode = { 'n', 'x' }, keys = "'" },        -- Marks
-      { mode = { 'n', 'x' }, keys = '`' },
-      { mode = { 'n', 'x' }, keys = '"' },        -- Registers
-      { mode = { 'i', 'c' }, keys = '<C-r>' },
-      { mode =   'n',        keys = '<C-w>' },    -- Window commands
-      { mode = { 'n', 'x' }, keys = 's' },        -- `s` key (mini.surround, etc.)
-      { mode = { 'n', 'x' }, keys = 'z' },        -- `z` key
+      { mode = { "n", "x" }, keys = "<Leader>" }, -- Leader triggers
+      { mode = "n", keys = "\\" }, -- mini.basics
+      { mode = { "n", "x" }, keys = "[" }, -- mini.bracketed
+      { mode = { "n", "x" }, keys = "]" },
+      { mode = "i", keys = "<C-x>" }, -- Built-in completion
+      { mode = { "n", "x" }, keys = "g" }, -- `g` key
+      { mode = { "n", "x" }, keys = "'" }, -- Marks
+      { mode = { "n", "x" }, keys = "`" },
+      { mode = { "n", "x" }, keys = '"' }, -- Registers
+      { mode = { "i", "c" }, keys = "<C-r>" },
+      { mode = "n", keys = "<C-w>" }, -- Window commands
+      { mode = { "n", "x" }, keys = "s" }, -- `s` key (mini.surround, etc.)
+      { mode = { "n", "x" }, keys = "z" }, -- `z` key
     },
   })
 end)
