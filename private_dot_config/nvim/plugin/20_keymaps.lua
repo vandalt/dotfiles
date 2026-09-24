@@ -14,6 +14,32 @@ end
 nmap("[p", '<Cmd>exe "iput! " . v:register<CR>', "Paste Above")
 nmap("]p", '<Cmd>exe "iput "  . v:register<CR>', "Paste Below")
 
+-- Move mappings (many are set by mini.bracketed)
+vim.keymap.set(
+  { "n", "x", "o" },
+  "]j",
+  function()
+    require("nvim-treesitter-textobjects.move").goto_next_start({ "@cell.inner", "@cell.comment" }, "textobjects")
+  end
+)
+vim.keymap.set(
+  { "n", "x", "o" },
+  "]J",
+  function() require("nvim-treesitter-textobjects.move").goto_next_end("@cell.outer", "textobjects") end
+)
+vim.keymap.set(
+  { "n", "x", "o" },
+  "[j",
+  function()
+    require("nvim-treesitter-textobjects.move").goto_previous_start({ "@cell.inner", "@cell.comment" }, "textobjects")
+  end
+)
+vim.keymap.set(
+  { "n", "x", "o" },
+  "[J",
+  function() require("nvim-treesitter-textobjects.move").goto_previous_end("@cell.outer", "textobjects") end
+)
+
 -- Escape twice to exit terminal
 vim.keymap.set("t", "<Esc><Esc>", [[<C-\><C-n>]], { desc = "Escape terminal" })
 
@@ -43,8 +69,20 @@ Config.leader_group_clues = {
 }
 
 -- Helpers to create `<Leader>` mappings
-local nmap_leader = function(suffix, rhs, desc) vim.keymap.set("n", "<Leader>" .. suffix, rhs, { desc = desc }) end
+local nmap_leader = function(suffix, rhs, desc, opts)
+  vim.keymap.set("n", "<Leader>" .. suffix, rhs, vim.tbl_extend("error", { desc = desc }, opts or {}))
+end
 local xmap_leader = function(suffix, rhs, desc) vim.keymap.set("x", "<Leader>" .. suffix, rhs, { desc = desc }) end
+local nxmap_leader = function(suffix, rhs, desc)
+  vim.keymap.set({ "n", "x" }, "<Leader>" .. suffix, rhs, { desc = desc })
+end
+
+-- a is for "AI"
+nmap_leader("aa", function() require("sidekick.cli").toggle({ name = "copilot" }) end, "Toggle copilot")
+nxmap_leader("ap", function()
+  require("sidekick.cli").show({ name = "copilot", focus = false })
+  require("sidekick.cli").prompt()
+end, "Sidekick prompt")
 
 -- b is for "Buffer"
 local new_scratch_buffer = function() vim.api.nvim_win_set_buf(0, vim.api.nvim_create_buf(true, true)) end
@@ -111,8 +149,9 @@ nmap_leader("fr", "<Cmd>Pick resume<CR>", "Resume")
 nmap_leader("fR", '<Cmd>Pick lsp scope="references"<CR>', "References (LSP)")
 nmap_leader("fs", pick_workspace_symbols_live, "Symbols workspace (live)")
 nmap_leader("fS", '<Cmd>Pick lsp scope="document_symbol"<CR>', "Symbols document")
-nmap_leader("ft", "<Cmd>Pick hipatterns<CR>", "Hipatterns (all)")
-nmap_leader("fT", '<Cmd>Pick hipatterns scope="current"<CR>', "Hipatterns (buf)")
+nmap_leader("ft", "<Cmd>TermSelect<CR>", "Terminal")
+nmap_leader("fp", "<Cmd>Pick hipatterns<CR>", "Hipatterns (all)")
+nmap_leader("fP", '<Cmd>Pick hipatterns scope="current"<CR>', "Hipatterns (buf)")
 nmap_leader("fv", '<Cmd>Pick visit_paths cwd=""<CR>', "Visit paths (all)")
 nmap_leader("fV", "<Cmd>Pick visit_paths<CR>", "Visit paths (cwd)")
 nmap_leader("fz", pick_chezmoi(vim.fn.stdpath("config")), "Pick nvim config")
@@ -121,6 +160,14 @@ nmap_leader("fZ", pick_chezmoi(), "Pick chezmoi files")
 -- g is for "Git"
 local git_log_cmd = [[Git log --pretty=format:\%h\ \%as\ │\ \%s --topo-order]]
 local git_log_buf_cmd = git_log_cmd .. " --follow -- %"
+local lazygit_toggle = function()
+  if require("toggleterm.terminal").get(9) then
+    vim.cmd("9ToggleTerm")
+  else
+    vim.cmd("9TermExec direction=float cmd='lazygit' name='lazygit'")
+  end
+end
+
 
 nmap_leader("ga", "<Cmd>Git diff --cached<CR>", "Added diff")
 nmap_leader("gA", "<Cmd>Git diff --cached -- %<CR>", "Added diff buffer")
@@ -128,12 +175,39 @@ nmap_leader("gc", "<Cmd>Git commit<CR>", "Commit")
 nmap_leader("gC", "<Cmd>Git commit --amend<CR>", "Commit amend")
 nmap_leader("gd", "<Cmd>Git diff<CR>", "Diff")
 nmap_leader("gD", "<Cmd>Git diff -- %<CR>", "Diff buffer")
+nmap_leader("gg", lazygit_toggle, "Lazygit")
 nmap_leader("gl", "<Cmd>" .. git_log_cmd .. "<CR>", "Log")
 nmap_leader("gL", "<Cmd>" .. git_log_buf_cmd .. "<CR>", "Log buffer")
 nmap_leader("go", "<Cmd>lua MiniDiff.toggle_overlay()<CR>", "Toggle overlay")
 nmap_leader("gs", "<Cmd>lua MiniGit.show_at_cursor()<CR>", "Show at cursor")
 
 xmap_leader("gs", "<Cmd>lua MiniGit.show_at_cursor()<CR>", "Show at selection")
+
+-- j is for "Jupyter" (REPL)
+local trim_spaces = false
+local use_bracketed_paste = true
+Config.tt_opts = { trim_spaces, { args = vim.v.count }, use_bracketed_paste }
+
+nmap_leader(
+  "jl",
+  ---@diagnostic disable-next-line:param-type-mismatch
+  function() require("toggleterm").send_lines_to_terminal("single_line", unpack(Config.tt_opts)) end,
+  "Send current line to terminal"
+)
+xmap_leader(
+  "js",
+  ---@diagnostic disable-next-line:param-type-mismatch
+  function() require("toggleterm").send_lines_to_terminal("visual_selection", unpack(Config.tt_opts)) end,
+  "Send current line to terminal"
+)
+nmap_leader(
+  "js",
+  Config.toggleterm_send_motion(Config.tt_opts[1], Config.tt_opts[2], Config.tt_opts[3]),
+  "Send motion to terminal",
+  { expr = true }
+)
+nmap_leader("jh", "m`<leader>jsij``", "Run cell", { remap = true })
+nmap_leader("jj", "<leader>jsij]j", "Run cell and move", { remap = true })
 
 -- l is for "Language"
 -- NOTE: most LSP mappings represent a more structured way of replacing built-in
@@ -171,8 +245,22 @@ nmap_leader("sR", "<Cmd>lua MiniSessions.restart()<CR>", "Restart")
 nmap_leader("sw", "<Cmd>lua MiniSessions.write()<CR>", "Write current")
 
 -- t is for "Terminal"
-nmap_leader("tT", "<Cmd>horizontal term<CR>", "Terminal (horizontal)")
-nmap_leader("tt", "<Cmd>vertical term<CR>", "Terminal (vertical)")
+nmap_leader("tt", '<Cmd>execute v:count1 . "ToggleTerm"<CR>', "Terminal")
+nmap_leader("tT", function() vim.cmd("ToggleTerm dir=" .. vim.fn.expand("%:p:h")) end, "Terminal (cwd)")
+nmap_leader("tp", "<Cmd>TermExec cmd='python %'<CR>", "Run Python script")
+nmap_leader("tr", "<Cmd>TermExec cmd='ipython'<CR>", "IPython REPL")
+nmap_leader("ti", "<Cmd>TermExec cmd='\\%run %'<CR>", "Run IPython script")
+-- nmap_leader("ti", function() require("util.snacks_repl").send_text("%run " .. vim.fn.expand("%"), { bracketed = true }) end, desc = "Run Python script in IPython",)
+-- TODO: Also check snacks and REPL configs
+vim.keymap.set("n", [[<C-/>]], '<Cmd>execute v:count1 . "ToggleTerm"<CR>', { desc = "Toggle Terminal", silent = true })
+vim.keymap.set("i", [[<C-/>]], "<Esc><Cmd>ToggleTerm<CR>", { desc = "Toggle Terminal", silent = true })
+vim.keymap.set("t", [[<C-/>]], "<Cmd>ToggleTerm<CR>", { desc = "Toggle Terminal", silent = true })
+vim.keymap.set(
+  "n",
+  [[<C-S-/>]],
+  function() vim.cmd("ToggleTerm dir=" .. vim.fn.expand("%:p:h")) end,
+  { desc = "Toggle Terminal in current file dir", silent = true }
+)
 
 -- v is for "Visits"
 ---@diagnostic disable: undefined-global
@@ -208,11 +296,7 @@ end
 nmap_leader("zo", function() require("zk").edit() end, "Open zk note")
 nmap_leader("zl", "<Cmd>ZkLinks<CR>", "Open zk links")
 nmap_leader("zb", "<Cmd>ZkBacklinks<CR>", "Open zk backlinks")
-nmap_leader(
-  "zw",
-  function() require("zk").new({ dir = "weekly", date = get_date_zw() }) end,
-  "Weekly note (zk)"
-)
+nmap_leader("zw", function() require("zk").new({ dir = "weekly", date = get_date_zw() }) end, "Weekly note (zk)")
 nmap_leader("zd", function() require("zk").new({ dir = "daily" }) end, "Daily note (zk)")
 nmap_leader(
   "zn",

@@ -134,6 +134,7 @@ later(function()
     custom_textobjects = {
       B = MiniExtra.gen_ai_spec.buffer(),
       F = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
+      j = Config.combined_cell_spec,
     },
     search_method = "cover",
   })
@@ -143,7 +144,11 @@ end)
 later(function() require("mini.align").setup() end)
 
 -- Go forward/backward with square brackets
-later(function() require("mini.bracketed").setup() end)
+later(function()
+  require("mini.bracketed").setup({
+    jump = { suffix = "" }
+  })
+end)
 
 -- Remove buffers. Opened files occupy space in tabline and buffer picker.
 later(function() require("mini.bufremove").setup() end)

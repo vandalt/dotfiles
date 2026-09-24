@@ -56,6 +56,17 @@ now_if_args(function()
     require("nvim-treesitter").install(to_install)
   end
 
+  require("nvim-treesitter-textobjects").setup({
+    move = {
+      keys = {
+        goto_next_start = { ["]j"] = { "@cell.inner", "@cell.comment" } },
+        goto_next_end = { ["]J"] = "@cell.outer" },
+        goto_previous_start = { ["[j"] = { "@cell.inner", "@cell.comment" } },
+        goto_previous_end = { ["[J"] = "@cell.outer" },
+      },
+    },
+  })
+
   -- Enable tree-sitter after opening a file for a target language
   local filetypes = {}
   for _, lang in ipairs(languages) do
@@ -154,4 +165,28 @@ now_if_args(function()
     output_extension = "md",
     force_ft = "markdown",
   })
+end)
+
+later(function()
+  vim.cmd.packadd("toggleterm.nvim")
+  require("toggleterm").setup({
+    size = function() return 0.30 * vim.o.lines end,
+    persist_size = false,
+    open_mapping = nil,
+    responsiveness = { horizontal_breakpoint = 200 },
+    shade_terminals = false,
+    persist_mode = false,
+  })
+end)
+
+later(function()
+  vim.cmd.packadd("NotebookNavigator.nvim")
+  require("notebook-navigator").setup({})
+end)
+
+
+-- Sidekick
+later(function()
+ add({"https://github.com/folke/sidekick.nvim"})
+ require("sidekick").setup({})
 end)
