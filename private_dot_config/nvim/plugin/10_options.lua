@@ -1,4 +1,6 @@
 -- TODO: decide if re-ignore stylua for all below until end
+-- To align at equal do: gA<textobject>=<CR>, then gA<textobject>s%-%-<CR>
+-- where textobject can be ignored if you do a visual selection beforehand
 
 -- General ====================================================================
 vim.g.mapleader = " " -- Use `<Space>` as <Leader> key
@@ -21,6 +23,7 @@ vim.o.number = true -- Show line numbers
 vim.o.pumborder = "single" -- Use border in popup menu
 vim.o.pumheight = 10 -- Make popup menu smaller
 vim.o.pummaxwidth = 100 -- Make popup menu not too wide
+vim.o.relativenumber = true -- Use relative line numbers
 vim.o.ruler = false -- Don't show cursor coordinates
 vim.o.shortmess = "CFOSWaco" -- Disable some built-in completion messages
 vim.o.showmode = false -- Don't show mode in command line
@@ -76,18 +79,14 @@ vim.o.completetimeout = 100 -- Limit sources delay
 local f = function() vim.cmd("setlocal formatoptions-=c formatoptions-=o") end
 Config.new_autocmd("FileType", nil, f, "Proper 'formatoptions'")
 
--- There are other autocommands created by 'mini.basics'. See 'plugin/30_mini.lua'.
-
 -- Diagnostics ================================================================
 
--- Neovim has built-in support for showing diagnostic messages. This configures
--- a more conservative display while still being useful.
--- See `:h vim.diagnostic` and `:h vim.diagnostic.config()`.
+-- More minimal diagnostic display options
 local diagnostic_opts = {
   -- Show signs on top of any other sign, but only for warnings and errors
   signs = { priority = 9999, severity = { min = "WARN", max = "ERROR" } },
 
-  -- Show all diagnostics as underline (for their messages type `<Leader>ld`)
+  -- Show all diagnostics as underline
   underline = { severity = { min = "HINT", max = "ERROR" } },
 
   -- Show more details immediately for errors on the current line

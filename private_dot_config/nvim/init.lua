@@ -30,6 +30,7 @@ end
 
 -- Load mini.nvim now to have mini.misc available for helpers below
 -- See plugin/30_mini.lua for more
+-- TODO: Fix "undefined-global" errors for Mini* lua variables
 vim.pack.add({ "https://github.com/nvim-mini/mini.nvim" })
 
 -- Loading helpers used to organize config into fail-safe parts. Example usage:

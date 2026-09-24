@@ -1,20 +1,3 @@
--- ┌─────────────────────────┐
--- │ Filetype config example │
--- └─────────────────────────┘
---
--- This is an example of a configuration that will apply only to a particular
--- filetype, which is the same as file's basename ('markdown' in this example;
--- which is for '*.md' files).
---
--- It can contain any code which will be usually executed when the file is opened
--- (strictly speaking, on every 'filetype' option value change to target value).
--- Usually it needs to define buffer/window local options and variables.
--- So instead of `vim.o` to set options, use `vim.bo` for buffer-local options and
--- `vim.cmd('setlocal ...')` for window-local options (currently more robust).
---
--- This is also a good place to set buffer-local 'mini.nvim' variables.
--- See `:h mini.nvim-buffer-local-config` and `:h mini.nvim-disabling-recipes`.
-
 -- Enable spelling and wrap for window
 vim.cmd("setlocal spell wrap")
 
@@ -40,3 +23,19 @@ vim.b.minisurround_config = {
     },
   },
 }
+
+-- mkdnflow mappings
+local mkdn_map = function(modes, lhs, rhs, desc) vim.keymap.set(modes, lhs, rhs, { buffer = 0, desc = desc }) end
+
+mkdn_map("i", "<CR>", "<cmd>MkdnNewListItem<cr>", "new markdown list item")
+mkdn_map("n", "o", "<Cmd>MkdnNewListItemBelowInsert<CR>", "New markdown list item below")
+mkdn_map("n", "O", "<Cmd>MkdnNewListItemAboveInsert<CR>", "New markdown list item above")
+mkdn_map({ "n", "v" }, "<C-Space>", "<Cmd>MkdnToggleToDo<CR>", "Toggle markdown todo")
+mkdn_map({ "n", "v" }, "+", "<Cmd>MkdnIncreaseHeading<CR>", "Increase heading level")
+mkdn_map({ "n", "v" }, "+", "<Cmd>MkdnDecreaseHeading<CR>", "Decrease heading level")
+mkdn_map("n", "]l", "<Cmd>MkdnNextLink<CR>", "Next link")
+mkdn_map("n", "[l", "<Cmd>MkdnPrevLink<CR>", "Prev link")
+mkdn_map("n", "]]", "<Cmd>MkdnNextHeading<CR>", "Next heading")
+mkdn_map("n", "[[", "<Cmd>MkdnPrevHeading<CR>", "Prev heading")
+mkdn_map("n", "][", "<Cmd>MkdnNextHeadingSame<CR>", "Next heading same")
+mkdn_map("n", "[]", "<Cmd>MkdnPrevHeadingSame<CR>", "Prev heading same")
