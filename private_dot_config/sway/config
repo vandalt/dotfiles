@@ -283,6 +283,8 @@ assign [app_id="spotify"] workspace 10
 for_window [class="Slack" title="Slack | *"] focus
 for_window [app_id="org.pulseaudio.pavucontrol"] floating enable
 for_window [app_id="blueman-manager"] floating enable
+for_window [class="Ds9.tcl"] floating enable
+for_window [class="TkMotifFDialog"] floating enable
 for_window [app_id="org.gnome.clocks"] floating enable
 # for_window [app_id="firefox" title="Extension.*"] floating enable
 for_window [app_id="firefox" title="Extension.*"] floating enable
