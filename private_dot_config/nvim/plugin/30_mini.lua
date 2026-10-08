@@ -42,7 +42,7 @@ now(function()
 end)
 
 -- Notifications provider.
-now(function() require("mini.notify").setup() end)
+now(function() require("mini.notify").setup({ lsp_progress = { enable = true } }) end)
 
 -- Session management. A thin wrapper around `:h mksession`
 -- manages session files.

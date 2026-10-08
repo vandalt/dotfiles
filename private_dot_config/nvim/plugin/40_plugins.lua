@@ -72,11 +72,21 @@ end)
 -- Language servers ===========================================================
 now_if_args(function()
   add({ "https://github.com/neovim/nvim-lspconfig" })
+  add({ "https://github.com/folke/lazydev.nvim" })
 
   vim.lsp.enable({
     "lua_ls",
     "basedpyright",
     "ruff",
+  })
+
+  require("lazydev").setup({
+    opts = {
+      library = {
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+        { path = "nvim-lspconfig", words = { "lspconfig.settings" } },
+      },
+    },
   })
 end)
 
