@@ -56,16 +56,7 @@ now_if_args(function()
     require("nvim-treesitter").install(to_install)
   end
 
-  require("nvim-treesitter-textobjects").setup({
-    move = {
-      keys = {
-        goto_next_start = { ["]j"] = { "@cell.inner", "@cell.comment" } },
-        goto_next_end = { ["]J"] = "@cell.outer" },
-        goto_previous_start = { ["[j"] = { "@cell.inner", "@cell.comment" } },
-        goto_previous_end = { ["[J"] = "@cell.outer" },
-      },
-    },
-  })
+  require("nvim-treesitter-textobjects").setup({})
 
   -- Enable tree-sitter after opening a file for a target language
   local filetypes = {}
@@ -100,8 +91,21 @@ later(function()
     },
     -- Map of filetype to formatters
     -- Make sure that necessary CLI tool is available
-    formatters_by_ft = { lua = { "stylua" } },
+    formatters_by_ft = {
+      lua = { "stylua" },
+      snakemake = { "snakefmt" },
+    },
   })
+end)
+
+-- Linting ====================================================================
+later(function()
+  add({ "https://github.com/mfussenegger/nvim-lint" })
+  require("lint").linters_by_ft = {
+    snakemake = { "snakemake" },
+  }
+
+  Config.new_autocmd("BufWritePost", nil, function() require("lint").try_lint() end, "Lint")
 end)
 
 -- Snippets ===================================================================
@@ -177,6 +181,13 @@ later(function()
     shade_terminals = false,
     persist_mode = false,
   })
+  local Terminal = require("toggleterm.terminal").Terminal
+  Config.lazygit = Terminal:new({
+    cmd = "lazygit",
+    hidden = true,
+    name = "lazygit",
+    direction = "float",
+  })
 end)
 
 later(function()
@@ -184,9 +195,62 @@ later(function()
   require("notebook-navigator").setup({})
 end)
 
-
--- Sidekick
 later(function()
- add({"https://github.com/folke/sidekick.nvim"})
- require("sidekick").setup({})
+  add({ "https://github.com/jmbuhr/otter.nvim" })
+  require("otter").setup({})
+
+  add({ "https://github.com/quarto-dev/quarto-nvim" })
+  require("quarto").setup({
+    lspFeatures = { enabled = true, chunks = "all" },
+    codeRunner = {
+      enabled = true,
+      default_method = function(cell, _)
+        local text_lines = require("quarto.tools").concat(cell.text)
+        local use_bracketed_paste = true
+        require("toggleterm").exec(text_lines, nil, nil, nil, nil, nil, nil, nil, use_bracketed_paste)
+      end,
+    },
+  })
+end)
+
+-- Sidekick ===================================================================
+later(function()
+  add({ "https://github.com/folke/sidekick.nvim" })
+  require("sidekick").setup({})
+end)
+
+-- Snakemake ==================================================================
+now_if_args(function()
+  local name = "snakemake"
+  add({ { src = "https://github.com/snakemake/snakemake", name = name } })
+  local plugin = vim.pack.get({ name }, { info = false })[1]
+  vim.opt.rtp:append(vim.fs.joinpath(plugin.path, "misc", "vim"))
+end)
+
+-- Testing =======================================================================
+later(function()
+  add({ "https://github.com/nvim-neotest/nvim-nio" })
+  add({ "https://github.com/antoinemadec/FixCursorHold.nvim" })
+  add({ "https://github.com/nvim-neotest/neotest" })
+  add({ "https://github.com/nvim-neotest/neotest-python" })
+
+  require("neotest").setup({
+    adapters = {
+      require("neotest-python")({
+        dap = { justMyCode = false },
+      }),
+    },
+  })
+end)
+
+-- Debugging ==================================================================
+later(function()
+  add({ "https://codeberg.org/mfussenegger/nvim-dap.git" })
+  add({ "https://github.com/nvim-neotest/nvim-nio" })
+  add({ "https://github.com/rcarriga/nvim-dap-ui" })
+
+  add({ "https://codeberg.org/mfussenegger/nvim-dap-python" })
+
+  require("dapui").setup()
+  require("dap-python").setup("debugpy-adapter")
 end)

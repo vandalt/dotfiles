@@ -15,30 +15,29 @@ nmap("[p", '<Cmd>exe "iput! " . v:register<CR>', "Paste Above")
 nmap("]p", '<Cmd>exe "iput "  . v:register<CR>', "Paste Below")
 
 -- Move mappings (many are set by mini.bracketed)
-vim.keymap.set(
-  { "n", "x", "o" },
-  "]j",
-  function()
-    require("nvim-treesitter-textobjects.move").goto_next_start({ "@cell.inner", "@cell.comment" }, "textobjects")
-  end
-)
-vim.keymap.set(
-  { "n", "x", "o" },
-  "]J",
-  function() require("nvim-treesitter-textobjects.move").goto_next_end("@cell.outer", "textobjects") end
-)
-vim.keymap.set(
-  { "n", "x", "o" },
-  "[j",
-  function()
-    require("nvim-treesitter-textobjects.move").goto_previous_start({ "@cell.inner", "@cell.comment" }, "textobjects")
-  end
-)
-vim.keymap.set(
-  { "n", "x", "o" },
-  "[J",
-  function() require("nvim-treesitter-textobjects.move").goto_previous_end("@cell.outer", "textobjects") end
-)
+local tsmap = function(lhs, move, textobjs)
+  local textobjs_str = type(textobjs) == "table" and table.concat(textobjs, ", ") or textobjs
+  local desc = "Inner " .. textobjs_str .. " start"
+  vim.keymap.set(
+    { "n", "x", "o" },
+    lhs,
+    function() require("nvim-treesitter-textobjects.move")[move](textobjs, "textobjects") end,
+    { desc = desc }
+  )
+end
+
+tsmap("]j", "goto_next_start", { "@cell.inner", "@cell.comment" })
+tsmap("[j", "goto_previous_start", { "@cell.inner", "@cell.comment" })
+tsmap("]J", "goto_next_end", "@cell.outer")
+tsmap("[J", "goto_previous_end", "@cell.outer")
+tsmap("]f", "goto_next_start", "@function.outer")
+tsmap("[f", "goto_previous_start", "@function.outer")
+tsmap("]F", "goto_next_end", "@function.outer")
+tsmap("[F", "goto_previous_end", "@function.outer")
+tsmap("]c", "goto_next_start", "@class.outer")
+tsmap("[c", "goto_previous_start", "@class.outer")
+tsmap("]C", "goto_next_end", "@class.outer")
+tsmap("[C", "goto_previous_end", "@class.outer")
 
 -- Escape twice to exit terminal
 vim.keymap.set("t", "<Esc><Esc>", [[<C-\><C-n>]], { desc = "Escape terminal" })
@@ -51,15 +50,18 @@ vim.keymap.set("t", "<Esc><Esc>", [[<C-\><C-n>]], { desc = "Escape terminal" })
 -- This is used to provide 'mini.clue' with extra clues.
 -- Add an entry if you create a new group.
 Config.leader_group_clues = {
+  { mode = "n", keys = "<Leader>a", desc = "+AI" },
   { mode = "n", keys = "<Leader>b", desc = "+Buffer" },
   { mode = "n", keys = "<Leader>e", desc = "+Explore/Edit" },
   { mode = "n", keys = "<Leader>f", desc = "+Find" },
   { mode = "n", keys = "<Leader>g", desc = "+Git" },
+  { mode = "n", keys = "<Leader>j", desc = "+Jupyter/REPL" },
   { mode = "n", keys = "<Leader>l", desc = "+Language" },
   { mode = "n", keys = "<Leader>m", desc = "+Map" },
   { mode = "n", keys = "<Leader>o", desc = "+Other" },
+  { mode = "n", keys = "<Leader>r", desc = "+REPL/Terminal" },
   { mode = "n", keys = "<Leader>s", desc = "+Session" },
-  { mode = "n", keys = "<Leader>t", desc = "+Terminal" },
+  { mode = "n", keys = "<Leader>t", desc = "+Tests" },
   { mode = "n", keys = "<Leader>v", desc = "+Visits" },
   { mode = "n", keys = "<Leader>z", desc = "+Zettel" },
 
@@ -92,6 +94,31 @@ nmap_leader("bD", "<Cmd>lua MiniBufremove.delete(0, true)<CR>", "Delete!")
 nmap_leader("bs", new_scratch_buffer, "Scratch")
 nmap_leader("bw", "<Cmd>lua MiniBufremove.wipeout()<CR>", "Wipeout")
 nmap_leader("bW", "<Cmd>lua MiniBufremove.wipeout(0, true)<CR>", "Wipeout!")
+
+-- d is for "Debug"
+nmap_leader("da", function() require("dap").continue({ before = Config.get_args }) end, "Run with Args")
+nmap_leader("db", function() require("dap").toggle_breakpoint() end, "Toggle Breakpoint")
+nmap_leader(
+  "dB",
+  function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end,
+  "Breakpoint Condition"
+)
+nmap_leader("dc", function() require("dap").continue() end, "Run/Continue")
+nmap_leader("dC", function() require("dap").run_to_cursor() end, "Run to Cursor")
+nmap_leader("dg", function() require("dap").goto_() end, "Go to Line (No Execute)")
+nmap_leader("di", function() require("dap").step_into() end, "Step Into")
+nmap_leader("dj", function() require("dap").down() end, "Down")
+nmap_leader("dk", function() require("dap").up() end, "Up")
+nmap_leader("dl", function() require("dap").run_last() end, "Run Last")
+nmap_leader("do", function() require("dap").step_over() end, "Step Over")
+nmap_leader("dO", function() require("dap").step_out() end, "Step Out")
+nmap_leader("dP", function() require("dap").pause() end, "Pause")
+nmap_leader("dr", function() require("dap").repl.toggle() end, "Toggle REPL")
+nmap_leader("ds", function() require("dap").session() end, "Session")
+nmap_leader("dt", function() require("dap").terminate() end, "Terminate")
+nmap_leader("du", function() require("dapui").toggle({}) end, "Dap UI")
+nmap_leader("dw", function() require("dap.ui.widgets").hover() end, "Widgets")
+nxmap_leader("de", function() require("dapui").eval() end, "Eval")
 
 -- e is for "Explore" and "Edit"
 -- - All mappings that use `edit_plugin_file` - edit 'plugin/' config files
@@ -160,14 +187,13 @@ nmap_leader("fZ", pick_chezmoi(), "Pick chezmoi files")
 -- g is for "Git"
 local git_log_cmd = [[Git log --pretty=format:\%h\ \%as\ │\ \%s --topo-order]]
 local git_log_buf_cmd = git_log_cmd .. " --follow -- %"
-local lazygit_toggle = function()
-  if require("toggleterm.terminal").get(9) then
-    vim.cmd("9ToggleTerm")
-  else
-    vim.cmd("9TermExec direction=float cmd='lazygit' name='lazygit'")
-  end
-end
-
+-- local lazygit_toggle = function()
+--   if require("toggleterm.terminal").get(9) then
+--     vim.cmd("9ToggleTerm")
+--   else
+--     vim.cmd("9TermExec direction=float cmd='lazygit' name='lazygit' close_on_exit=true")
+--   end
+-- end
 
 nmap_leader("ga", "<Cmd>Git diff --cached<CR>", "Added diff")
 nmap_leader("gA", "<Cmd>Git diff --cached -- %<CR>", "Added diff buffer")
@@ -175,7 +201,7 @@ nmap_leader("gc", "<Cmd>Git commit<CR>", "Commit")
 nmap_leader("gC", "<Cmd>Git commit --amend<CR>", "Commit amend")
 nmap_leader("gd", "<Cmd>Git diff<CR>", "Diff")
 nmap_leader("gD", "<Cmd>Git diff -- %<CR>", "Diff buffer")
-nmap_leader("gg", lazygit_toggle, "Lazygit")
+nmap_leader("gg", function() Config.lazygit:toggle() end, "Lazygit")
 nmap_leader("gl", "<Cmd>" .. git_log_cmd .. "<CR>", "Log")
 nmap_leader("gL", "<Cmd>" .. git_log_buf_cmd .. "<CR>", "Log buffer")
 nmap_leader("go", "<Cmd>lua MiniDiff.toggle_overlay()<CR>", "Toggle overlay")
@@ -208,6 +234,14 @@ nmap_leader(
 )
 nmap_leader("jh", "m`<leader>jsij``", "Run cell", { remap = true })
 nmap_leader("jj", "<leader>jsij]j", "Run cell and move", { remap = true })
+nmap_leader("jo", function() require("otter").activate() end, "Activate otter")
+nmap_leader("ja", function() require("quarto.runner").run_above() end, "Run cell and above")
+nmap_leader("jA", function() require("quarto.runner").run_all() end, "Run all cells")
+nmap_leader("jb", function() require("quarto.runner").run_below() end, "Run cell and below")
+
+-- Jupyter snippets
+nmap_leader("jn", "icodeblock<C-j>python<C-l>", "New cell", { remap = true })
+vim.keymap.set("i", "<C-CR>", "codeblock<C-j>python<C-l>", { desc = "New cell", remap = true })
 
 -- l is for "Language"
 -- NOTE: most LSP mappings represent a more structured way of replacing built-in
@@ -220,6 +254,7 @@ nmap_leader("ll", "<Cmd>lua vim.lsp.codelens.run()<CR>", "Lens")
 nmap_leader("lr", "<Cmd>lua vim.lsp.buf.rename()<CR>", "Rename")
 nmap_leader("lR", "<Cmd>lua vim.lsp.buf.references()<CR>", "References")
 nmap_leader("ls", "<Cmd>lua vim.lsp.buf.definition()<CR>", "Source definition")
+nmap("gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", "Go to definition")
 nmap_leader("lt", "<Cmd>lua vim.lsp.buf.type_definition()<CR>", "Type definition")
 
 xmap_leader("lf", '<Cmd>lua require("conform").format()<CR>', "Format selection")
@@ -231,9 +266,134 @@ nmap_leader("ms", "<Cmd>lua MiniMap.toggle_side()<CR>", "Side (toggle)")
 nmap_leader("mt", "<Cmd>lua MiniMap.toggle()<CR>", "Toggle")
 
 -- o is for "Other"
+local zen_text_width = 80
+local zen = { backdrop_win = nil, content_win = nil, augroup = nil }
+local zen_has_border = function() return vim.o.winborder ~= "" and vim.o.winborder ~= "none" end
+local zen_backdrop_config = function()
+  return {
+    col = 0,
+    height = math.max(1, vim.o.lines - vim.o.cmdheight),
+    relative = "editor",
+    row = 0,
+    style = "minimal",
+    width = vim.o.columns,
+    zindex = 50,
+  }
+end
+local zen_content_config = function()
+  local border_width = zen_has_border() and 2 or 0
+  local max_width = math.max(1, vim.o.columns - border_width)
+  local width = math.min(zen_text_width + MiniMisc.get_gutter_width(zen.content_win), max_width)
+  local config = {
+    border = zen_has_border() and vim.o.winborder or "none",
+    col = math.max(0, math.floor((vim.o.columns - width - border_width) / 2)),
+    height = math.max(1, vim.o.lines - vim.o.cmdheight - border_width),
+    relative = "editor",
+    row = 0,
+    width = width,
+    zindex = 51,
+  }
+  if zen_has_border() then
+    config.title = " Zen "
+  end
+  return config
+end
+local is_zen_active = function()
+  return zen.backdrop_win
+    and zen.content_win
+    and vim.api.nvim_win_is_valid(zen.backdrop_win)
+    and vim.api.nvim_win_is_valid(zen.content_win)
+end
+local close_zen
+local update_zen
+
+close_zen = function()
+  if zen.augroup then
+    vim.api.nvim_del_augroup_by_id(zen.augroup)
+  end
+
+  local wins = { zen.content_win, zen.backdrop_win }
+  zen = { backdrop_win = nil, content_win = nil, augroup = nil }
+  for _, win in ipairs(wins) do
+    if win and vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_win_close(win, true)
+    end
+  end
+end
+
+update_zen = function()
+  if not is_zen_active() then
+    close_zen()
+    return
+  end
+
+  vim.api.nvim_win_set_config(zen.backdrop_win, zen_backdrop_config())
+  vim.api.nvim_win_set_config(zen.content_win, zen_content_config())
+end
+local toggle_zoom = function()
+  if is_zen_active() then
+    close_zen()
+    return
+  end
+
+  MiniMisc.zoom()
+end
+local toggle_zen = function()
+  if is_zen_active() then
+    close_zen()
+    return
+  end
+
+  close_zen()
+  if MiniMisc.zoom() then
+    MiniMisc.zoom()
+  end
+
+  local backdrop_buf = vim.api.nvim_create_buf(false, true)
+  vim.bo[backdrop_buf].bufhidden = "wipe"
+  vim.bo[backdrop_buf].swapfile = false
+
+  zen.backdrop_win = vim.api.nvim_open_win(backdrop_buf, false, zen_backdrop_config())
+  vim.wo[zen.backdrop_win].fillchars = "eob: "
+  vim.wo[zen.backdrop_win].winhighlight = "Normal:NormalFloat,EndOfBuffer:NormalFloat"
+  vim.wo[zen.backdrop_win].winblend = 0
+  zen.content_win = vim.api.nvim_open_win(0, true, zen_content_config())
+
+  zen.augroup = vim.api.nvim_create_augroup("custom-zen-mode", { clear = true })
+  vim.api.nvim_create_autocmd("VimResized", { group = zen.augroup, callback = update_zen })
+  vim.api.nvim_create_autocmd("OptionSet", {
+    group = zen.augroup,
+    pattern = { "cmdheight", "winborder" },
+    callback = update_zen,
+  })
+end
+
+nmap_leader("oc", "<Cmd>tabclose<CR>", "Close tab")
 nmap_leader("or", "<Cmd>lua MiniMisc.resize_window()<CR>", "Resize to default width")
 nmap_leader("ot", "<Cmd>lua MiniTrailspace.trim()<CR>", "Trim trailspace")
-nmap_leader("oz", "<Cmd>lua MiniMisc.zoom()<CR>", "Zoom toggle")
+nmap_leader("oz", toggle_zoom, "Zoom toggle")
+nmap_leader("oZ", toggle_zen, "Zen toggle")
+
+-- r is for "REPL" (and terminals)
+nmap_leader("rt", '<Cmd>execute v:count1 . "ToggleTerm"<CR>', "Terminal")
+nmap_leader("rT", function() vim.cmd("ToggleTerm dir=" .. vim.fn.expand("%:p:h")) end, "Terminal (cwd)")
+nmap_leader("rp", "<Cmd>TermExec cmd='python %'<CR>", "Run Python script")
+nmap_leader("rr", "<Cmd>TermExec cmd='ipython'<CR>", "IPython REPL")
+nmap_leader(
+  "rR",
+  function() return vim.cmd("TermExec cmd='ipython' dir=" .. vim.fn.expand("%:p:h")) end,
+  "IPython REPL (cwd)"
+)
+nmap_leader("ri", "<Cmd>TermExec cmd='\\%run %'<CR>", "Run IPython script")
+vim.keymap.set("n", [[<C-/>]], '<Cmd>execute v:count1 . "ToggleTerm"<CR>', { desc = "Toggle Terminal", silent = true })
+vim.keymap.set("i", [[<C-/>]], "<Esc><Cmd>ToggleTerm<CR>", { desc = "Toggle Terminal", silent = true })
+vim.keymap.set("t", [[<C-/>]], "<Cmd>ToggleTerm<CR>", { desc = "Toggle Terminal", silent = true })
+vim.keymap.set(
+  "n",
+  [[<C-S-/>]],
+  function() vim.cmd("ToggleTerm dir=" .. vim.fn.expand("%:p:h")) end,
+  { desc = "Toggle Terminal in current file dir", silent = true }
+)
 
 -- s is for "Session"
 local session_new = 'vim.ui.input({ prompt = "Session name: " }, MiniSessions.write)'
@@ -244,23 +404,20 @@ nmap_leader("sr", '<Cmd>lua MiniSessions.select("read")<CR>', "Read")
 nmap_leader("sR", "<Cmd>lua MiniSessions.restart()<CR>", "Restart")
 nmap_leader("sw", "<Cmd>lua MiniSessions.write()<CR>", "Write current")
 
--- t is for "Terminal"
-nmap_leader("tt", '<Cmd>execute v:count1 . "ToggleTerm"<CR>', "Terminal")
-nmap_leader("tT", function() vim.cmd("ToggleTerm dir=" .. vim.fn.expand("%:p:h")) end, "Terminal (cwd)")
-nmap_leader("tp", "<Cmd>TermExec cmd='python %'<CR>", "Run Python script")
-nmap_leader("tr", "<Cmd>TermExec cmd='ipython'<CR>", "IPython REPL")
-nmap_leader("ti", "<Cmd>TermExec cmd='\\%run %'<CR>", "Run IPython script")
--- nmap_leader("ti", function() require("util.snacks_repl").send_text("%run " .. vim.fn.expand("%"), { bracketed = true }) end, desc = "Run Python script in IPython",)
--- TODO: Also check snacks and REPL configs
-vim.keymap.set("n", [[<C-/>]], '<Cmd>execute v:count1 . "ToggleTerm"<CR>', { desc = "Toggle Terminal", silent = true })
-vim.keymap.set("i", [[<C-/>]], "<Esc><Cmd>ToggleTerm<CR>", { desc = "Toggle Terminal", silent = true })
-vim.keymap.set("t", [[<C-/>]], "<Cmd>ToggleTerm<CR>", { desc = "Toggle Terminal", silent = true })
-vim.keymap.set(
-  "n",
-  [[<C-S-/>]],
-  function() vim.cmd("ToggleTerm dir=" .. vim.fn.expand("%:p:h")) end,
-  { desc = "Toggle Terminal in current file dir", silent = true }
+-- t is for "Tests"
+nmap_leader("td", function() require("neotest").run.run({ strategy = "dap" }) end, "Debug Nearest")
+nmap_leader("tl", function() require("neotest").run.run_last() end, "Run Last (Neotest)")
+nmap_leader(
+  "to",
+  function() require("neotest").output.open({ enter = true, auto_close = true }) end,
+  "Show Output (Neotest)"
 )
+nmap_leader("tO", function() require("neotest").output_panel.toggle() end, "Toggle Output Panel (Neotest)")
+nmap_leader("tr", function() require("neotest").run.run() end, "Run Nearest (Neotest)")
+nmap_leader("ts", function() require("neotest").summary.toggle() end, "Toggle Summary (Neotest)")
+nmap_leader("tS", function() require("neotest").run.stop() end, "Stop (Neotest)")
+nmap_leader("tt", function() require("neotest").run.run(vim.fn.expand("%")) end, "Run File (Neotest)")
+nmap_leader("tT", function() require("neotest").run.run(vim.uv.cwd()) end, "Run All Test Files (Neotest)")
 
 -- v is for "Visits"
 ---@diagnostic disable: undefined-global

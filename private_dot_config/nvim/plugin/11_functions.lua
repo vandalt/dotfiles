@@ -39,19 +39,20 @@ Config.combined_cell_spec = function(ai_type, id, opts)
   end
 end
 
-Config.open_lazygit = function()
-  vim.cmd('tabedit')
-  vim.cmd('setlocal nonumber signcolumn=no')
+---@param config {type?:string, args?:string[]|fun():string[]?}
+Config.get_args = function(config)
+  local args = type(config.args) == "function" and (config.args() or {}) or config.args or {} --[[@as string[] | string ]]
+  local args_str = type(args) == "table" and table.concat(args, " ") or args --[[@as string]]
 
-  -- Unset vim environment variables to be able to call `vim` without errors
-  -- Use custom `--git-dir` and `--work-tree` to be able to open inside
-  -- symlinked submodules
-  vim.fn.termopen('VIMRUNTIME= VIM= lazygit --git-dir=$(git rev-parse --git-dir) --work-tree=$(realpath .)', {
-    on_exit = function()
-      vim.cmd('silent! :checktime')
-      vim.cmd('silent! :bw')
-    end,
-  })
-  vim.cmd('startinsert')
-  vim.b.minipairs_disable = true
+  config = vim.deepcopy(config)
+  ---@cast args string[]
+  config.args = function()
+    local new_args = vim.fn.expand(vim.fn.input("Run with args: ", args_str)) --[[@as string]]
+    if config.type and config.type == "java" then
+      ---@diagnostic disable-next-line: return-type-mismatch
+      return new_args
+    end
+    return require("dap.utils").splitstr(new_args)
+  end
+  return config
 end

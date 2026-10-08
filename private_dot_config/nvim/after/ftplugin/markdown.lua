@@ -1,6 +1,18 @@
 -- Enable spelling and wrap for window
 vim.cmd("setlocal spell wrap")
 
+local bufname = vim.api.nvim_buf_get_name(0)
+-- Jupytext keeps notebook buffers named as .ipynb files even when ft becomes markdown.
+if bufname:match("%.ipynb$") then
+  vim.opt_local.shiftwidth = 4
+  vim.opt_local.tabstop = 4
+  vim.opt_local.softtabstop = 4
+else
+  vim.opt_local.shiftwidth = 2
+  vim.opt_local.tabstop = 2
+  vim.opt_local.softtabstop = 2
+end
+
 -- Fold with tree-sitter
 vim.cmd("setlocal foldmethod=expr foldexpr=v:lua.vim.treesitter.foldexpr()")
 

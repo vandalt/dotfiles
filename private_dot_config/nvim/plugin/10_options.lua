@@ -58,6 +58,7 @@ vim.o.shiftwidth = 2 -- Use this number of spaces for indentation
 vim.o.smartcase = true -- Respect case if search pattern has upper case
 vim.o.smartindent = true -- Make indenting smart
 vim.o.spelloptions = "camel" -- Treat camelCase word parts as separate words
+vim.o.spelllang = {"en", "fr"}
 vim.o.tabstop = 2 -- Show tab as this number of spaces
 vim.o.virtualedit = "block" -- Allow going past end of line in blockwise mode
 
@@ -77,8 +78,10 @@ vim.o.completetimeout = 100 -- Limit sources delay
 
 -- Don't auto-wrap comments and don't insert comment leader after hitting 'o'.
 -- Do on `FileType` to always override these changes from filetype plugins.
-local f = function() vim.cmd("setlocal formatoptions-=c formatoptions-=o") end
-Config.new_autocmd("FileType", nil, f, "Proper 'formatoptions'")
+local f_format = function() vim.cmd("setlocal formatoptions-=c formatoptions-=o") end
+Config.new_autocmd("FileType", nil, f_format, "Proper 'formatoptions'")
+local f_snakemake = function() vim.cmd("setlocal shiftwidth=4 tabstop=4 softtabstop=4") end
+Config.new_autocmd("FileType", "snakemake", f_snakemake, "Snakemake indent to 4")
 
 -- Diagnostics ================================================================
 

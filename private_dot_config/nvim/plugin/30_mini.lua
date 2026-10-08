@@ -1,5 +1,5 @@
 ---@diagnostic disable: undefined-global
--- TODO: Fix this properly by making mini globals accessible
+-- TODO: Fix above diagnostic properly by making mini globals accessible
 -- To minimize the time until first screen draw, modules are enabled in two steps:
 -- - Step one enables everything that is needed for first draw with `now()`.
 --   Sometimes needed only if Neovim is started as `nvim -- path/to/file`.
@@ -135,8 +135,10 @@ later(function()
       B = MiniExtra.gen_ai_spec.buffer(),
       F = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
       j = Config.combined_cell_spec,
+      h = ai.gen_spec.treesitter({ a = "@section.outer", i = "@section.inner" }),
     },
     search_method = "cover",
+    n_lines = 250,
   })
 end)
 
@@ -144,11 +146,15 @@ end)
 later(function() require("mini.align").setup() end)
 
 -- Go forward/backward with square brackets
-later(function()
-  require("mini.bracketed").setup({
-    jump = { suffix = "" }
-  })
-end)
+later(
+  function()
+    require("mini.bracketed").setup({
+      jump = { suffix = "" },
+      comment = { suffix = "" },
+      file = { suffix = "" },
+    })
+  end
+)
 
 -- Remove buffers. Opened files occupy space in tabline and buffer picker.
 later(function() require("mini.bufremove").setup() end)
@@ -270,9 +276,16 @@ later(function() require("mini.move").setup() end)
 later(function() require("mini.operators").setup() end)
 
 -- Autopairs functionality
-later(function()
-  require("mini.pairs").setup({ modes = { command = false } }) -- leaving command for easy experimentation
-end)
+later(
+  function()
+    require("mini.pairs").setup({
+      modes = { command = false },
+      mappings = {
+        ["`"] = { action = "closeopen", pair = "``", neigh_pattern = "[^\\`].", register = { cr = false } },
+      },
+    })
+  end
+)
 
 -- Pick anything with single window layout and fast matching
 later(function() require("mini.pick").setup() end)
