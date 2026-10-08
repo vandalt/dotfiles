@@ -9,6 +9,13 @@ local nmap = function(lhs, rhs, desc)
   vim.keymap.set("n", lhs, rhs, { desc = desc })
 end
 
+-- Helper to create an insert mode mapping
+local imap = function(lhs, rhs, desc)
+  -- See `:h vim.keymap.set()`
+  vim.keymap.set("i", lhs, rhs, { desc = desc })
+end
+
+
 -- Paste linewise before/after current line
 -- Useful to copy a non-line thing (e.g. word) and put it on its own line
 nmap("[p", '<Cmd>exe "iput! " . v:register<CR>', "Paste Above")
@@ -162,6 +169,8 @@ nmap_leader("fc", "<Cmd>Pick git_commits<CR>", "Commits (all)")
 nmap_leader("fC", '<Cmd>Pick git_commits path="%"<CR>', "Commits (buf)")
 nmap_leader("fd", '<Cmd>Pick diagnostic scope="all"<CR>', "Diagnostic workspace")
 nmap_leader("fD", '<Cmd>Pick diagnostic scope="current"<CR>', "Diagnostic buffer")
+nmap_leader("fe", function() require("mini_pick_emoji").pick() end, "Emoji")
+imap("<C-.>", function() require("mini_pick_emoji").pick() end, "Emoji")
 nmap_leader("ff", "<Cmd>Pick files<CR>", "Files")
 nmap_leader("fg", "<Cmd>Pick grep_live<CR>", "Grep live")
 nmap_leader("fG", '<Cmd>Pick grep pattern="<cword>"<CR>', "Grep current word")
@@ -183,6 +192,7 @@ nmap_leader("fv", '<Cmd>Pick visit_paths cwd=""<CR>', "Visit paths (all)")
 nmap_leader("fV", "<Cmd>Pick visit_paths<CR>", "Visit paths (cwd)")
 nmap_leader("fz", pick_chezmoi(vim.fn.stdpath("config")), "Pick nvim config")
 nmap_leader("fZ", pick_chezmoi(), "Pick chezmoi files")
+vim.keymap.set("i", "<Leader>fe", function() require("mini_pick_emoji").pick() end, { desc = "Emoji" })
 
 -- g is for "Git"
 local git_log_cmd = [[Git log --pretty=format:\%h\ \%as\ │\ \%s --topo-order]]
