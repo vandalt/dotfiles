@@ -81,11 +81,10 @@ now_if_args(function()
   })
 
   require("lazydev").setup({
-    opts = {
-      library = {
-        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-        { path = "nvim-lspconfig", words = { "lspconfig.settings" } },
-      },
+    library = {
+      { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      { path = "nvim-lspconfig", words = { "lspconfig.settings" } },
+      { path = "mini.nvim", words = { "%f[%w]Mini[%u]" }},
     },
   })
 end)
