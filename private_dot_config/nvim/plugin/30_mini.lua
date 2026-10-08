@@ -288,7 +288,14 @@ later(
 )
 
 -- Pick anything with single window layout and fast matching
-later(function() require("mini.pick").setup() end)
+later(function()
+  require("mini.pick").setup()
+
+  -- Register our custom emoji picker
+  MiniPick.registry.emoji = function()
+    require("mini_pick_emoji").pick()
+  end
+end)
 
 -- Manage and expand snippets
 later(function()

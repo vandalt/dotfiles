@@ -1,10 +1,12 @@
 local M = {}
 
+-- The emoji data is downloaded online and cached following snacks.nvim
 local emoji_url = "https://raw.githubusercontent.com/muan/unicode-emoji-json/refs/heads/main/data-by-emoji.json"
 local cache_file = vim.fn.stdpath("cache") .. "/mini-pick/emoji-v1.json"
 
 local notify = function(message, level) vim.notify(message, level, { title = "Emoji picker" }) end
 
+--- Normalize emoji data to flat tables
 local normalize = function(data)
   local items = {}
   for emoji, info in pairs(data) do
@@ -22,6 +24,7 @@ local normalize = function(data)
   return items
 end
 
+--- Decode items stored in the JSON cache
 local decode_items = function(encoded)
   local ok, decoded = pcall(vim.json.decode, encoded)
   if not ok or not vim.islist(decoded) then
@@ -42,6 +45,7 @@ local decode_items = function(encoded)
   return decoded
 end
 
+--- Read emoji cache
 local read_cache = function()
   if vim.fn.filereadable(cache_file) == 0 then
     return nil
@@ -57,6 +61,7 @@ local read_cache = function()
   return nil
 end
 
+--- Write emoji cache
 local write_cache = function(items)
   vim.fn.mkdir(vim.fn.fnamemodify(cache_file, ":h"), "p")
   local ok, result = pcall(vim.fn.writefile, { vim.json.encode(items) }, cache_file)
@@ -68,6 +73,8 @@ local write_cache = function(items)
   return false
 end
 
+--- Load and normalize emoji items
+--- If the cache is not available, downloads emojis with curl
 local load_items = function()
   local cached_items = read_cache()
   if cached_items then
@@ -103,6 +110,7 @@ local load_items = function()
   return items
 end
 
+-- Insert the emoji at cursor location
 local insert_emoji = function(item, mode)
   local target = MiniPick.get_picker_state().windows.target
   if not vim.api.nvim_win_is_valid(target) then
@@ -126,6 +134,7 @@ local insert_emoji = function(item, mode)
   vim.api.nvim_win_set_cursor(target, { row, cursor_col })
 end
 
+--- The emoji picker
 M.pick = function()
   local mode = vim.api.nvim_get_mode().mode
   local items = load_items()
