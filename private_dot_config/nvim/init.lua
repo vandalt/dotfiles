@@ -1,8 +1,9 @@
 -- Define config table to be able to pass data between scripts
 _G.Config = {}
 
+-- TODO: Make docstrings throughout config with neogen
+
 local gr = vim.api.nvim_create_augroup("custom-config", {})
--- TODO: Make docstring with neogen
 Config.new_autocmd = function(event, pattern, callback, desc)
   local opts = { group = gr, pattern = pattern, callback = callback, desc = desc }
   vim.api.nvim_create_autocmd(event, opts)

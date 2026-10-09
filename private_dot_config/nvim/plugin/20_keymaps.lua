@@ -1,17 +1,14 @@
 -- General mappings ===========================================================
 
--- Use this section to add custom general mappings. See `:h vim.keymap.set()`.
 -- Many general mappings are created by 'mini.basics', see plugin/30_mini.lua
 
 -- Helper to create a Normal mode mapping
 local nmap = function(lhs, rhs, desc)
-  -- See `:h vim.keymap.set()`
   vim.keymap.set("n", lhs, rhs, { desc = desc })
 end
 
 -- Helper to create an insert mode mapping
 local imap = function(lhs, rhs, desc)
-  -- See `:h vim.keymap.set()`
   vim.keymap.set("i", lhs, rhs, { desc = desc })
 end
 
@@ -283,6 +280,7 @@ nmap_leader("mt", "<Cmd>lua MiniMap.toggle()<CR>", "Toggle")
 nmap_leader("oc", "<Cmd>tabclose<CR>", "Close tab")
 nmap_leader("or", "<Cmd>lua MiniMisc.resize_window()<CR>", "Resize to default width")
 nmap_leader("ot", "<Cmd>lua MiniTrailspace.trim()<CR>", "Trim trailspace")
+nmap_leader("ou", "<Cmd>Undotree<CR>", "Undotree")
 nmap_leader("oz",  "<Cmd>lua MiniMisc.zoom()<CR>", "Zoom toggle")
 nmap_leader("oZ", function() require("mini_zen").zen() end, "Zen toggle")
 

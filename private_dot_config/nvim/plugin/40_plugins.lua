@@ -3,11 +3,12 @@ local add = vim.pack.add
 local now, now_if_args, later = Config.now, Config.now_if_args, Config.later
 
 -- Useful plugins ============================================================
-add({ "https://github.com/nvim-lua/plenary.nvim" })
+now(function() add({ "https://github.com/nvim-lua/plenary.nvim" }) end)
 now_if_args(function()
   add({ "https://github.com/mason-org/mason.nvim" })
   require("mason").setup()
 end)
+later(function() vim.cmd.packadd("nvim.undotree") end)
 
 -- Tree-sitter ================================================================
 now_if_args(function()
