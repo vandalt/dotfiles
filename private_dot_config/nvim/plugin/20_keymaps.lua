@@ -21,6 +21,10 @@ end
 nmap("[p", '<Cmd>exe "iput! " . v:register<CR>', "Paste Above")
 nmap("]p", '<Cmd>exe "iput "  . v:register<CR>', "Paste Below")
 
+-- Insert common emojis or unicode characters
+imap("<M-d>", "📅", "Calendar emoji")
+imap("<M-.>", "·", "Point median")
+
 -- Move mappings (many are set by mini.bracketed)
 local tsmap = function(lhs, move, textobjs)
   local textobjs_str = type(textobjs) == "table" and table.concat(textobjs, ", ") or textobjs
@@ -279,8 +283,8 @@ nmap_leader("mt", "<Cmd>lua MiniMap.toggle()<CR>", "Toggle")
 nmap_leader("oc", "<Cmd>tabclose<CR>", "Close tab")
 nmap_leader("or", "<Cmd>lua MiniMisc.resize_window()<CR>", "Resize to default width")
 nmap_leader("ot", "<Cmd>lua MiniTrailspace.trim()<CR>", "Trim trailspace")
-nmap_leader("oz", function() require("mini_zen").toggle_zoom() end, "Zoom toggle")
-nmap_leader("oZ", function() require("mini_zen").toggle_zen() end, "Zen toggle")
+nmap_leader("oz",  "<Cmd>lua MiniMisc.zoom()<CR>", "Zoom toggle")
+nmap_leader("oZ", function() require("mini_zen").zen() end, "Zen toggle")
 
 -- r is for "REPL" (and terminals)
 nmap_leader("rt", '<Cmd>execute v:count1 . "ToggleTerm"<CR>', "Terminal")
