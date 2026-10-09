@@ -9,6 +9,12 @@ now_if_args(function()
   require("mason").setup()
 end)
 later(function() vim.cmd.packadd("nvim.undotree") end)
+now_if_args(function()
+  add({"https://github.com/folke/snacks.nvim"})
+  require("snacks").setup({
+    image = { enabled = true },
+  })
+end)
 
 -- Tree-sitter ================================================================
 now_if_args(function()
