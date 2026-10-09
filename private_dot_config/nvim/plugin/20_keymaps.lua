@@ -275,6 +275,7 @@ nmap_leader("mt", "<Cmd>lua MiniMap.toggle()<CR>", "Toggle")
 
 -- o is for "Other"
 nmap_leader("oc", "<Cmd>tabclose<CR>", "Close tab")
+nmap_leader("oi", function() require("snacks_image_toggle").toggle_snacks_image() end, "Toggle snacks.image")
 nmap_leader("or", "<Cmd>lua MiniMisc.resize_window()<CR>", "Resize to default width")
 nmap_leader("ot", "<Cmd>lua MiniTrailspace.trim()<CR>", "Trim trailspace")
 nmap_leader("ou", "<Cmd>Undotree<CR>", "Undotree")
