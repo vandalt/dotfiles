@@ -24,27 +24,6 @@ local normalize = function(data)
   return items
 end
 
---- Decode items stored in the JSON cache
-local decode_items = function(encoded)
-  local ok, decoded = pcall(vim.json.decode, encoded)
-  if not ok or not vim.islist(decoded) then
-    return nil
-  end
-
-  for _, item in ipairs(decoded) do
-    if
-      type(item) ~= "table"
-      or type(item.emoji) ~= "string"
-      or type(item.group) ~= "string"
-      or type(item.name) ~= "string"
-      or type(item.text) ~= "string"
-    then
-      return nil
-    end
-  end
-  return decoded
-end
-
 --- Read emoji cache
 local read_cache = function()
   if vim.fn.filereadable(cache_file) == 0 then
@@ -52,7 +31,7 @@ local read_cache = function()
   end
 
   local ok, lines = pcall(vim.fn.readfile, cache_file)
-  local items = ok and decode_items(table.concat(lines, "\n")) or nil
+  local items = ok and pcall(vim.json.decode, table.concat(lines, "\n")) or nil
   if items then
     return items
   end
@@ -76,6 +55,8 @@ end
 --- Load and normalize emoji items
 --- If the cache is not available, downloads emojis with curl
 local load_items = function()
+  -- If the cache exists and can be read, just load it
+  -- It's already formatted properly
   local cached_items = read_cache()
   if cached_items then
     return cached_items
@@ -86,23 +67,14 @@ local load_items = function()
     return nil
   end
 
+  notify("Downloading emoji data", vim.log.levels.INFO)
   local output = vim.fn.system({ "curl", "-fsSL", emoji_url })
   if vim.v.shell_error ~= 0 then
     notify("Could not download emoji data: " .. vim.trim(output), vim.log.levels.ERROR)
     return nil
   end
 
-  local ok, data = pcall(vim.json.decode, output)
-  if not ok or type(data) ~= "table" then
-    notify("Downloaded emoji data is not valid JSON.", vim.log.levels.ERROR)
-    return nil
-  end
-
-  local items = normalize(data)
-  if #items == 0 then
-    notify("Downloaded emoji data contains no usable emojis.", vim.log.levels.ERROR)
-    return nil
-  end
+  local items = normalize(vim.json.decode(output))
 
   if not write_cache(items) then
     return nil
@@ -113,16 +85,7 @@ end
 -- Insert the emoji at cursor location
 local insert_emoji = function(item, mode)
   local target = MiniPick.get_picker_state().windows.target
-  if not vim.api.nvim_win_is_valid(target) then
-    notify("Original window is no longer available.", vim.log.levels.ERROR)
-    return
-  end
-
   local buf = vim.api.nvim_win_get_buf(target)
-  if not vim.bo[buf].modifiable then
-    notify("Target buffer is not modifiable.", vim.log.levels.ERROR)
-    return
-  end
 
   local cursor = vim.api.nvim_win_get_cursor(target)
   local row, col = cursor[1], cursor[2]
