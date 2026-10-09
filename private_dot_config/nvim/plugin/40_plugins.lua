@@ -121,6 +121,14 @@ end)
 -- Snippets ===================================================================
 later(function() add({ "https://github.com/rafamadriz/friendly-snippets" }) end)
 
+later(function()
+  add({ "https://github.com/danymat/neogen"})
+  require("neogen").setup({
+    languages = { python = { template = { annotation_convention = "reST" } } },
+    snippet_engine = "mini",
+  })
+end)
+
 -- Chezmoi ====================================================================
 now(function()
   add({ "https://github.com/alker0/chezmoi.vim" })

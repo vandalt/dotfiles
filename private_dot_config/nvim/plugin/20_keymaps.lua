@@ -3,15 +3,10 @@
 -- Many general mappings are created by 'mini.basics', see plugin/30_mini.lua
 
 -- Helper to create a Normal mode mapping
-local nmap = function(lhs, rhs, desc)
-  vim.keymap.set("n", lhs, rhs, { desc = desc })
-end
+local nmap = function(lhs, rhs, desc) vim.keymap.set("n", lhs, rhs, { desc = desc }) end
 
 -- Helper to create an insert mode mapping
-local imap = function(lhs, rhs, desc)
-  vim.keymap.set("i", lhs, rhs, { desc = desc })
-end
-
+local imap = function(lhs, rhs, desc) vim.keymap.set("i", lhs, rhs, { desc = desc }) end
 
 -- Paste linewise before/after current line
 -- Useful to copy a non-line thing (e.g. word) and put it on its own line
@@ -38,10 +33,10 @@ tsmap("]j", "goto_next_start", { "@cell.inner", "@cell.comment" })
 tsmap("[j", "goto_previous_start", { "@cell.inner", "@cell.comment" })
 tsmap("]J", "goto_next_end", "@cell.outer")
 tsmap("[J", "goto_previous_end", "@cell.outer")
-tsmap("]f", "goto_next_start", "@function.outer")
-tsmap("[f", "goto_previous_start", "@function.outer")
-tsmap("]F", "goto_next_end", "@function.outer")
-tsmap("[F", "goto_previous_end", "@function.outer")
+tsmap("]m", "goto_next_start", "@function.outer")
+tsmap("[m", "goto_previous_start", "@function.outer")
+tsmap("]M", "goto_next_end", "@function.outer")
+tsmap("[M", "goto_previous_end", "@function.outer")
 tsmap("]c", "goto_next_start", "@class.outer")
 tsmap("[c", "goto_previous_start", "@class.outer")
 tsmap("]C", "goto_next_end", "@class.outer")
@@ -49,8 +44,6 @@ tsmap("[C", "goto_previous_end", "@class.outer")
 
 -- Escape twice to exit terminal
 vim.keymap.set("t", "<Esc><Esc>", [[<C-\><C-n>]], { desc = "Escape terminal" })
-
--- TODO: decide if re-ignore stylua for all below until end
 
 -- Leader mappings ============================================================
 
@@ -60,6 +53,7 @@ vim.keymap.set("t", "<Esc><Esc>", [[<C-\><C-n>]], { desc = "Escape terminal" })
 Config.leader_group_clues = {
   { mode = "n", keys = "<Leader>a", desc = "+AI" },
   { mode = "n", keys = "<Leader>b", desc = "+Buffer" },
+  { mode = "n", keys = "<Leader>d", desc = "+Debug" },
   { mode = "n", keys = "<Leader>e", desc = "+Explore/Edit" },
   { mode = "n", keys = "<Leader>f", desc = "+Find" },
   { mode = "n", keys = "<Leader>g", desc = "+Git" },
@@ -129,28 +123,25 @@ nmap_leader("dw", function() require("dap.ui.widgets").hover() end, "Widgets")
 nxmap_leader("de", function() require("dapui").eval() end, "Eval")
 
 -- e is for "Explore" and "Edit"
--- - All mappings that use `edit_plugin_file` - edit 'plugin/' config files
--- TODO: Use chezmoi.nvim edit command?
 local edit_plugin_file = function(filename)
-  local config_dir = vim.env.HOME .. "/.local/share/chezmoi/private_dot_config/nvim" -- or vim.fn.stdpath("config")
-  return string.format("<Cmd>edit %s/plugin/%s<CR>", config_dir, filename)
-end
-local edit_init_lua = function()
-  local config_dir = vim.env.HOME .. "/.local/share/chezmoi/private_dot_config/nvim" -- or vim.fn.stdpath("config")
-  return string.format("<Cmd>edit %s/init.lua<CR>", config_dir)
+  local config_dir = vim.env.HOME .. "/.local/share/chezmoi/private_dot_config/nvim" -- or vim.fn.stdpath("config") if not chezmoi
+  return string.format("<Cmd>edit %s/%s<CR>", config_dir, filename)
 end
 local explore_at_file = "<Cmd>lua MiniFiles.open(vim.api.nvim_buf_get_name(0))<CR>"
+---@diagnostic disable-next-line: assign-type-mismatch
 local explore_quickfix = function() vim.cmd(vim.fn.getqflist({ winid = true }).winid ~= 0 and "cclose" or "copen") end
+---@diagnostic disable-next-line: assign-type-mismatch
 local explore_locations = function() vim.cmd(vim.fn.getloclist(0, { winid = true }).winid ~= 0 and "lclose" or "lopen") end
 
 nmap_leader("ed", "<Cmd>lua MiniFiles.open()<CR>", "Directory")
 nmap_leader("ef", explore_at_file, "File directory")
-nmap_leader("ei", edit_init_lua(), "init.lua")
-nmap_leader("ek", edit_plugin_file("20_keymaps.lua"), "Keymaps config")
-nmap_leader("em", edit_plugin_file("30_mini.lua"), "MINI config")
+nmap_leader("ei", edit_plugin_file("init.lua"), "init.lua")
+nmap_leader("ek", edit_plugin_file("plugin/20_keymaps.lua"), "Keymaps config")
+nmap_leader("em", edit_plugin_file("plugin/30_mini.lua"), "MINI config")
+nmap_leader("el", edit_plugin_file("lua/"), "Lua config modules")
 nmap_leader("en", "<Cmd>lua MiniNotify.show_history()<CR>", "Notifications")
-nmap_leader("eo", edit_plugin_file("10_options.lua"), "Options config")
-nmap_leader("ep", edit_plugin_file("40_plugins.lua"), "Plugins config")
+nmap_leader("eo", edit_plugin_file("plugin/10_options.lua"), "Options config")
+nmap_leader("ep", edit_plugin_file("plugin/40_plugins.lua"), "Plugins config")
 nmap_leader("eq", explore_quickfix, "Quickfix list")
 nmap_leader("eQ", explore_locations, "Location list")
 
@@ -255,18 +246,24 @@ nmap_leader("jn", "icodeblock<C-j>python<C-l>", "New cell", { remap = true })
 vim.keymap.set("i", "<C-CR>", "codeblock<C-j>python<C-l>", { desc = "New cell", remap = true })
 
 -- l is for "Language"
--- NOTE: most LSP mappings represent a more structured way of replacing built-in
+local neogen = function(python_convention)
+  local opts = { annotation_convention = { python = python_convention } }
+  require("neogen").generate(opts)
+end
 nmap_leader("la", "<Cmd>lua vim.lsp.buf.code_action()<CR>", "Actions")
 nmap_leader("ld", "<Cmd>lua vim.diagnostic.open_float()<CR>", "Diagnostic popup")
 nmap_leader("lf", '<Cmd>lua require("conform").format()<CR>', "Format")
-nmap_leader("li", "<Cmd>lua vim.lsp.buf.implementation()<CR>", "Implementation")
 nmap_leader("lh", "<Cmd>lua vim.lsp.buf.hover()<CR>", "Hover")
+nmap_leader("li", "<Cmd>lua vim.lsp.buf.implementation()<CR>", "Implementation")
 nmap_leader("ll", "<Cmd>lua vim.lsp.codelens.run()<CR>", "Lens")
 nmap_leader("lr", "<Cmd>lua vim.lsp.buf.rename()<CR>", "Rename")
 nmap_leader("lR", "<Cmd>lua vim.lsp.buf.references()<CR>", "References")
 nmap_leader("ls", "<Cmd>lua vim.lsp.buf.definition()<CR>", "Source definition")
 nmap("gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", "Go to definition")
 nmap_leader("lt", "<Cmd>lua vim.lsp.buf.type_definition()<CR>", "Type definition")
+nmap_leader("ln", function() neogen() end, "Generate docstrings")
+nmap_leader("lp", function() neogen("numpydoc") end, "Generate NumPy docstrings")
+nmap_leader("lg", function() neogen("google_docstrings") end, "Generate Google docstrings")
 
 xmap_leader("lf", '<Cmd>lua require("conform").format()<CR>', "Format selection")
 
@@ -281,7 +278,7 @@ nmap_leader("oc", "<Cmd>tabclose<CR>", "Close tab")
 nmap_leader("or", "<Cmd>lua MiniMisc.resize_window()<CR>", "Resize to default width")
 nmap_leader("ot", "<Cmd>lua MiniTrailspace.trim()<CR>", "Trim trailspace")
 nmap_leader("ou", "<Cmd>Undotree<CR>", "Undotree")
-nmap_leader("oz",  "<Cmd>lua MiniMisc.zoom()<CR>", "Zoom toggle")
+nmap_leader("oz", "<Cmd>lua MiniMisc.zoom()<CR>", "Zoom toggle")
 nmap_leader("oZ", function() require("mini_zen").zen() end, "Zen toggle")
 
 -- r is for "REPL" (and terminals)

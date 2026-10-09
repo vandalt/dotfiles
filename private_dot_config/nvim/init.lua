@@ -1,20 +1,27 @@
 -- Define config table to be able to pass data between scripts
 _G.Config = {}
 
--- TODO: Make docstrings throughout config with neogen
-
 local gr = vim.api.nvim_create_augroup("custom-config", {})
+
+--- Create an autocommand in the custom-config augroup
+--- Also simplifies opts via direct arguments
+---@param event string Event that triggers the autocommand
+---@param pattern string | nil Pattern to match against the event
+---@param callback function Callback function to call on autocommand
+---@param desc string Description of the autocommand
 Config.new_autocmd = function(event, pattern, callback, desc)
   local opts = { group = gr, pattern = pattern, callback = callback, desc = desc }
   vim.api.nvim_create_autocmd(event, opts)
 end
 
--- TODO: Make docstring with neogen
--- Define custom `vim.pack.add()` hook helper. Plugin data is passed as
--- argument to the callback. See `:h vim.pack-events`.
--- Example usage: see 'plugin/40_plugins.lua'.
--- If any plugin requires installation hooks, add them after this function
--- and before the first `vim.pack.add()` call.
+--- Define custom `vim.pack.add()` hook helper via an autocommand that runs on PackChanged
+--- Plugin data is passed as argument to the callback. See `:h vim.pack-events` ().
+--- Must be used before `vim.pack.add()` for the relevant plugin.
+--- Example usage: `Config.on_packchanged("nvim-treesitter", { "update" }, ts_update, ":TSUpdate")`
+---@param plugin_name string Name of the plugin
+---@param kinds string[] Kinds of events ("install", "update", "delete")
+---@param callback function Callback function executed on event
+---@param desc string Description of the autocmd
 Config.on_packchanged = function(plugin_name, kinds, callback, desc)
   local f = function(ev)
     local name, kind = ev.data.spec.name, ev.data.kind
@@ -31,7 +38,6 @@ end
 
 -- Load mini.nvim now to have mini.misc available for helpers below
 -- See plugin/30_mini.lua for more
--- TODO: Fix "undefined-global" errors for Mini* lua variables
 vim.pack.add({ "https://github.com/nvim-mini/mini.nvim" })
 
 -- Loading helpers used to organize config into fail-safe parts. Example usage:

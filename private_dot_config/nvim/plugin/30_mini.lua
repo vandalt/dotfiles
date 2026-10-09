@@ -1,9 +1,4 @@
----@diagnostic disable: undefined-global
--- TODO: Fix above diagnostic properly by making mini globals accessible
--- To minimize the time until first screen draw, modules are enabled in two steps:
--- - Step one enables everything that is needed for first draw with `now()`.
---   Sometimes needed only if Neovim is started as `nvim -- path/to/file`.
--- - Everything else is delayed until the first draw with `later()`.
+-- Make concise helpers for installing/adding plugins in two stages
 local now, now_if_args, later = Config.now, Config.now_if_args, Config.later
 
 -- Step one ===================================================================
@@ -42,7 +37,7 @@ now(function()
 end)
 
 -- Notifications provider.
-now(function() require("mini.notify").setup({ lsp_progress = { enable = true } }) end)
+now(function() require("mini.notify").setup({ lsp_progress = { enable = false } }) end)
 
 -- Session management. A thin wrapper around `:h mksession`
 -- manages session files.
@@ -162,7 +157,6 @@ later(function() require("mini.bufremove").setup() end)
 -- Show next key clues in a bottom right window
 later(function()
   local miniclue = require("mini.clue")
-  -- TODO: decide if re-ignore stylua for function call
   miniclue.setup({
     clues = {
       -- This is defined in 'plugin/20_keymaps.lua' with Leader group descriptions
@@ -190,6 +184,9 @@ later(function()
       { mode = "n", keys = "<C-w>" }, -- Window commands
       { mode = { "n", "x" }, keys = "s" }, -- `s` key (mini.surround, etc.)
       { mode = { "n", "x" }, keys = "z" }, -- `z` key
+    },
+    window = {
+      delay = 400,
     },
   })
 end)
@@ -292,9 +289,7 @@ later(function()
   require("mini.pick").setup()
 
   -- Register our custom emoji picker
-  MiniPick.registry.emoji = function()
-    require("mini_pick_emoji").pick()
-  end
+  MiniPick.registry.emoji = function() require("mini_pick_emoji").pick() end
 end)
 
 -- Manage and expand snippets

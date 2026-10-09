@@ -1,9 +1,10 @@
--- TODO: decide if re-ignore stylua for all below until end
--- To align at equal do: gA<textobject>=<CR>, then gA<textobject>s%-%-<CR>
--- where textobject can be ignored if you do a visual selection beforehand
+-- To align options at equal sign and comments, disable stylua for the file and do:
+-- gA<textobject>=<CR>, then gA<textobject>s%-%-<CR><CR> (ignore textobject if doing visual selection)
 
 -- General ====================================================================
 vim.g.mapleader = " " -- Use `<Space>` as <Leader> key
+
+vim.g.no_python_maps = true -- Dont map ]] ]m specifically for Python - use treesitter
 
 vim.o.mouse = "a" -- Enable mouse
 vim.o.mousescroll = "ver:25,hor:6" -- Customize mouse scroll
@@ -58,7 +59,7 @@ vim.o.shiftwidth = 2 -- Use this number of spaces for indentation
 vim.o.smartcase = true -- Respect case if search pattern has upper case
 vim.o.smartindent = true -- Make indenting smart
 vim.o.spelloptions = "camel" -- Treat camelCase word parts as separate words
-vim.o.spelllang = {"en", "fr"}
+vim.o.spelllang = { "en", "fr" }
 vim.o.tabstop = 2 -- Show tab as this number of spaces
 vim.o.virtualedit = "block" -- Allow going past end of line in blockwise mode
 
