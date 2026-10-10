@@ -16,7 +16,7 @@ local normalize = function(data)
         emoji = emoji,
         group = group,
         name = info.name,
-        text = string.format("%s  %s  %s", emoji, info.name, group),
+        text = string.format("%s  %s", emoji, info.name),
       })
     end
   end
@@ -31,7 +31,7 @@ local read_cache = function()
   end
 
   local ok, lines = pcall(vim.fn.readfile, cache_file)
-  local items = ok and pcall(vim.json.decode, table.concat(lines, "\n")) or nil
+  local items = ok and vim.json.decode(table.concat(lines, "\n")) or nil
   if items then
     return items
   end
